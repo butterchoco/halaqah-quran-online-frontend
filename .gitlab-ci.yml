@@ -1,0 +1,22 @@
+build site:
+  stage: build
+  script:
+    - npm install --progress=false
+    - npm run build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - dist
+
+unit test:
+  stage: test
+  script:
+    - npm install --progress=false
+    - npm run test:unit
+
+deploy:
+  stage: deploy
+  script:
+    - npm install --progress=false
+    - npm run build
+    - npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
