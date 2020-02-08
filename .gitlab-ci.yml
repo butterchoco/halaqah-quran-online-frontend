@@ -1,4 +1,5 @@
 build site:
+  image: node:12-buster
   stage: build
   script:
     - npm install --progress=false
@@ -9,12 +10,14 @@ build site:
       - dist
 
 unit test:
+  image: node:12-buster
   stage: test
   script:
     - npm install --progress=false
     - npm run test:unit
 
 deploy:
+  image: node:12-buster
   stage: deploy
   script:
     - npm install --progress=false
