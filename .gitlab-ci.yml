@@ -31,6 +31,7 @@ test:
 build:
   stage: build
   script:
+    - npm install --progress=false
     - npm run build
   artifacts:
     paths:
