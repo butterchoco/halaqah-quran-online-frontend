@@ -37,6 +37,7 @@ build:
       - dist
   only:
     - master
+    - staging
 
 deploy:
   stage: deploy
@@ -47,3 +48,4 @@ deploy:
     - build
   only:
     - master
+    - staging
