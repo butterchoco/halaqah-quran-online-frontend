@@ -22,6 +22,7 @@ setup:
 test:
   stage: test
   script:
+    - npm install --progress=false
     - npm run test:unit
   only:
     - master
