@@ -1,4 +1,4 @@
-image: node:12.15
+image: node:10.15.3
 
 cache:
   untracked: true
@@ -17,6 +17,7 @@ setup:
     - npm ci
   only:
     - master
+    - staging
 
 test:
   stage: test
@@ -24,6 +25,7 @@ test:
     - npm run test:unit
   only:
     - master
+    - staging
 
 build:
   stage: build
