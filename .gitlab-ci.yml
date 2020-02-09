@@ -27,6 +27,7 @@ test:
   only:
     - master
     - staging
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 build:
   stage: build
