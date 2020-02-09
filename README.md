@@ -1,5 +1,9 @@
 # Halaqah Quran Online Frontend Project
 
+[![pipeline status](https://gitlab.cs.ui.ac.id/ppl-fasilkom-ui/2020/people/halaqah-quran-online-frontend/badges/staging/pipeline.svg)](https://gitlab.cs.ui.ac.id/ppl-fasilkom-ui/2020/people/halaqah-quran-online-frontend/commits/staging)
+[![coverage report](https://gitlab.cs.ui.ac.id/ppl-fasilkom-ui/2020/people/halaqah-quran-online-frontend/badges/staging/coverage.svg)](https://gitlab.cs.ui.ac.id/ppl-fasilkom-ui/2020/people/halaqah-quran-online-frontend/commits/staging)
+
+
 * [Description](#description)
 * [Installation](#installation-for-development)
 * [Usage](#usage)
