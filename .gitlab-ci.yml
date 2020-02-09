@@ -23,7 +23,7 @@ test:
   stage: test
   script:
     - npm install --progress=false
-    - npm run test:unit
+    - npm run test:unit -- --coverage
   only:
     - master
     - staging
