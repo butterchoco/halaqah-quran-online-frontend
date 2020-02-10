@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap");
+
+html,
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1.header-title {
+  font-size: $h1;
+}
+
+h2.header-title {
+  font-size: $h2;
+}
+
+h3.header-title {
+  font-size: $h3;
+}
+
+h4.header-title {
+  font-size: $h4;
+}
+
+p {
+  font-size: $paragraph;
+}
+
+section {
+  min-height: 100vh;
+  max-width: 100vw;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  &.center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.h-center {
+    align-items: center;
+  }
+
+  &.v-center {
+    justify-content: center;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+
+  &.center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.v-center {
+    align-items: center;
+  }
+
+  &.h-center {
+    justify-content: center;
+  }
+}
+
+.btn {
+  cursor: pointer;
+  border: 0;
+  padding: $gap-sm $gap;
+  border-radius: 20px;
+  margin-top: $gap-m;
+
+  &.primary {
+    background: $primary;
+    color: $white;
+  }
+
+  &:hover {
+    background: darken($primary, 5%);
+    color: $white;
+  }
+}
+
+.image-fluid {
+  max-width: 100%;
+}
