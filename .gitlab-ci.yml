@@ -8,6 +8,7 @@ cache:
 stages:
   - setup
   - test
+  - sonar
   - build
   - deploy
 
@@ -21,6 +22,10 @@ setup:
 
 test:
   stage: test
+  artifacts:
+    paths:
+      - ./coverage/**
+    expire_in: 1 week
   script:
     - npm install --progress=false
     - npm run test:unit -- --coverage
@@ -28,6 +33,22 @@ test:
     - master
     - staging
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+SonarScanner:
+  image: addianto/sonar-scanner-cli:latest
+  stage: sonar
+  script:
+    - sonar-scanner
+      -Dsonar.host.url=https://pmpl.cs.ui.ac.id/sonarqube
+      -Dsonar.login=$SONARQUBE_TOKEN
+      -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY
+      -Dsonar.branch.name=$CI_COMMIT_REF_NAME
+  only:
+    - master
+    - staging
+    - development
+  dependencies:
+    - test
 
 build:
   stage: build
