@@ -11,7 +11,7 @@
 
 ## Description
 
-Backend for Halaqah Quran Online product in the form of web API.
+Frontend for Halaqah Quran Online, made with Vue.js
 
 ## Installation (For Development)
 Before you begin, make sure you have installed Yarn Package Manager. If you have not, please install it first [here](https://classic.yarnpkg.com/en/docs/install)!
