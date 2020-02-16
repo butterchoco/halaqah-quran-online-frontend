@@ -2,9 +2,9 @@
   <div>
     <section class="maintenance-container col center">
       <ErrorMaintenance :img="img" :title="title" :msg="msg" />
-      <img src="@/assets/img/vector-1.png" class="svg-1" />
-      <img src="@/assets/img/vector-2.png" class="svg-2" />
-      <img src="@/assets/img/vector-3.png" class="svg-3" />
+      <img src="@/assets/img/vector-1.png" alt="vector" class="svg-1" />
+      <img src="@/assets/img/vector-2.png" alt="vector" class="svg-2" />
+      <img src="@/assets/img/vector-3.png" alt="vector" class="svg-3" />
     </section>
   </div>
 </template>
