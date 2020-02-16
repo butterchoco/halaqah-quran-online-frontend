@@ -24,7 +24,7 @@ test:
   stage: test
   artifacts:
     paths:
-      - ./coverage/**
+      - ./coverage/lcov.info
     expire_in: 1 week
   script:
     - npm install --progress=false
