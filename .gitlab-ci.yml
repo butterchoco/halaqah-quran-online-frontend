@@ -1,0 +1,64 @@
+image: node:10.15.3
+
+cache:
+  untracked: true
+  paths:
+    - node_modules/
+
+stages:
+  - setup
+  - test
+  - sonar
+  - build
+  - deploy
+
+test:
+  stage: test
+  artifacts:
+    paths:
+      - ./coverage/lcov.info
+    expire_in: 1 week
+  script:
+    - npm install --progress=false
+    - npm run test:unit -- --coverage
+  only:
+    - master
+    - staging
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+SonarScanner:
+  image: addianto/sonar-scanner-cli:latest
+  stage: sonar
+  script:
+    - sonar-scanner
+      -Dsonar.host.url=https://pmpl.cs.ui.ac.id/sonarqube
+      -Dsonar.login=$SONARQUBE_TOKEN
+      -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY
+      -Dsonar.branch.name=$CI_COMMIT_REF_NAME
+  only:
+    - master
+    - staging
+    - development
+  dependencies:
+    - test
+
+build:
+  stage: build
+  script:
+    - npm install --progress=false
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - npm i -g netlify-cli
+    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+  dependencies:
+    - build
+  only:
+    - master
