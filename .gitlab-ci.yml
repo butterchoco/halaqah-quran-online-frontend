@@ -12,7 +12,8 @@ install_dependencies:
   script:
     - npm install
   artifacts:
-    - node_modules
+    paths:
+      - node_modules
 
 test:
   stage: test
@@ -39,7 +40,8 @@ SonarScanner:
       -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME
   artifacts:
-    - node_modules
+    paths:
+      - node_modules
   only:
     - master
     - staging
