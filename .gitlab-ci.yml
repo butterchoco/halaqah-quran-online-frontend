@@ -35,6 +35,7 @@ test:
   only:
     - master
     - staging
+    - development
 
 SonarScanner:
   image: addianto/sonar-scanner-cli:latest
