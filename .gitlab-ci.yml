@@ -21,8 +21,11 @@ install_dependencies:
 
 test:
   stage: test
-  beforeScript:
+  before_script:
     - npm install --progress=false
+    only:
+    changes:
+      - package-lock.json
   script:
     - npm run test:unit -- --coverage
   coverage: '/All\sfiles.*?\s+(\d+.\d+)/'
