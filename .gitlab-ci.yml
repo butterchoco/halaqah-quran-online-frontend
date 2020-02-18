@@ -21,15 +21,8 @@ install_dependencies:
 
 test:
   stage: test
-  cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
-    paths:
-      - node_modules/
   beforeScript:
     - npm install --progress=false
-    only:
-      changes:
-      - package-lock.json
   script:
     - npm run test:unit -- --coverage
   coverage: '/All\sfiles.*?\s+(\d+.\d+)/'
