@@ -7,15 +7,12 @@ stages:
   - build
   - deploy
 
-cache:
-  key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
-  paths:
-    - node_modules/
-
 install_dependencies:
   stage: install_dependencies
   script:
     - npm install
+  artifacts:
+    - node_modules
 
 test:
   stage: test
@@ -25,6 +22,7 @@ test:
   artifacts:
     paths:
       - ./coverage/lcov.info
+      - node_modules
     expire_in: 1 week
   only:
     - master
@@ -40,6 +38,8 @@ SonarScanner:
       -Dsonar.login=$SONARQUBE_TOKEN
       -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME
+  artifacts:
+    - node_modules
   only:
     - master
     - staging
@@ -54,6 +54,7 @@ build:
   artifacts:
     paths:
       - dist
+      - node_modules
     expire_in: 1 week
   only:
     - master
