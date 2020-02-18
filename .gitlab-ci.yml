@@ -7,22 +7,18 @@ stages:
   - build
   - deploy
 
+cache:
+  key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+  paths:
+    - node_modules/
+
 install_dependencies:
   stage: install_dependencies
-  cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
-    paths:
-      - node_modules/
   script:
-    - npm ci
-  only:
-    changes:
-      - package-lock.json
+    - npm install
 
 test:
   stage: test
-  before_script:
-    - npm install --progress=false
   script:
     - npm run test:unit -- --coverage
   coverage: '/All\sfiles.*?\s+(\d+.\d+)/'
@@ -53,11 +49,6 @@ SonarScanner:
 
 build:
   stage: build
-  cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
-    paths:
-      - node_modules/
-    policy: pull
   script:
     - npm run build
   artifacts:
