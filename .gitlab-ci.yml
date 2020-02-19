@@ -71,4 +71,13 @@ deploy:
     - build
   only:
     - master
+
+deploy:
+  stage: deploy
+  script:
+    - npm i -g netlify-cli
+    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --timeout=900
+  dependencies:
+    - build
+  only:
     - staging
