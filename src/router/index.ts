@@ -1,8 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Maintenance from "../views/Maintenance.vue";
-import NotFound from "../views/404-NotFound.vue";
+import Maintenance from "@/views/Maintenance.vue";
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(VueRouter);
 
