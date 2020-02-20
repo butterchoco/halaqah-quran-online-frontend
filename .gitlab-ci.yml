@@ -25,10 +25,6 @@ test:
       - ./coverage/lcov.info
       - node_modules
     expire_in: 1 week
-  only:
-    - master
-    - staging
-    - development
 
 SonarScanner:
   image: addianto/sonar-scanner-cli:latest
