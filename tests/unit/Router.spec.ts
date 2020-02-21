@@ -24,7 +24,7 @@ describe("App", () => {
     const wrapper = mount(App, {
       localVue,
       router
-
+    });
     router.push("/about");
     await wrapper.vm.$nextTick();
     expect(wrapper.find(About).exists()).toBe(true);
