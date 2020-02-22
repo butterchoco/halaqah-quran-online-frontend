@@ -22,15 +22,15 @@ describe("Home.vue", () => {
     );
   });
   it("has timeline correctly", () => {
-    expect(wrapper.vm.$store.getters.getTimeline.exist()).toBe(true);
+    expect(wrapper.vm.$store.getters.getTimeline).toBeTruthy();
   });
   it("has IsProgramOpened correctly", () => {
-    expect(wrapper.vm.$store.getters.getIsProgramOpened.exist()).toBe(true);
+    expect(wrapper.vm.$store.getters.getIsProgramOpened).toBeTruthy();
   });
   it("has AllCurriculum correctly", () => {
-    expect(wrapper.vm.$store.getters.getAllCurriculum.exist()).toBe(true);
+    expect(wrapper.vm.$store.getters.getAllCurriculum).toBeTruthy();
   });
   it("has AllTeacher correctly", () => {
-    expect(wrapper.vm.$store.getters.getAllTeacher.exist()).toBe(true);
+    expect(wrapper.vm.$store.getters.getAllTeacher).toBeTruthy();
   });
 });
