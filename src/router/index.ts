@@ -2,19 +2,25 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Maintenance from "@/views/Maintenance.vue";
 import NotFound from "@/views/NotFound.vue";
+import SignIn from "@/views/Signin.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "*",
-    name: "Home",
+    name: "NotFound",
     component: NotFound
   },
   {
     path: "/",
     name: "Home",
     component: Maintenance
+  },
+  {
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn
   },
   {
     path: "/about",
