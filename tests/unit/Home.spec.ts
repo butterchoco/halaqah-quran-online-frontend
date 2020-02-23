@@ -28,9 +28,9 @@ describe("Home.vue", () => {
     expect(wrapper.vm.$store.getters.getIsProgramOpened).toBeTruthy();
   });
   it("has AllCurriculum correctly", () => {
-    expect(wrapper.vm.$store.getters.getAllCurriculum).toBeTruthy();
+    expect(wrapper.vm.$store.getters.getAllCurriculums).toBeTruthy();
   });
   it("has AllTeacher correctly", () => {
-    expect(wrapper.vm.$store.getters.getAllTeacher).toBeTruthy();
+    expect(wrapper.vm.$store.getters.getAllTeachers).toBeTruthy();
   });
 });
