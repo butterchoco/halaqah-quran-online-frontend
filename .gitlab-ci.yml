@@ -29,6 +29,7 @@ test:
     - master
     - staging
     - development
+    - PBI-2-sign_in_out
 
 SonarScanner:
   image: addianto/sonar-scanner-cli:latest
