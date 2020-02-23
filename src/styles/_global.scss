@@ -86,19 +86,26 @@ section {
 .btn {
   cursor: pointer;
   border: 0;
-  padding: $gap-sm $gap;
+  padding: $gap-sm-1 $gap-sm-4;
   border-radius: 20px;
-  margin-top: $gap-m;
+  margin-top: $gap-m-1;
 
   &.primary {
     background: $primary;
-    color: $white;
+    color: white;
   }
 
   &:hover {
     background: darken($primary, 5%);
     color: $white;
   }
+}
+
+a {
+  color: $black;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .image-fluid {
