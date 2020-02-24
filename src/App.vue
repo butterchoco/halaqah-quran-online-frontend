@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <NavBeforeLogin />
+    <NavLoggedIn v-if="isUserLoggedIn" />
+    <NavBeforeLogin v-else />
     <div class="layout">
       <router-view />
     </div>
@@ -9,11 +10,18 @@
 
 <script>
 import NavBeforeLogin from "@/components/NavBeforeLogin";
+import NavLoggedIn from "@/components/NavLoggedIn";
 
 export default {
   name: "app",
   components: {
-    NavBeforeLogin
+    NavBeforeLogin,
+    NavLoggedIn
+  },
+  data() {
+    return {
+      isUserLoggedIn: false
+    };
   }
 };
 </script>
