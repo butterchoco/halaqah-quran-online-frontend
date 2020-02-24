@@ -5,18 +5,16 @@ describe("NotFound.vue", () => {
   it("renders data when passed", () => {
     function data() {
       return {
-        msg: "Anything",
-        title: "title goes here",
         img: require("@/assets/img/404-not-found.png"),
+        title: "404 Not Found",
+        msg: "Where are you going ? Nobody here.",
         goto: {
           link: "/",
           str: "Back to home"
         }
       };
     }
-    const wrapper = shallowMount(NotFound, {
-      data
-    });
+    const wrapper = shallowMount(NotFound);
     expect(wrapper.vm.$data).toMatchObject(data());
   });
 });
