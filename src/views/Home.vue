@@ -1,12 +1,14 @@
 <template>
-  <div class="home-frame">
+  <div>
+    <img class="vector svg-1" src="@/assets/img/Vector 8.png" alt="vector-8" />
+    <img class="vector svg-2" src="@/assets/img/Vector 9.png" alt="vector-9" />
+    <img class="vector svg-3" src="@/assets/img/Vector 10.png" alt="vector-10" />
+    <img class="vector svg-4" src="@/assets/img/Vector 11.png" alt="vector-11" />
+    <img class="vector svg-5" src="@/assets/img/Vector 12.png" alt="vector-12" />
+    <img class="vector svg-6" src="@/assets/img/Vector 13.png" alt="vector-13" />
+    <img class="vector svg-7" src="@/assets/img/Vector 8.png" alt="vector-8" />
+    <img class="vector svg-8" src="@/assets/img/Vector 9.png" alt="vector-9" />
     <section class="hero-container">
-      <img class="vector svg-1" src="@/assets/img/Vector 8.png" alt="vector-8" />
-      <img class="vector svg-2" src="@/assets/img/Vector 9.png" alt="vector-9" />
-      <img class="vector svg-3" src="@/assets/img/Vector 10.png" alt="vector-10" />
-      <img class="vector svg-4" src="@/assets/img/Vector 11.png" alt="vector-11" />
-      <img class="vector svg-5" src="@/assets/img/Vector 12.png" alt="vector-12" />
-      <img class="vector svg-6" src="@/assets/img/Vector 13.png" alt="vector-13" />
       <h1 class="header-title">
         Pendaftaran TahfidzQu
         <span class="isOpened" v-if="getIsProgramOpened">Dibuka</span>
@@ -117,41 +119,64 @@ export default {
 
 <style lang="scss">
 @media only screen and (min-width: 768px) {
-  .header-title {
+  h1.header-title {
     font-size: $h1 !important;
   }
 
+  h2.header-title {
+    font-size: $h2 !important;
+  }
+
   .vector {
-    max-height: 100% !important;
-    max-width: 100% !important;
+    max-height: 120% !important;
+    max-width: 120% !important;
 
     &.svg-1 {
-      top: 15% !important;
-      left: 70vw !important;
+      top: 45% !important;
+      right: 0 !important;
+      margin-right: -35rem !important;
     }
 
     &.svg-2 {
-      top: 15% !important;
-      left: 65vw !important;
+      top: 45% !important;
+      right: 0 !important;
+      margin-right: -25rem !important;
     }
 
     &.svg-3 {
-      top: 170% !important;
-      left: -40vw !important;
+      top: 180% !important;
+      left: 0 !important;
+      margin-left: -50rem !important;
     }
+
     &.svg-4 {
-      top: 170% !important;
-      left: -35vw !important;
+      top: 180% !important;
+      left: 0 !important;
+      margin-left: -45rem !important;
     }
 
     &.svg-5 {
       top: 310% !important;
-      left: 70vw !important;
+      right: 0 !important;
+      margin-right: -45rem !important;
     }
 
     &.svg-6 {
       top: 310% !important;
-      left: 65vw !important;
+      right: 0 !important;
+      margin-right: -40rem !important;
+    }
+
+    &.svg-7 {
+      top: 530% !important;
+      left: 0 !important;
+      margin-left: -60rem !important;
+    }
+
+    &.svg-8 {
+      top: 530% !important;
+      left: 0 !important;
+      margin-left: -55rem !important;
     }
   }
   .hero-container {
@@ -196,13 +221,14 @@ export default {
 
     .card-container {
       width: 100%;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)) !important;
+      margin: auto;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
       grid-gap: $gap-m-2;
     }
   }
 
   .facilities-container {
-    min-height: 200vh !important;
+    min-height: 150vh !important;
 
     .header-title {
       margin-bottom: $gap-m-2;
@@ -210,7 +236,7 @@ export default {
 
     .card-container {
       width: 80%;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
     }
   }
 }
@@ -224,35 +250,57 @@ export default {
 
   &.svg-1 {
     top: 60%;
-    left: 40vw;
-    z-index: -2;
+    right: 0;
+    margin-right: -25rem;
+    z-index: -1;
   }
 
   &.svg-2 {
     top: 60%;
-    left: 30vw;
+    right: 0;
+    margin-right: -25rem;
     z-index: -1;
   }
 
   &.svg-3 {
-    top: 380%;
-    left: -120vw;
-    z-index: -2;
+    top: 180%;
+    left: 0;
+    margin-left: -30rem;
+    z-index: -1;
   }
 
   &.svg-4 {
-    top: 380%;
-    left: -110vw;
+    top: 175%;
+    left: 0;
+    margin-left: -25rem;
     z-index: -1;
   }
+
   &.svg-5 {
-    top: 930%;
-    left: -100vw;
-    z-index: -2;
+    top: 365%;
+    right: 0;
+    margin-right: -25rem;
+    z-index: -1;
   }
+
   &.svg-6 {
-    top: 940%;
-    left: -90vw;
+    top: 360%;
+    right: 0;
+    margin-right: -22rem;
+    z-index: -1;
+  }
+
+  &.svg-7 {
+    top: 860%;
+    left: 0;
+    margin-left: -25rem;
+    z-index: -1;
+  }
+
+  &.svg-8 {
+    top: 860%;
+    left: 0;
+    margin-left: -25rem;
     z-index: -1;
   }
 }
@@ -273,10 +321,11 @@ export default {
 
   .header-description {
     margin-top: $gap-m-1;
+    font-size: 14px;
   }
 
   .daftar-program {
-    margin-top: $gap-m-1;
+    margin-top: $gap-m-2;
   }
 }
 
@@ -286,7 +335,6 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  min-height: 40vh;
 
   .header-title {
     font-size: 2rem;
@@ -353,15 +401,16 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  min-height: 580vh;
+  min-height: 500vh;
 
   .header-title {
     font-size: 2rem;
-    margin-left: 1rem;
+    margin-left: 5%;
   }
 
   .card-container {
-    margin-top: $gap-m-1;
+    max-width: 90%;
+    margin: $gap-m-1 auto;
     display: grid;
     grid-gap: $gap-m-2;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
