@@ -19,7 +19,7 @@ install_dependencies:
 linting_source_code:
   stage: lint
   script:
-    - npm lint
+    - npm run lint
   artifacts:
     paths:
       - node_modules
