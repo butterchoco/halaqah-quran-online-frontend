@@ -47,10 +47,6 @@ SonarScanner:
   artifacts:
     paths:
       - node_modules
-  only:
-    - master
-    - staging
-    - development
   dependencies:
     - test
 
