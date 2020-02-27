@@ -1,9 +1,5 @@
 <template>
-  <header
-    id="header"
-    class="header-container"
-    :class="{ scrolledHeader: isScrolled }"
-  >
+  <header id="header" class="header-container" :class="{ scrolledHeader: isScrolled }">
     <div class="header-mobile">
       <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
       <div class="right-header">
@@ -11,14 +7,10 @@
           <svg class="login-icon" viewBox="0 0 24 24">
             <path
               d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-            /></svg
-          >login
+            />
+          </svg>login
         </button>
-        <div
-          class="mob-btn"
-          @click="dropdownActivate"
-          :class="{ active: isDropdownActive }"
-        >
+        <div class="mob-btn" @click="dropdownActivate" :class="{ active: isDropdownActive }">
           <div class="line one"></div>
           <div class="line two"></div>
         </div>
@@ -30,9 +22,7 @@
           <router-link class="nav-link home" to="/">home</router-link>
         </li>
         <li>
-          <router-link class="nav-link program" to="/program"
-            >program</router-link
-          >
+          <router-link class="nav-link program" to="/program">program</router-link>
         </li>
         <li>
           <router-link class="nav-link about" to="/about">about</router-link>
@@ -42,8 +32,8 @@
         <svg class="login-icon" viewBox="0 0 24 24">
           <path
             d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-          /></svg
-        >login
+          />
+        </svg>login
       </button>
     </nav>
   </header>
@@ -61,25 +51,31 @@ export default {
   methods: {
     dropdownActivate() {
       this.isDropdownActive = !this.isDropdownActive;
+    },
+    windowToggle() {
+      if (window.innerWidth > 768) {
+        this.isDropdownActive = true;
+        this.mobile = false;
+      }
+    },
+    styleNavbarWhenScrolled() {
+      if (!this.mobile) {
+        window.document.onscroll = () => {
+          const header = document.getElementById("header");
+          if (window.scrollY > header.offsetTop) {
+            this.isScrolled = true;
+          } else {
+            this.isScrolled = false;
+          }
+        };
+      } else {
+        this.isScrolled = true;
+      }
     }
   },
   mounted() {
-    if (window.innerWidth > 768) {
-      this.isDropdownActive = true;
-      this.mobile = false;
-    }
-    if (!this.mobile) {
-      window.document.onscroll = () => {
-        const header = document.getElementById("header");
-        if (window.scrollY > header.offsetTop) {
-          this.isScrolled = true;
-        } else {
-          this.isScrolled = false;
-        }
-      };
-    } else {
-      this.isScrolled = true;
-    }
+    this.windowToggle();
+    this.styleNavbarWhenScrolled();
   }
 };
 </script>
