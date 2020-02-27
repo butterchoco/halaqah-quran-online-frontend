@@ -121,7 +121,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background: white;
+  background: rgba($color: white, $alpha: 0.5);
   width: 100%;
   max-width: 100%;
   display: flex;
