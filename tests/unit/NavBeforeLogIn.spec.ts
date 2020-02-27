@@ -11,10 +11,6 @@ describe("NavBeforeLogin Data", () => {
     localVue
   });
 
-  it("has isScrolled data", () => {
-    expect(wrapper.vm.$data.isScrolled).toBeDefined();
-  });
-
   it("has isDropdownActive data", () => {
     expect(wrapper.vm.$data.isDropdownActive).toBeDefined();
   });
@@ -41,20 +37,4 @@ describe("NavBeforeLogin Data", () => {
     expect(windowToggle).toBeCalled();
   });
 
-  it("calls styleNavbarWhenScrolled function", () => {
-    const styleNavbarWhenScrolled = jest.fn();
-    wrapper = shallowMount(NavBeforeLogin, {
-      localVue,
-      data() {
-        return {
-          isScrolled: false
-        };
-      },
-      methods: {
-        styleNavbarWhenScrolled
-      }
-    });
-    wrapper.vm.$nextTick();
-    expect(styleNavbarWhenScrolled).toBeCalled();
-  });
 });
