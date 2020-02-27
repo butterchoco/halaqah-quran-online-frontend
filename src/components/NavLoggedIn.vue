@@ -1,5 +1,5 @@
 <template>
-  <header id="header" class="header-container" :class="{ scrolledHeader: isScrolled }">
+  <header id="header" class="header-container">
     <div class="header-mobile">
       <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
       <div class="right-header">
@@ -58,7 +58,6 @@ export default {
     return {
       isDropdownActive: false,
       isProfileDropdownActive: false,
-      isScrolled: false,
       mobile: true,
       user: {
         name: "dummy"
@@ -70,27 +69,17 @@ export default {
       this.isDropdownActive = !this.isDropdownActive;
     },
     profileDropdownActivate() {
-      console.log(true);
       this.isProfileDropdownActive = !this.isProfileDropdownActive;
+    },
+    windowToggle() {
+      if (window.innerWidth > 768) {
+        this.isDropdownActive = true;
+        this.mobile = false;
+      }
     }
   },
   mounted() {
-    if (window.innerWidth > 768) {
-      this.isDropdownActive = true;
-      this.mobile = false;
-    }
-    if (!this.mobile) {
-      window.document.onscroll = () => {
-        const header = document.getElementById("header");
-        if (window.scrollY > header.offsetTop) {
-          this.isScrolled = true;
-        } else {
-          this.isScrolled = false;
-        }
-      };
-    } else {
-      this.isScrolled = true;
-    }
+    this.windowToggle();
   }
 };
 </script>
