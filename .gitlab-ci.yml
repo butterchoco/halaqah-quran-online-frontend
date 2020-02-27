@@ -2,7 +2,6 @@ image: node:10.15.3
 
 stages:
   - install_dependencies
-  - lint
   - test
   - sonar
   - build
@@ -17,7 +16,7 @@ install_dependencies:
       - node_modules
 
 linting_source_code:
-  stage: lint
+  stage: test
   script:
     - npm run lint
   artifacts:
