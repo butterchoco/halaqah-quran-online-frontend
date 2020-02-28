@@ -23,12 +23,14 @@
       </ul>
       <div class="profile-container">
         <button class="profile btn primary" @click="profileDropdownActivate">
-          <svg class="profile-icon" viewBox="0 0 24 24">
-            <path
-              d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-            />
-          </svg>
-          {{ user.name }}
+          <div class="row center">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+              <path
+                d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
+              />
+            </svg>
+            {{ user.name }}
+          </div>
           <div class="circle">
             <img src="@/assets/img/arrow-down.png" alt="arrow" />
           </div>
@@ -89,16 +91,23 @@ export default {
   .header-container {
     flex-direction: row !important;
     padding: 10px 0;
+    height: 8vh;
 
     .profile-container {
-      top: 2rem !important;
-      right: 2rem !important;
+      top: 2vh !important;
+      right: 10% !important;
       transform: none;
       margin: auto $gap-m-1 !important;
       position: absolute !important;
 
+      border-radius: 20px;
+      width: auto !important;
+      height: auto !important;
+      padding: 0 !important;
+
       ul.nav-profile {
         position: relative !important;
+        margin: $gap-m-1 0 !important;
       }
     }
 
@@ -127,7 +136,7 @@ export default {
         li.nav-link {
           a.link {
             width: 140px !important;
-            padding: 2rem 0 !important;
+            padding: 1rem 0 !important;
             display: flex;
             align-items: center !important;
             justify-content: center !important;
@@ -145,20 +154,20 @@ export default {
     .profile {
       margin: auto $gap-m-1 !important;
       font-weight: bold;
+      padding: 5px 10px;
+      font-weight: bold;
+      width: auto !important;
+      height: auto !important;
     }
   }
-}
-
-.scrolledHeader {
-  box-shadow: 0 4px 20px rgba($color: #222, $alpha: 0.05);
-  transition: box-shadow 0.5s ease;
 }
 
 .header-container {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba($color: white, $alpha: 0.5);
+  background: white;
+  box-shadow: 0 4px 10px rgba($color: #222, $alpha: 0.1);
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -218,8 +227,9 @@ export default {
 
   .profile-container {
     background: $primary;
-    margin: 1rem auto;
-    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    padding: $gap-m-1 $gap-m-1;
 
     ul.nav-profile {
       background: inherit;
@@ -233,6 +243,7 @@ export default {
       padding-left: 0;
       left: 50%;
       transform: translateX(-50%);
+      margin: 0;
 
       li.nav-profile-link {
         width: 100%;
@@ -260,19 +271,25 @@ export default {
     margin: auto 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 5px 10px;
     cursor: pointer;
+
+    /////
+    // padding: 5px 10px;
+    font-weight: bold;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 
     .circle {
       background: white;
-      width: 16px;
-      height: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       margin-left: $gap-sm-2;
+
+      height: 24px;
+      width: 24px;
 
       img {
         max-width: 100%;
@@ -281,8 +298,10 @@ export default {
 
     .profile-icon {
       fill: white;
-      max-width: 16px;
       margin-right: $gap-sm-1;
+
+      margin-right: $gap-sm-2;
+      max-width: 24px;
     }
 
     &:hover {
