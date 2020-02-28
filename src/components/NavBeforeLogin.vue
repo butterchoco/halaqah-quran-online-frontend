@@ -93,7 +93,6 @@ export default {
 
         a {
           width: 140px !important;
-          padding: 2rem 0 !important;
           display: flex;
           align-items: center !important;
           justify-content: center !important;
@@ -186,7 +185,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 10px;
+    padding: $gap-sm-1 $gap-sm-4;
     cursor: pointer;
 
     .login-icon {
