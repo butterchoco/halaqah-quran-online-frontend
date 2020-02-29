@@ -6,7 +6,7 @@
     <p class="message">{{ msg2 }}</p>
     <div class="flex">
       <router-link v-for="(data, index) in goto" :key="index" :to="data.link">
-        <button class="btn primary">{{ data.str }}</button>
+        <button class="btn" :class="[isPrimary ? 'primary' : '']">{{ data.str }}</button>
       </router-link>
     </div>
     <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
@@ -22,6 +22,7 @@ export default {
   name: "MessagePage",
   props: {
     isDanger: Boolean,
+    isPrimary: Boolean,
     img: String,
     title: String,
     msg: String,
@@ -96,6 +97,10 @@ export default {
 
 .red {
   color: #eb4d55;
+}
+
+.gray {
+  color: #e5e5e5;
 }
 
 .svg-4 {

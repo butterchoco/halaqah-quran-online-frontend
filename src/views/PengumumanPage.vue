@@ -1,7 +1,7 @@
 <template>
   <div class="pengumuman-container col center">
     <section class="maintenance-container col center">
-      <MessagePage :isDanger="isDanger" :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
+      <MessagePage :isPrimary="isPrimary" :isDanger="isDanger" :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
     </section>
   </div>
 </template>
@@ -21,6 +21,7 @@ export default {
       return {
         img: require("@/assets/img/success-selection-1.png"),
         title: "Selamat Anda Lulus Program!",
+        isPrimary: true,
         msg: "Silahkan pilih jadwal untuk melanjutkan.",
         goto: [{ str: "Pilih Jadwal", link: "/" }]
       };
@@ -29,8 +30,9 @@ export default {
         img: require("@/assets/img/failed-selection.png"),
         title: "Mohon Maaf Anda Belum Lulus Program!",
         isDanger: true,
+        isPrimary: false,
         msg: "Kami sarankan untuk tahsin dulu ya kak :)",
-        msg2: "Level tahsin yang sesuai adalah <strong>Level 2</strong>",
+        msg2: "Level tahsin yang sesuai adalah Level 2",
         goto: [{ str: "Lihat Nilai", link: "/" }]
       };
     }
