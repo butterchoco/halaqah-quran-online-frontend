@@ -1,12 +1,15 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import MessagePage from "@/components/MessagePage.vue";
 import VueRouter from "vue-router";
+import Store from "@/store/index.ts";
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
 describe("MessagePage Data", () => {
+  const store = Store;
   let wrapper = shallowMount(MessagePage, {
-    localVue
+    localVue,
+    store
   });
   it("renders data when passed", () => {
     const prop = {
@@ -20,9 +23,10 @@ describe("MessagePage Data", () => {
         }
       ]
     };
-    const wrapper = shallowMount(MessagePage, {
+    wrapper = shallowMount(MessagePage, {
       propsData: prop,
       localVue,
+      store,
       stubs: ["router-link", "router-view"]
     });
     expect(wrapper.props()).toMatchObject(prop);

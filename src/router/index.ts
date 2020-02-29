@@ -5,7 +5,7 @@ import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
 import Maintenance from "@/views/Maintenance.vue";
 import NotFound from "@/views/NotFound.vue";
-import PenerimaanProgram from "@/views/PenerimaanProgram.vue";
+import PengumumanPage from "@/views/PengumumanPage.vue";
 
 Vue.use(VueRouter);
 
@@ -31,9 +31,9 @@ const routes = [
     component: Program
   },
   {
-    path: "/penerimaan",
-    name: "penerimaan",
-    component: PenerimaanProgram
+    path: "/pengumuman",
+    name: "pengumuman",
+    component: PengumumanPage
   }
 ];
 
