@@ -1,8 +1,7 @@
 <template>
   <div class="pengumuman-container col center">
     <section class="maintenance-container col center">
-      <MessagePage v-if="!msg2" :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
-      <MessagePage v-if="msg2" :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
+      <MessagePage :isDanger="isDanger" :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
     </section>
   </div>
 </template>
@@ -29,8 +28,9 @@ export default {
       return {
         img: require("@/assets/img/failed-selection.png"),
         title: "Mohon Maaf Anda Belum Lulus Program!",
+        isDanger: true,
         msg: "Kami sarankan untuk tahsin dulu ya kak :)",
-        msg2: "Level tahsin yang sesuai adalah Level 2",
+        msg2: "Level tahsin yang sesuai adalah <strong>Level 2</strong>",
         goto: [{ str: "Lihat Nilai", link: "/" }]
       };
     }

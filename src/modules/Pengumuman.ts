@@ -1,15 +1,14 @@
 const state = {
-  isAccepted: true
+    isTahfizhProgramAccepted: true
 };
 const getters = {
   getIsAccepted: () => {
-    return state.isAccepted;
+    return state.isTahfizhProgramAccepted;
   }
 };
 const mutations = {
   setAccepted: (state: any, payload: any) => {
-    state.isAccepted = payload.value;
-    console.log("New State: " + state.isAccepted);
+    state.isTahfizhProgramAccepted = payload.value;
   }
 };
 const actions = {};

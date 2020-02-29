@@ -1,10 +1,9 @@
 <template>
   <div class="message-container col center">
     <img class="hero-message" :src="img" alt="Message" />
-    <h3 class="header-title blue" v-if="getIsAccepted">{{ title }}</h3>
-    <h3 class="header-title red" v-if="!getIsAccepted">{{ title }}</h3>
+    <h3 class="header-title" :class="[isDanger ? 'red' : '']">{{ title }}</h3>
     <p class="message">{{ msg }}</p>
-    <p class="message" v-if="!getIsAccepted">{{ msg2 }}</p>
+    <p class="message">{{ msg2 }}</p>
     <div class="flex">
       <router-link v-for="(data, index) in goto" :key="index" :to="data.link">
         <button class="btn primary">{{ data.str }}</button>
@@ -21,10 +20,8 @@
 import { mapGetters } from "vuex";
 export default {
   name: "MessagePage",
-  computed: {
-    ...mapGetters(["getIsAccepted"])
-  },
   props: {
+    isDanger: Boolean,
     img: String,
     title: String,
     msg: String,
@@ -95,10 +92,6 @@ export default {
 
 .header-title {
   text-align: center;
-}
-
-.blue {
-  color: $primary;
 }
 
 .red {
