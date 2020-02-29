@@ -6,10 +6,8 @@ import Store from "@/store/index.ts";
 const localVue = createLocalVue();
 localVue.use(VueRouter);
 describe("MessagePage Data", () => {
-  const store = Store;
   let wrapper = shallowMount(MessagePage, {
-    localVue,
-    store
+    localVue
   });
   it("renders data when passed", () => {
     const prop = {
@@ -26,7 +24,6 @@ describe("MessagePage Data", () => {
     wrapper = shallowMount(MessagePage, {
       propsData: prop,
       localVue,
-      store,
       stubs: ["router-link", "router-view"]
     });
     expect(wrapper.props()).toMatchObject(prop);
