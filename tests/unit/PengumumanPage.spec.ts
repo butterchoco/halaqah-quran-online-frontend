@@ -8,11 +8,11 @@ describe("PengumumanPage.vue", () => {
     store
   });
 
-  it("has IsAccepted true", () => {
+  it("has isTahfizhProgramAccepted true", () => {
     expect(wrapper.vm.$store.getters.getIsAccepted).toBeTruthy();
   });
 
-  it("renders data when passed", () => {
+  it("renders data when passed isTahfizhProgramAccepted true", () => {
     let expectedData = {
       img: require("@/assets/img/maintenance.png"),
       msg: "Silahkan pilih jadwal untuk melanjutkan.",
@@ -22,12 +22,12 @@ describe("PengumumanPage.vue", () => {
     expect(wrapper.vm.$data).toMatchObject(expectedData);
   });
 
-  it("has IsAccepted false", () => {
+  it("has isTahfizhProgramAccepted false", () => {
     wrapper.vm.$store.commit("setAccepted", { value: false });
     expect(wrapper.vm.$store.getters.getIsAccepted).toBeFalsy();
   });
 
-  it("renders data when passed", () => {
+  it("renders data when passed isTahfizhProgramAccepted false", () => {
     function data() {
       if (wrapper.vm.$store.getters.getIsAccepted) {
         return {
