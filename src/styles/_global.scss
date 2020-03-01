@@ -105,6 +105,11 @@ section {
       border: 1px solid $primary;
     }
   }
+
+  &:hover {
+    background: $black;
+    color: white;
+  }
 }
 
 a {
