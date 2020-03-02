@@ -6,6 +6,9 @@ import Program from "@/views/Program.vue";
 import Maintenance from "@/views/Maintenance.vue";
 import NotFound from "@/views/NotFound.vue";
 import PengumumanPage from "@/views/PengumumanPage.vue";
+import ProgramRegistration from "@/views/ProgramRegistration.vue";
+import RegistrationClosed from "@/views/RegistrationClosed.vue";
+import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
 
 Vue.use(VueRouter);
 
@@ -34,6 +37,21 @@ const routes = [
     path: "/pengumuman",
     name: "pengumuman",
     component: PengumumanPage
+  },
+  {
+    path: "/program-registration",
+    name: "Program Registration",
+    component: ProgramRegistration
+  },
+  {
+    path: "/regis-success",
+    name: "RegistrationSuccess",
+    component: RegistrationSuccess
+  },
+  {
+    path: "/regis-closed",
+    name: "RegistrationClosed",
+    component: RegistrationClosed
   }
 ];
 

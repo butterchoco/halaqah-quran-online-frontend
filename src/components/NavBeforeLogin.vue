@@ -69,6 +69,7 @@ export default {
   .header-container {
     flex-direction: row !important;
     padding: 10px 0;
+    height: 8vh;
 
     .header-mobile {
       width: auto !important;
@@ -92,7 +93,6 @@ export default {
 
         a {
           width: 140px !important;
-          padding: 2rem 0 !important;
           display: flex;
           align-items: center !important;
           justify-content: center !important;
@@ -121,7 +121,8 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba($color: white, $alpha: 0.5);
+  background: white;
+  box-shadow: 0 4px 10px rgba($color: #eee, $alpha: 0.4);
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -184,7 +185,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 10px;
+    padding: $gap-sm-1 $gap-sm-4;
     cursor: pointer;
 
     .login-icon {

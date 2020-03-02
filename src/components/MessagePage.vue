@@ -50,6 +50,7 @@ export default {
     max-width: 50%;
   }
 
+<<<<<<< HEAD
   .vector {
     max-height: 120% !important;
     max-width: 120% !important;
@@ -79,20 +80,46 @@ export default {
       left: 0 !important;
       margin-left: -60rem !important;
     }
+=======
+  .message {
+    max-width: 100% !important;
+    font-size: 16px !important;
+>>>>>>> 4909db03bd77e95f097762de7b1715df796f54a4
   }
 }
 
 .hero-message {
   max-width: 75%;
+<<<<<<< HEAD
+=======
+  margin-bottom: $gap-m-2;
+}
+
+.message {
+  margin-top: $gap-sm-1;
+  text-align: center;
+  max-width: 80%;
+  font-size: 12px;
+>>>>>>> 4909db03bd77e95f097762de7b1715df796f54a4
 }
 
 .message-container {
   min-width: 20%;
   max-height: 40%;
+<<<<<<< HEAD
 }
 
 .header-title {
   text-align: center;
+=======
+  margin-bottom: $gap-m-2;
+}
+
+.header-title {
+  margin-bottom: $gap-m-1;
+  text-align: center;
+  font-size: 16px;
+>>>>>>> 4909db03bd77e95f097762de7b1715df796f54a4
 }
 
 .red {
@@ -112,6 +139,7 @@ export default {
   max-height: 20%;
 }
 
+<<<<<<< HEAD
 .svg-6 {
   position: absolute;
   bottom: 0;
@@ -128,6 +156,24 @@ export default {
   left: 0;
   max-width: 40%;
   max-height: 25%;
+=======
+.svg-5 {
+  position: absolute;
+  z-index: -2;
+  bottom: 0;
+  left: 0;
+  max-width: 40%;
+  max-height: 25%;
+}
+
+.svg-6 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  max-width: 40%;
+  max-height: 50%;
+>>>>>>> 4909db03bd77e95f097762de7b1715df796f54a4
 }
 
 .svg-7 {
@@ -135,7 +181,12 @@ export default {
   z-index: -2;
   bottom: 0;
   right: 0;
+<<<<<<< HEAD
   max-width: 20%;
   max-height: 20%;
+=======
+  max-width: 30%;
+  max-height: 50%;
+>>>>>>> 4909db03bd77e95f097762de7b1715df796f54a4
 }
 </style>
