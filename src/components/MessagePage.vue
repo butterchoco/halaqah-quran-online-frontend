@@ -50,7 +50,7 @@ export default {
   .hero-message {
     max-width: 50%;
   }
-
+  
   .message {
     max-width: 100% !important;
     font-size: 16px !important;
