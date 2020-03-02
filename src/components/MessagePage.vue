@@ -6,7 +6,9 @@
     <p class="message">{{ msg2 }}</p>
     <div class="flex">
       <router-link v-for="(data, index) in goto" :key="index" :to="data.link">
-        <button class="btn" :class="[isPrimary ? 'primary' : '']">{{ data.str }}</button>
+        <button class="btn" :class="[isPrimary ? 'primary' : '']">
+          {{ data.str }}
+        </button>
       </router-link>
     </div>
     <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
@@ -17,7 +19,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "MessagePage",
   props: {

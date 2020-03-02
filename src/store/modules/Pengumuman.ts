@@ -1,5 +1,5 @@
 const state = {
-    isTahfizhProgramAccepted: true
+  isTahfizhProgramAccepted: true
 };
 const getters = {
   getIsAccepted: () => {
@@ -7,8 +7,8 @@ const getters = {
   }
 };
 const mutations = {
-  setAccepted: (state: any, payload: any) => {
-    state.isTahfizhProgramAccepted = payload.value;
+  setAccepted: (payload: boolean) => {
+    state.isTahfizhProgramAccepted = payload;
   }
 };
 const actions = {};
