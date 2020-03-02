@@ -1,5 +1,5 @@
 const state = {
-    isTahfizhProgramAccepted: true
+  isTahfizhProgramAccepted: true
 };
 const getters = {
   getIsAccepted: () => {
