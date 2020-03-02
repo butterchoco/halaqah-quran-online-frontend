@@ -1,11 +1,16 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Store from "@/store/index.ts";
 import Home from "@/views/Home.vue";
+import VueRouter from "vue-router";
+
+const localVue = createLocalVue();
+localVue.use(VueRouter);
 
 describe("Home.vue", () => {
   const store = Store;
   const wrapper = shallowMount(Home, {
-    store
+    store,
+    localVue
   });
   it("has header description correctly", () => {
     const headerDescription =
