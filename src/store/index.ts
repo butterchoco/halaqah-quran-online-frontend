@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Home from "@/modules/Home.ts";
-import Pengumuman from "@/modules/Pengumuman.ts";
+import Pengumuman from "@/store/modules/Pengumuman";
+import Home from "@/store/modules/Home";
+import ProgramRegistration from "@/store/modules/ProgramRegistration";
 
 Vue.use(Vuex);
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     Home,
-    Pengumuman
+    Pengumuman,
+    ProgramRegistration
   }
 });
