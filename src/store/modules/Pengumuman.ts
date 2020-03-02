@@ -7,8 +7,8 @@ const getters = {
   }
 };
 const mutations = {
-  setAccepted: (payload: boolean) => {
-    state.isTahfizhProgramAccepted = payload;
+  setAccepted: (state: any, payload: any) => {
+    state.isTahfizhProgramAccepted = payload.value;
   }
 };
 const actions = {};
