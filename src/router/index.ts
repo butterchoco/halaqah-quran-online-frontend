@@ -3,7 +3,9 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
+import Maintenance from "@/views/Maintenance.vue";
 import NotFound from "@/views/NotFound.vue";
+import PengumumanPage from "@/views/PengumumanPage.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +29,11 @@ const routes = [
     path: "/program",
     name: "Program",
     component: Program
+  },
+  {
+    path: "/pengumuman",
+    name: "pengumuman",
+    component: PengumumanPage
   }
 ];
 
