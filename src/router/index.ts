@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
-import Maintenance from "@/views/Maintenance.vue";
 import NotFound from "@/views/NotFound.vue";
 import PengumumanPage from "@/views/PengumumanPage.vue";
+import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
 
 Vue.use(VueRouter);
 
@@ -34,6 +34,11 @@ const routes = [
     path: "/pengumuman",
     name: "pengumuman",
     component: PengumumanPage
+  },
+  {
+    path: "/regis-success",
+    name: "RegistrationSuccess",
+    component: RegistrationSuccess
   }
 ];
 

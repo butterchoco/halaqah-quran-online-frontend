@@ -50,49 +50,34 @@ export default {
     max-width: 50%;
   }
 
-  .vector {
-    max-height: 120% !important;
-    max-width: 120% !important;
-    min-height: 100%;
-    min-width: 100%;
-
-    &.svg-4 {
-      top: 180% !important;
-      left: 0 !important;
-      margin-left: -45rem !important;
-    }
-
-    &.svg-5 {
-      top: 310% !important;
-      right: 0 !important;
-      margin-right: -45rem !important;
-    }
-
-    &.svg-6 {
-      top: 310% !important;
-      right: 0 !important;
-      margin-right: -40rem !important;
-    }
-
-    &.svg-7 {
-      top: 530% !important;
-      left: 0 !important;
-      margin-left: -60rem !important;
-    }
+  .message {
+    max-width: 100% !important;
+    font-size: 16px !important;
   }
 }
 
 .hero-message {
   max-width: 75%;
+  margin-bottom: $gap-m-2;
+}
+
+.message {
+  margin-top: $gap-sm-1;
+  text-align: center;
+  max-width: 80%;
+  font-size: 12px;
 }
 
 .message-container {
   min-width: 20%;
   max-height: 40%;
+  margin-bottom: $gap-m-2;
 }
 
 .header-title {
+  margin-bottom: $gap-m-1;
   text-align: center;
+  font-size: 16px;
 }
 
 .red {
@@ -112,15 +97,6 @@ export default {
   max-height: 20%;
 }
 
-.svg-6 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: -1;
-  max-width: 40%;
-  max-height: 20%;
-}
-
 .svg-5 {
   position: absolute;
   z-index: -2;
@@ -130,12 +106,21 @@ export default {
   max-height: 25%;
 }
 
+.svg-6 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  max-width: 40%;
+  max-height: 50%;
+}
+
 .svg-7 {
   position: absolute;
   z-index: -2;
   bottom: 0;
   right: 0;
-  max-width: 20%;
-  max-height: 20%;
+  max-width: 30%;
+  max-height: 50%;
 }
 </style>
