@@ -68,7 +68,7 @@ import axios from "axios";
 export default {
   name: "DataCalonPeserta",
   computed: {
-    ...mapGetters(["getCalonPeserta"])
+    ...mapGetters(["getCalonPeserta, getUSerToken"])
   },
   data() {
     return {
@@ -85,8 +85,7 @@ export default {
       this.isModal = !this.isModal;
     },
     getData() {
-      const token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTgzMjE0NDUwLCJqdGkiOiJkMDEwYTg4ZGM0MGU0N2M4YmEyNzhlYjM1M2Q2YWY2YyIsInVzZXJfaWQiOiI2ZDcxZjI5Ni03ZGQ3LTQ2NGMtODYwNS0zZjUyNTFlOTliMmUifQ.eHok6CYzveLYQf1NHac2Vqi3tfQkRSm39XWj48LddRA";
+      const token = this.$store.getUserToken;
 
       axios
         .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
