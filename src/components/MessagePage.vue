@@ -6,17 +6,30 @@
     <p class="message">{{ msg2 }}</p>
     <div class="flex">
       <router-link v-for="(data, index) in goto" :key="index" :to="data.link">
-        <button class="btn" :class="[isPrimary ? 'primary' : '']">
-          {{ data.str }}
-        </button>
+        <button
+          v-for="(data, index) in goto"
+          :key="index"
+          @click="toggleModal()"
+          class="btn"
+          :class="[isPrimary ? 'primary' : '']"
+        >{{ data.str }}</button>
       </router-link>
     </div>
+    <Modal v-if="isModal" @exit="toggleModal" :isDanger="isDanger" :dataModal="dataModal" />
+
+    <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
+    <img src="@/assets/img/vector-5.png" alt="vector" class="svg-5" />
+    <img src="@/assets/img/vector-6.png" alt="vector" class="svg-6" />
+    <img src="@/assets/img/vector-7.png" alt="vector" class="svg-7" />
   </div>
 </template>
 
 <script>
+import Modal from "@/components/Modal.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "MessagePage",
+  components: { Modal },
   props: {
     isDanger: Boolean,
     isPrimary: Boolean,
@@ -24,7 +37,18 @@ export default {
     title: String,
     msg: String,
     msg2: String,
+    dataModal: Object,
     goto: Array
+  },
+  data() {
+    return {
+      isModal: false
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.isModal = !this.isModal;
+    }
   }
 };
 </script>
@@ -80,10 +104,6 @@ export default {
 
 .red {
   color: #eb4d55;
-}
-
-.gray {
-  color: #e5e5e5;
 }
 
 .svg-4 {
