@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
+import DataCalonPeserta from "@/views/DataCalonPeserta.vue";
 import NotFound from "@/views/NotFound.vue";
 import SignIn from "@/views/Signin.vue";
 import SignUp from "@/views/Signup.vue";
@@ -68,6 +69,11 @@ const routes = [
     path: "/regis-closed",
     name: "RegistrationClosed",
     component: RegistrationClosed
+  },
+  {
+    path: "/data-calon-peserta",
+    name: "DataCalonPeserta",
+    component: DataCalonPeserta
   }
 ];
 
