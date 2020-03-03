@@ -38,229 +38,229 @@
   background: url("../assets/img/Bg-2.png") no-repeat;
   background-position-y: bottom;
   background-size: contain;
+}
 
-  p.error {
-    color: $danger;
-    font-size: 12px;
-    margin-top: $gap-sm-2;
+p.error {
+  color: $danger;
+  font-size: 12px;
+  margin-top: $gap-sm-2;
+}
+
+.error-container {
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  box-shadow: 0 0 10px rgba($color: #222, $alpha: 0.05);
+  border: 1px solid $danger;
+  margin-bottom: $gap-m-1;
+  border-radius: 10px;
+  padding: $gap-m-1 $gap-m-2;
+  width: 80%;
+  max-width: 90%;
+
+  .error-message {
+    margin-left: $gap-sm-4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+}
+
+.registration-form {
+  max-width: 80%;
+  margin: auto;
+
+  .header-title {
+    font-size: 32px;
+    text-align: left;
+    color: $black;
   }
 
-  .error-container {
-    position: fixed;
-    z-index: 2;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    box-shadow: 0 0 10px rgba($color: #222, $alpha: 0.05);
-    border: 1px solid $danger;
-    margin-bottom: $gap-m-1;
-    border-radius: 10px;
-    padding: $gap-m-1 $gap-m-2;
-    width: 80%;
-    max-width: 90%;
+  .register {
+    margin-top: $gap-m-2;
 
-    .error-message {
-      margin-left: $gap-sm-4;
-      word-wrap: break-word;
-      white-space: pre-wrap;
+    &.disable {
+      opacity: 0.3;
+      cursor: initial;
+
+      &:hover {
+        background: $primary;
+        color: white;
+      }
     }
   }
 
-  .registration-form {
-    max-width: 80%;
-    margin: auto;
+  .row {
+    flex-wrap: wrap;
+  }
 
-    .header-title {
-      font-size: 32px;
-      text-align: left;
-      color: $black;
-    }
+  .form-group {
+    flex: 1;
+    margin-top: $gap-m-2;
+    width: 100%;
 
-    .register {
-      margin-top: $gap-m-2;
-
-      &.disable {
-        opacity: 0.3;
-        cursor: initial;
-
-        &:hover {
-          background: $primary;
-          color: white;
-        }
+    label {
+      font-size: 14px;
+      &.text-muted {
+        font-size: 12px;
+        color: gray;
       }
     }
 
-    .row {
-      flex-wrap: wrap;
-    }
+    .checkbox {
+      margin-top: $gap-sm-2;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: flex-end;
 
-    .form-group {
-      flex: 1;
-      margin-top: $gap-m-2;
-      width: 100%;
-
-      label {
-        font-size: 14px;
-        &.text-muted {
-          font-size: 12px;
-          color: gray;
-        }
+      input:active .check,
+      input:focus .check,
+      input:focus-within .check label:hover .check {
+        background: transparent;
       }
 
-      .checkbox {
-        margin-top: $gap-sm-2;
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        justify-content: flex-end;
-
-        input:active .check,
-        input:focus .check,
-        input:focus-within .check label:hover .check {
-          background: transparent;
-        }
-
-        .check {
-          min-width: 24px;
-          min-height: 24px;
-          background: $white;
-          border-radius: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          svg {
-            max-height: 100%;
-            max-width: 100%;
-          }
-        }
-
-        input {
-          margin: 0;
-        }
-
-        label {
-          cursor: pointer;
-          margin-left: $gap-sm-2;
-
-          &:hover {
-            color: rgba($color: $primary, $alpha: 0.7);
-          }
-
-          &.TermAndConditions {
-            font-size: 12px;
-          }
-        }
-      }
-
-      input,
-      select,
-      textarea {
-        margin-top: $gap-sm-2;
-        border: none;
+      .check {
+        min-width: 24px;
+        min-height: 24px;
         background: $white;
-        padding: $gap-sm-2 $gap-sm-4;
-        border-radius: 40px;
-        outline: none;
-        border: 3px solid transparent;
-        appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        &:focus {
-          border: 3px solid rgba($color: $primary, $alpha: 0.5);
-        }
-
-        &.error {
-          background: url("../assets/img/error.png") no-repeat right $white;
-          background-position-x: 95%;
-          border: 3px solid transparent;
-
-          &:focus {
-            border: 3px solid rgba($color: $danger, $alpha: 0.5);
-          }
-        }
-
-        &::-webkit-file-upload-button {
-          background: $primary;
-          color: $white;
-          border: 1px solid transparent;
-          padding: $gap-sm-1 $gap-sm-2;
-          border-radius: 20px;
-          margin-right: $gap-sm-2;
-          outline: none;
-          cursor: pointer;
-
-          &:active {
-            background: white;
-            color: $primary;
-            border: 1px solid $primary;
-          }
-        }
-
-        &::placeholder {
-          margin-left: 10rem;
-          font-size: 12px;
-
-          &::after {
-            content: "";
-            width: 100%;
-            height: 100%;
-            animation: slideInfinite 5s linear infinite;
-          }
+        svg {
+          max-height: 100%;
+          max-width: 100%;
         }
       }
 
       input {
-        &#motivation-field {
-          min-height: 100px;
-          display: flex;
-          align-items: flex-start;
+        margin: 0;
+      }
+
+      label {
+        cursor: pointer;
+        margin-left: $gap-sm-2;
+
+        &:hover {
+          color: rgba($color: $primary, $alpha: 0.7);
+        }
+
+        &.TermAndConditions {
+          font-size: 12px;
         }
       }
+    }
 
-      input[type="number"] {
-        -moz-appearance: textfield;
+    input,
+    select,
+    textarea {
+      margin-top: $gap-sm-2;
+      border: none;
+      background: $white;
+      padding: $gap-sm-2 $gap-sm-4;
+      border-radius: 40px;
+      outline: none;
+      border: 3px solid transparent;
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
 
-        &::-webkit-outer-spin-button,
-        &::-webkit-outer-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
+      &:focus {
+        border: 3px solid rgba($color: $primary, $alpha: 0.5);
       }
 
-      input[type="file"] {
-        display: flex;
-        flex-direction: row-reverse;
-        padding: $gap-sm-1;
-      }
-
-      select {
-        background: url("../assets/img/arrow-down-green.png") no-repeat right
-          $white;
+      &.error {
+        background: url("../assets/img/error.png") no-repeat right $white;
         background-position-x: 95%;
-        padding: $gap-sm-2 3rem $gap-sm-2 $gap-sm-4;
-        appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
+        border: 3px solid transparent;
+
+        &:focus {
+          border: 3px solid rgba($color: $danger, $alpha: 0.5);
+        }
+      }
+
+      &::-webkit-file-upload-button {
+        background: $primary;
+        color: $white;
+        border: 1px solid transparent;
+        padding: $gap-sm-1 $gap-sm-2;
+        border-radius: 20px;
+        margin-right: $gap-sm-2;
+        outline: none;
         cursor: pointer;
 
-        &::-ms-expand {
-          background: $primary;
-          color: $white;
-          border-radius: 50%;
-          width: 16px;
-          height: 16px;
-          font-weight: 600;
+        &:active {
+          background: white;
+          color: $primary;
+          border: 1px solid $primary;
         }
+      }
 
-        option {
-          background-color: $white;
-          border-radius: 20px;
-          border: none;
-          font-weight: bold;
+      &::placeholder {
+        margin-left: 10rem;
+        font-size: 12px;
+
+        &::after {
+          content: "";
+          width: 100%;
+          height: 100%;
+          animation: slideInfinite 5s linear infinite;
         }
+      }
+    }
+
+    input {
+      &#motivation-field {
+        min-height: 100px;
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    input[type="file"] {
+      display: flex;
+      flex-direction: row-reverse;
+      padding: $gap-sm-1;
+    }
+
+    select {
+      background: url("../assets/img/arrow-down-green.png") no-repeat right
+        $white;
+      background-position-x: 95%;
+      padding: $gap-sm-2 3rem $gap-sm-2 $gap-sm-4;
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+
+      &::-ms-expand {
+        background: $primary;
+        color: $white;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        font-weight: 600;
+      }
+
+      option {
+        background-color: $white;
+        border-radius: 20px;
+        border: none;
+        font-weight: bold;
       }
     }
   }
