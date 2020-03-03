@@ -4,7 +4,9 @@ import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
 import NotFound from "@/views/NotFound.vue";
+import SignUp from "@/views/Signup.vue";
 import PengumumanPage from "@/views/PengumumanPage.vue";
+import Activation from "@/views/Activation.vue";
 import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
 import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
@@ -23,6 +25,11 @@ const routes = [
     component: Home
   },
   {
+    path: "/signup",
+    name: "SignUp",
+    component: SignUp
+  },
+  {
     path: "/about",
     name: "About",
     component: About
@@ -38,6 +45,10 @@ const routes = [
     component: PengumumanPage
   },
   {
+    path: "/activate/:uid/:token",
+    name: "Activation",
+    component: Activation
+  }, {
     path: "/program-registration",
     name: "Program Registration",
     component: ProgramRegistration

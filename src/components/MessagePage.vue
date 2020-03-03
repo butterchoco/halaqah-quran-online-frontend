@@ -11,10 +11,6 @@
         </button>
       </router-link>
     </div>
-    <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
-    <img src="@/assets/img/vector-5.png" alt="vector" class="svg-5" />
-    <img src="@/assets/img/vector-6.png" alt="vector" class="svg-6" />
-    <img src="@/assets/img/vector-7.png" alt="vector" class="svg-7" />
   </div>
 </template>
 
@@ -48,6 +44,7 @@ export default {
   }
 
   .hero-message {
+    margin-bottom: 5%;
     max-width: 50%;
   }
   

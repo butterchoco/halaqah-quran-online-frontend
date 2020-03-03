@@ -1,8 +1,20 @@
 <template>
   <div class="pengumuman-container col center">
     <section class="maintenance-container col center">
-      <MessagePage :isPrimary="isPrimary" :isDanger="isDanger" :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
+      <MessagePage
+        :isPrimary="isPrimary"
+        :isDanger="isDanger"
+        :img="img"
+        :title="title"
+        :msg="msg"
+        :msg2="msg2"
+        :goto="goto"
+      />
     </section>
+    <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
+    <img src="@/assets/img/vector-5.png" alt="vector" class="svg-5" />
+    <img src="@/assets/img/vector-6.png" alt="vector" class="svg-6" />
+    <img src="@/assets/img/vector-7.png" alt="vector" class="svg-7" />
   </div>
 </template>
 
