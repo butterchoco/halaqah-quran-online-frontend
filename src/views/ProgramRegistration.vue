@@ -382,7 +382,6 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
 
 export default {
   name: "ProgramRegistration",
@@ -491,7 +490,6 @@ export default {
         return;
       }
       this.recording = files[0];
-      console.log(this.recording)
     },
     checkInfaqOptionField() {
       const infaqOptionError = "Isian 'Pilihan Kontribusi Infaq' harus dipilih";
@@ -823,33 +821,35 @@ export default {
         this.showError();
         return;
       }
+      const formData = new FormData()
       const year = new Date().getFullYear();
-
-      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
+      this.$axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
         this.periodId = response.data.latest_opened.id;
         this.term = "TahfidzQu_" + year + "_" + this.periodId;
         const token = this.$store.getters.getUserToken
-        axios
-          .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId, {
-            'term': this.term,
-            'user': 12,
-            'age': this.age,
-            'domicile': this.domicile,
-            'recording': this.recording,
-            'juz_target_number': this.juzTargetNumber,
-            'juz_number_memorized': this.juzNumberMemorized,
-            'tahsin_experience': this.tahsinExperience,
-            'pilihan_infaq': this.infaqOptionNumber,
-            'selection_period': this.periodId,
-            'referral_names': this.infaqChoice
-          }, { headers: {
+        formData.append('term', this.term)
+        formData.append('user', 12)
+        formData.append('age', this.age)
+        formData.append('domicile', this.domicile)
+        formData.append('recording', this.recording)
+        formData.append('juz_target_number', this.juzTargetNumber)
+        formData.append('juz_number_memorized', this.juzNumberMemorized)
+        formData.append('tahsin_experience', this.tahsinExperience)
+        formData.append('pilihan_infaq', this.infaqOptionNumber)
+        formData.append('selection_period', this.periodId)
+        formData.append('referral_names', this.infaqChoice)
+        this.$axios
+          .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId + "/", formData, { headers: {
             'Content-Type': 'multipart/form-data',
+            // 'Access-Control-Allow-Origin': '*',
             Authorization: "JWT " + token
             }})
           .then(response => {
+            console.log("masuk program")
             this.$store.commit("setHasProgramRegistered", {
               value: response.data["has_registered"]
             });
+            this.$router.push("/regis-success")
           });
       });
     }
