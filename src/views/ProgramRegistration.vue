@@ -897,7 +897,6 @@ export default {
             Authorization: "JWT " + token
             }})
           .then(response => {
-            console.log("masuk program")
             this.$store.commit("setHasProgramRegistered", {
               value: response.data["has_registered"]
             });
