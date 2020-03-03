@@ -1,33 +1,19 @@
 <template>
   <div>
-    <section class="signup-container">
-      <b-container fluid>
-        <b-row class="row-container">
-          <b-col class="column-container">
-            <div class="image-container">
-              <b-img :src="require('../assets/img/authentication.png')" alt="authentication" />
-            </div>
-            <h1 class="header-login">HALAQAH QURAN ONLINE</h1>
+    <section class="signin-container">
+      <b-container fluid class="signin-child-container">
+        <b-row>
+          <b-col class="main-cross-center-center">
+            <b-img
+              :src="require('../assets/img/authentication.png')"
+              class="responsive-image"
+              alt="authentication"
+            />
+            <h1 class="title">HALAQAH QURAN ONLINE</h1>
           </b-col>
-          <b-col class="column-container-two">
-            <h2 class="header-login">Member Login</h2>
-            <div class="w-75">
-              <b-form @reset="onReset" v-if="show">
-                <b-form-group id="input-group-1" label="Username" label-for="input-1">
-                  <b-form-input id="input-1" class="custom-input" v-model="form.username" required></b-form-input>
-                </b-form-group>
-                <b-form-group id="input-group-5" label="Password" label-for="input-5">
-                  <b-form-input
-                    id="input-5"
-                    v-model="form.password"
-                    type="password"
-                    class="custom-input"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-button type="reset" variant="none" class="primary custom-button">Login</b-button>
-              </b-form>
-            </div>
+          <b-col class="main-cross-center-center">
+            <h2 class="subtitle" ref="title">Member Login</h2>
+            <SignInForm :inputWidth="inputWidth"/>
           </b-col>
         </b-row>
       </b-container>
@@ -39,34 +25,93 @@
 </template>
 
 <script>
+import SignInForm from "@/components/SignInForm";
 export default {
-  name: "Signup",
+  components: {
+    SignInForm
+  },
+  name: "SignIn",
   data() {
     return {
-      show: true,
-      form: {
-        username: "",
-        password: ""
-      }
+      inputWidth: 0
     };
   },
-  methods: {
-    onReset(evt) {
-      evt.preventDefault();
-      this.form.username = "";
-      this.form.password = "";
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    }
-  }
+  mounted() {
+    this.inputWidth = this.$refs.title.clientWidth;
+  },
 };
 </script>
 
 <style lang="scss">
-.signup-container {
+.signin-container {
   overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  @media only screen and (max-width: 1440px) {
+    img.responsive-image {
+      width: 100% !important;
+      max-width: 350px !important;
+      height: auto !important;
+    }
+
+    h1.title {
+      margin-top: 10%;
+      font-size: $h2 !important;
+      color: black !important;
+      font-weight: 600 !important;
+    }
+
+    h2.subtitle {
+      font-size: $h3 !important;
+      color: $black !important;
+      font-weight: normal !important;
+    }
+  }
+
+  .signin-child-container {
+    height: 100%;
+    position: absolute;
+  }
+
+  .row {
+    height: 100%;
+  }
+
+  img.responsive-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+  }
+
+  .col.main-cross-center-center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .col.main-cross-center-start {
+    padding-left: 10%;
+    justify-content: center;
+    align-items: start;
+  }
+
+  h1.title {
+    font-size: $h1;
+    color: black;
+    font-weight: 600;
+  }
+
+  h2.subtitle {
+    font-size: $h2;
+    color: $black;
+    font-weight: normal;
+  }
+
+  p {
+    font-family: "poppins";
+    font-weight: 300;
+    font-size: 16px;
+  }
 
   a {
     font-weight: 600;
@@ -81,41 +126,6 @@ export default {
     font-size: 16px;
     color: $primary;
     text-decoration: none;
-  }
-
-  .custom-input {
-    background-color: #f3f3f3;
-    border-radius: 20px;
-    border: none !important;
-    border-color: transparent !important;
-  }
-
-  .custom-button {
-    border-radius: 20px;
-  }
-
-  .row-container {
-    height: 100vh;
-  }
-
-  .image-container {
-    width: 500px;
-    height: 345px;
-  }
-
-  .column-container {
-    justify-content: center;
-    align-items: center;
-  }
-
-  .column-container-two {
-    justify-content: center;
-    align-items: start;
-  }
-
-  .image-container img {
-    max-height: 100%;
-    max-width: 100%;
   }
 
   .svg-1 {
