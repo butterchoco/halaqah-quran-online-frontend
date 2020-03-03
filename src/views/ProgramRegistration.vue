@@ -842,16 +842,14 @@ export default {
             'referral_names': this.infaqChoice
           })
           .then(response => {
-            this.$store.commit("setHasProgramRegistered", {
-              value: response.data["has_registered"]
-            });
+            this.$store.commit("setProgramRegistration", response.data["has_registered"]);
           });
       });
     }
   },
   computed: {
     ...mapGetters(["getTimeline"]),
-    ...mapMutations(["setHasProgramRegistered"])
+    ...mapMutations(["setProgramRegistration"])
   }
 };
 </script>
