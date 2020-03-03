@@ -3,8 +3,12 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
+import DataCalonPeserta from "@/views/DataCalonPeserta.vue";
 import NotFound from "@/views/NotFound.vue";
+import SignIn from "@/views/Signin.vue";
+import SignUp from "@/views/Signup.vue";
 import PengumumanPage from "@/views/PengumumanPage.vue";
+import Activation from "@/views/Activation.vue";
 import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
 import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
@@ -23,6 +27,16 @@ const routes = [
     component: Home
   },
   {
+    path: "/signup",
+    name: "SignUp",
+    component: SignUp
+  },
+  {
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn
+  },
+  {
     path: "/about",
     name: "About",
     component: About
@@ -38,6 +52,10 @@ const routes = [
     component: PengumumanPage
   },
   {
+    path: "/activate/:uid/:token",
+    name: "Activation",
+    component: Activation
+  }, {
     path: "/program-registration",
     name: "Program Registration",
     component: ProgramRegistration
@@ -51,6 +69,11 @@ const routes = [
     path: "/regis-closed",
     name: "RegistrationClosed",
     component: RegistrationClosed
+  },
+  {
+    path: "/data-calon-peserta",
+    name: "DataCalonPeserta",
+    component: DataCalonPeserta
   }
 ];
 

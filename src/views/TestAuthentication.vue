@@ -1,7 +1,7 @@
 <template>
   <div>
-    <section class="maintenance-container col center">
-      <ErrorMaintenance :img="img" :title="title" :msg="msg" />
+    <section class="main-container col center">
+      <p>Test authentication page</p>
       <img src="@/assets/img/vector-1.png" alt="vector" class="svg-1" />
       <img src="@/assets/img/vector-2.png" alt="vector" class="svg-2" />
       <img src="@/assets/img/vector-3.png" alt="vector" class="svg-3" />
@@ -10,24 +10,18 @@
 </template>
 
 <script>
-import ErrorMaintenance from "@/components/ErrorPage";
 export default {
-  name: "Maintenance",
-  components: {
-    ErrorMaintenance
-  },
+  name: "TestAuthentication",
   data() {
     return {
-      img: require("@/assets/img/maintenance.png"),
-      title: "Sorry, this page is under maintenance !",
-      msg: "Please come back later until it's up."
+      
     };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.maintenance-container {
+.main-container {
   overflow: hidden;
 
   .svg-1 {
