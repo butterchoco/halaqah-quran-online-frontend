@@ -89,7 +89,9 @@ export default {
           this.$store.commit("setUserIdentification", {
             value: this.form.username
           });
+          this.$store.commit("setUserLoggedIn", { value: true });
           this.$store.commit("setUserToken", { value: this.form.password });
+          this.$router.push('/')
         })
         .catch(error => {
           // do nothing
@@ -108,6 +110,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserIdentification", "getUserToken"]),
+    ...mapMutations(["setUserLoggedIn"]),
     inputStyle() {
       return "width: " + this.inputWidth * 2 + "px";
     }

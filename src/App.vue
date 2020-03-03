@@ -11,6 +11,7 @@
 <script>
 import NavBeforeLogin from "@/components/NavBeforeLogin";
 import NavLoggedIn from "@/components/NavLoggedIn";
+import { mapGetters } from "vuex"
 
 export default {
   name: "app",
@@ -18,10 +19,8 @@ export default {
     NavBeforeLogin,
     NavLoggedIn
   },
-  data() {
-    return {
-      isUserLoggedIn: false
-    };
+  computed: {
+    ...mapGetters(["isUserLoggedIn"])
   }
 };
 </script>

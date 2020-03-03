@@ -3,6 +3,7 @@
     <div class="header-mobile">
       <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
       <div class="right-header">
+        <router-link to="/signin">
         <button class="login btn primary" v-if="mobile">
           <svg class="login-icon" viewBox="0 0 24 24">
             <path
@@ -10,6 +11,7 @@
             /></svg
           >login
         </button>
+        </router-link>
         <div
           class="mob-btn"
           @click="dropdownActivate"
@@ -34,6 +36,7 @@
           <router-link class="nav-link about" to="/about">about</router-link>
         </li>
       </ul>
+      <router-link to="/signin">
       <button class="login btn primary" v-if="!mobile">
         <svg class="login-icon" viewBox="0 0 24 24">
           <path
@@ -41,6 +44,7 @@
           /></svg
         >login
       </button>
+      </router-link>
     </nav>
   </header>
 </template>

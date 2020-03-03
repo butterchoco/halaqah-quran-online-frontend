@@ -827,6 +827,7 @@ export default {
       axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
         this.periodId = response.data.latest_opened.id;
         this.term = "TahfidzQu_" + year + "_" + this.periodId;
+        const token = this.$store.getters.getUserToken
         axios
           .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId, {
             'term': this.term,
@@ -840,16 +841,21 @@ export default {
             'pilihan_infaq': this.infaqOptionNumber,
             'selection_period': this.periodId,
             'referral_names': this.infaqChoice
-          })
+          }, { headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: "JWT " + token
+            }})
           .then(response => {
-            this.$store.commit("setProgramRegistration", response.data["has_registered"]);
+            this.$store.commit("setHasProgramRegistered", {
+              value: response.data["has_registered"]
+            });
           });
       });
     }
   },
   computed: {
-    ...mapGetters(["getTimeline"]),
-    ...mapMutations(["setProgramRegistration"])
+    ...mapGetters(["getTimeline", "getUserToken"]),
+    ...mapMutations(["setHasProgramRegistered"])
   }
 };
 </script>

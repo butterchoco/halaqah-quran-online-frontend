@@ -26,7 +26,6 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import { mapGetters } from "vuex";
 export default {
   name: "MessagePage",
   components: { Modal },
