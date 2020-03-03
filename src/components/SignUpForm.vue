@@ -155,12 +155,10 @@ export default {
         "whatsapp_number": this.form.number,
       })
       .then(response => {
-        console.log(response);
         this.isLoggedin = true;
         this.registrationSuccess(this.form.username);
       })
       .catch(error => {
-        console.log(error.response);
         if (error.response.data.username) {
           this.registrationFailure("Please try again!", error.response.data.username[0]);
         } else {
