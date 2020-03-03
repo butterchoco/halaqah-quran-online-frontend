@@ -20,6 +20,9 @@ const mutations = {
     },
     setUserToken: (state: any, payload: any) => {
         state.token = payload.value;
+    },
+    setUserLoggedIn: (state: any, payload:any) => {
+        state.userLoggedIn = payload.value
     }
 };
 const actions = {
