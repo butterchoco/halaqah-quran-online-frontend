@@ -35,7 +35,7 @@
       <b-button v-else type="submit" variant="none" ref="btn-submit" class="primary">Login</b-button>
       <p>
         OR
-        <a href="#">Create New Account</a>
+        <router-link to="/signup">Create New Account</router-link>
       </p>
     </div>
   </b-form>
