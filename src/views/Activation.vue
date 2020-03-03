@@ -46,11 +46,9 @@ export default {
         token: this.$route.params.token
     })
     .then(response => {
-        console.log(response)
         this.isActivated()
     })
     .catch(error => {
-        console.log(error.response)
         this.isExpired()
     })
   }
