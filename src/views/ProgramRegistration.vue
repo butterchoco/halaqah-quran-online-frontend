@@ -384,8 +384,6 @@
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
 
-const BASE_URL = "http://hqo-backend.herokuapp.com";
-
 export default {
   name: "ProgramRegistration",
   components: {},
@@ -826,11 +824,11 @@ export default {
       }
       const year = new Date().getFullYear();
 
-      axios.get(BASE_URL + "/api/tahfidz/selections/latest/").then(response => {
+      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
         this.periodId = response.data.latest_opened.id;
         this.term = "TahfidzQu_" + year + "_" + this.periodId;
         axios
-          .post(BASE_URL + "/api/tahfidz/selections/" + this.periodId, {
+          .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId, {
             'term': this.term,
             'user': 12,
             'age': this.age,
