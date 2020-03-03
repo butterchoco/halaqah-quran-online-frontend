@@ -413,6 +413,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import axios from "axios"
 
 export default {
   name: "ProgramRegistration",
@@ -465,8 +466,7 @@ export default {
   },
   methods: {
     getLatestPeriod() {
-      axios
-        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
+      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
         .then(response => {
           if (response.data.latest_opened) {
             const today = Date.parse(new Date());
@@ -875,7 +875,7 @@ export default {
       }
       const formData = new FormData()
       const year = new Date().getFullYear();
-      this.$axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
+      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
         this.periodId = response.data.latest_opened.id;
         this.term = "TahfidzQu_" + year + "_" + this.periodId;
         const token = this.$store.getters.getUserToken
@@ -890,7 +890,7 @@ export default {
         formData.append('pilihan_infaq', this.infaqOptionNumber)
         formData.append('selection_period', this.periodId)
         formData.append('referral_names', this.infaqChoice)
-        this.$axios
+        axios
           .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId + "/", formData, { headers: {
             'Content-Type': 'multipart/form-data',
             'Access-Control-Allow-Origin': '*',
