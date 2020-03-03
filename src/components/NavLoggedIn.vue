@@ -50,7 +50,7 @@
             <router-link to="/" class="link">Laporan</router-link>
           </li>
           <li class="nav-profile-link">
-            <router-link to="/" class="link">Logout</router-link>
+            <router-link to="/" class="link" v-on:click.native="logout">Logout</router-link>
           </li>
         </ul>
       </div>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -71,6 +72,11 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["removeToken"]),
+    logout() {
+      this.$store.commit("removeToken");
+      window.location.pathname = "/";
+    },
     dropdownActivate() {
       this.isDropdownActive = !this.isDropdownActive;
     },
