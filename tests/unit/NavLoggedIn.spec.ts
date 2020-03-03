@@ -52,7 +52,7 @@ describe("NavLoggedIn Data", () => {
     })
     wrapper.vm.$nextTick();
     expect(wrapper.vm.$data.isProfileDropdownActive).toBe(false);
-    wrapper.find("button.profile").trigger("click");
+    wrapper.find(".profile").trigger("click");
     expect(wrapper.vm.$data.isProfileDropdownActive).toBe(true);
   })
 });
