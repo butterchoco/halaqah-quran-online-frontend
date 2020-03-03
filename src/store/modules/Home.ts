@@ -182,7 +182,11 @@ const getters = {
   }
 };
 
-const mutations = {};
+const mutations = {
+  setProgramOpened: (state:any, payload:any) => {
+    state.isProgramOpened = payload.value;
+  }
+};
 
 const actions = {};
 

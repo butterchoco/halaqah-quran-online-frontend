@@ -124,6 +124,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -137,6 +138,31 @@ export default {
       "getAllCurriculums",
       "getAllFacilities"
     ])
+  },
+  created() {
+    this.getLatestPeriod();
+  },
+  methods: {
+    getLatestPeriod() {
+      axios
+        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
+        .then(response => {
+          if (response.data.latest_opened) {
+            const today = Date.parse(new Date());
+            const startDate = Date.parse(
+              response.data.latest_opened.start_date
+            );
+            const endDate = Date.parse(response.data.latest_opened.end_date);
+            if (today < endDate && today >= startDate) {
+              this.$store.commit("setProgramOpened", { value: true });
+            } else {
+              this.$store.commit("setProgramOpened", { value: false });
+            }
+          } else {
+            this.$store.commit("setProgramOpened", { value: false });
+          }
+        });
+    }
   }
 };
 </script>
