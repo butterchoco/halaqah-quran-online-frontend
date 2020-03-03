@@ -1,3 +1,4 @@
+/* eslint-disable */
 const state = {
   isTahfizhProgramAccepted: true,
   registrationEvaluation: {
@@ -29,7 +30,7 @@ const getters = {
   }
 };
 const mutations = {
-  setAccepted: (state: any, payload: any) => {
+  setAccepted: (payload: any) => {
     state.isTahfizhProgramAccepted = payload.value;
   }
 };

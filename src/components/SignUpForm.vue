@@ -154,7 +154,7 @@ export default {
         "last_name": this.form.fullname.split()[1],
         "whatsapp_number": this.form.number,
       })
-      .then(response => {
+      .then(() => {
         this.isLoggedin = true;
         this.registrationSuccess(this.form.username);
       })

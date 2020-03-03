@@ -3,7 +3,11 @@
     <div class="header-mobile">
       <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
       <div class="right-header">
-        <div class="mob-btn" @click="dropdownActivate" :class="{ active: isDropdownActive }">
+        <div
+          class="mob-btn"
+          @click="dropdownActivate"
+          :class="{ active: isDropdownActive }"
+        >
           <div class="line one"></div>
           <div class="line two"></div>
         </div>
@@ -166,6 +170,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 200;
   background: white;
   box-shadow: 0 4px 10px rgba($color: #222, $alpha: 0.1);
   width: 100%;
