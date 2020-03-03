@@ -396,6 +396,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/vue,test,node,vuejs,linux,macos,dotenv,windows,sublimetext,webstorm+all,visualstudiocode
-
-# Local Netlify folder
-.netlify

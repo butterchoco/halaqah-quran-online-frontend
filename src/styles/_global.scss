@@ -1,16 +1,8 @@
-$material-icons-font-path: "~material-icons/iconfont/";
-
-@import "~material-icons/iconfont/material-icons.scss";
-
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap");
 
 html,
 body {
   margin: 0;
-  scroll-behavior: smooth;
-}
-body {
-  overflow-x: hidden;
 }
 
 * {
@@ -47,7 +39,7 @@ p {
 }
 
 section {
-  min-height: 90vh;
+  min-height: 100vh;
   max-width: 100vw;
 }
 
@@ -58,10 +50,6 @@ section {
 .row {
   display: flex;
   flex-direction: row;
-
-  &-reverse {
-    flex-direction: row-reverse;
-  }
 
   &.center {
     justify-content: center;
@@ -98,45 +86,19 @@ section {
 .btn {
   cursor: pointer;
   border: 0;
-  padding: $gap-sm-1 $gap-sm-4;
+  padding: $gap-sm $gap;
   border-radius: 20px;
-  margin-top: $gap-m-1;
+  margin-top: $gap-m;
 
   &.primary {
     background: $primary;
-    color: white;
-    border: 1px solid transparent;
-
-    &:hover {
-      background: white;
-      color: $black;
-      border: 1px solid $primary;
-    }
+    color: $white;
   }
 
   &:hover {
-    background: $black;
-    color: white;
+    background: darken($primary, 5%);
+    color: $white;
   }
-}
-
-.material-icons {
-  color: $black;
-
-  &.primary {
-    color: $primary;
-  }
-
-  &.danger {
-    color: $danger;
-  }
-}
-
-a {
-  color: $black;
-  outline: none;
-  text-decoration: none !important;
-  cursor: pointer;
 }
 
 .image-fluid {
