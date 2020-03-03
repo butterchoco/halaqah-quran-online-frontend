@@ -1,3 +1,4 @@
+/* eslint-disable */
 const state = {
   HasProgramRegistered: false
 };
@@ -9,8 +10,8 @@ const getters = {
 };
 
 const mutations = {
-  setProgramRegistration: (payload: boolean) => {
-    state.HasProgramRegistered = payload;
+  setProgramRegistration: (payload: any) => {
+    state.HasProgramRegistered = payload.value;
   }
 };
 

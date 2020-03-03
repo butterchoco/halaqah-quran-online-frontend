@@ -86,14 +86,13 @@ export default {
           "password": this.form.password
         })
         .then(response => {
-          console.log(response);
           this.$store.commit("setUserIdentification", {
             value: this.form.username
           });
           this.$store.commit("setUserToken", { value: this.form.password });
         })
         .catch(error => {
-          console.log(error.response);
+          // do nothing
         })
         .finally(() => (this.isLoading = false));
     },

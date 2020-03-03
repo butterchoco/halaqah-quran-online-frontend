@@ -1,7 +1,13 @@
 <template>
   <div class="activation-container col center">
     <section class="main-container col center">
-      <MessagePage :isPrimary="isPrimary" :img="img" :title="title" :msg="msg" :goto="goto" />
+      <MessagePage
+        :isPrimary="isPrimary"
+        :img="img"
+        :title="title"
+        :msg="msg"
+        :goto="goto"
+      />
     </section>
     <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
     <img src="@/assets/img/vector-5.png" alt="vector" class="svg-5" />
@@ -25,34 +31,33 @@ export default {
     };
   },
   methods: {
-      isActivated() {
-          this.img = require("../assets/img/success-selection-1.png");
-          this.title = "Selamat akun anda sudah aktif!";
-          this.isPrimary = true;
-          this.msg = "Silahkan login untuk melanjutkan menggunakan aplikasi";
-          this.goto = [{ str: "Go to login page", link: "/" }];
-      },
-      isExpired() {
-          this.img = require("../assets/img/failed-selection-2.png");
-          this.title = "Link aktivasi akun expired";
-          this.isPrimary = true;
-          this.msg = "Silahkan kirim ulang verifikasi email";
-          this.goto = [{ str: "Resend Verification", link: "#" }];
-      }
+    isActivated() {
+      this.img = require("../assets/img/success-selection-1.png");
+      this.title = "Selamat akun anda sudah aktif!";
+      this.isPrimary = true;
+      this.msg = "Silahkan login untuk melanjutkan menggunakan aplikasi";
+      this.goto = [{ str: "Go to login page", link: "/" }];
+    },
+    isExpired() {
+      this.img = require("../assets/img/failed-selection-2.png");
+      this.title = "Link aktivasi akun expired";
+      this.isPrimary = true;
+      this.msg = "Silahkan kirim ulang verifikasi email";
+      this.goto = [{ str: "Resend Verification", link: "#" }];
+    }
   },
   created() {
-    this.$axios.post( process.env.VUE_APP_URL + "/api/auth/users/activation/", {
+    this.$axios
+      .post(process.env.VUE_APP_URL + "/api/auth/users/activation/", {
         uid: this.$route.params.uid,
         token: this.$route.params.token
-    })
-    .then(response => {
-        console.log(response)
-        this.isActivated()
-    })
-    .catch(error => {
-        console.log(error.response)
-        this.isExpired()
-    })
+      })
+      .then(() => {
+        this.isActivated();
+      })
+      .catch(() => {
+        this.isExpired();
+      });
   }
 };
 </script>

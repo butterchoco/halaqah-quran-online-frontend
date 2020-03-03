@@ -234,36 +234,26 @@ export default {
       }
     },
     postForm() {
-      this.$axios
-        .post(process.env.VUE_APP_URL + "/api/auth/users/", {
-          "username": this.form.username,
-          "email": this.form.email,
-          "password": this.form.password,
-          "re_password": this.form.passwordValidation,
-          "first_name": this.form.fullname.split()[0],
-          "last_name": this.form.fullname.split()[1],
-          "whatsapp_number": this.form.number
-        })
-        .then(response => {
-          console.log(response);
-          this.isLoggedin = true;
-          this.registrationSuccess(this.form.username);
-        })
-        .catch(error => {
-          console.log(error.response);
-          if (error.response.data.username) {
-            this.registrationFailure(
-              "Please try again!",
-              error.response.data.username[0]
-            );
-          } else {
-            this.registrationFailure(
-              "Please try again latter",
-              "Website temporarily unavailable"
-            );
-          }
-        })
-        .finally(() => (this.isLoading = false));
+      this.$axios.post( process.env.VUE_APP_URL + "/api/auth/users/", {
+        "username": this.form.username,
+        "email": this.form.email,
+        "password": this.form.password,
+        "re_password": this.form.passwordValidation,
+        "first_name": this.form.fullname.split()[0],
+        "last_name": this.form.fullname.split()[1],
+        "whatsapp_number": this.form.number,
+      })
+      .then(() => {
+        this.isLoggedin = true;
+        this.registrationSuccess(this.form.username);
+      })
+      .catch(error => {
+        if (error.response.data.username) {
+          this.registrationFailure("Please try again!", error.response.data.username[0]);
+        } else {
+          this.registrationFailure("Please try again latter", "Website temporarily unavailable");
+        }
+      });
     }
   },
   computed: {

@@ -1,9 +1,7 @@
 <template>
   <section class="program-registration-container">
     <div class="registration-form">
-      <h2 class="header-title">
-        Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}
-      </h2>
+      <h2 class="header-title">Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}</h2>
       <div class="form-group col">
         <label for="age-field">Usia</label>
         <input
@@ -30,14 +28,10 @@
           v-model="domicile"
           :class="{ error: isShowError && errors.domicileError[0] }"
         />
-        <p v-if="isShowError" class="error">
-          {{ errors.domicileError[0] }}
-        </p>
+        <p v-if="isShowError" class="error">{{ errors.domicileError[0] }}</p>
       </div>
       <div class="form-group col">
-        <label for="juzNumberMemorized-field"
-          >Jumlah juz yang sudah dihafal</label
-        >
+        <label for="juzNumberMemorized-field">Jumlah juz yang sudah dihafal</label>
         <input
           @change="checkField"
           required
@@ -49,9 +43,7 @@
           max="30"
           :class="{ error: isShowError && errors.juzNumberMemorizedError[0] }"
         />
-        <p v-if="isShowError" class="error">
-          {{ errors.juzNumberMemorizedError[0] }}
-        </p>
+        <p v-if="isShowError" class="error">{{ errors.juzNumberMemorizedError[0] }}</p>
       </div>
       <div class="form-group col">
         <label for="juzTargetNumber-field">Target juz yang ingin dihafal</label>
@@ -66,9 +58,7 @@
           max="30"
           :class="{ error: isShowError && errors.juzTargetNumberError[0] }"
         />
-        <p v-if="isShowError" class="error">
-          {{ errors.juzTargetNumberError[0] }}
-        </p>
+        <p v-if="isShowError" class="error">{{ errors.juzTargetNumberError[0] }}</p>
       </div>
       <div class="row h-center">
         <div class="form-group col">
@@ -87,17 +77,11 @@
             <option value="1">Ya, pernah</option>
             <option selected value="0">Tidak, belum Pernah</option>
           </select>
-          <p v-if="isShowError" class="error">
-            {{ errors.hasTahsinExperienceError[0] }}
-          </p>
+          <p v-if="isShowError" class="error">{{ errors.hasTahsinExperienceError[0] }}</p>
         </div>
         <div v-if="hasExperience()" class="form-group col optional">
-          <label for="tahsinExperience-field"
-            >Kelompok/lembaga yang pernah diikuti</label
-          >
-          <label class="text-muted" for="tahsinExperience-field"
-            >Pisahkan dengan tanda baca koma ","</label
-          >
+          <label for="tahsinExperience-field">Kelompok/lembaga yang pernah diikuti</label>
+          <label class="text-muted" for="tahsinExperience-field">Pisahkan dengan tanda baca koma ","</label>
           <input
             required
             type="text"
@@ -107,9 +91,7 @@
             id="tahsinExperience-field"
             :class="{ error: isShowError && errors.tahsinExperienceError[0] }"
           />
-          <p v-if="isShowError" class="error">
-            {{ errors.tahsinExperienceError[0] }}
-          </p>
+          <p v-if="isShowError" class="error">{{ errors.tahsinExperienceError[0] }}</p>
         </div>
       </div>
       <div class="row h-center">
@@ -128,15 +110,11 @@
             <option value="2">Paket Berdua (Rp.240.000)</option>
             <option value="3">Paket Bertiga (Rp.280.000)</option>
           </select>
-          <p v-if="isShowError" class="error">
-            {{ errors.infaqOptionNumberError[0] }}
-          </p>
+          <p v-if="isShowError" class="error">{{ errors.infaqOptionNumberError[0] }}</p>
         </div>
         <div v-if="isInfaqTogether" class="form-group col optional">
           <label for="infaqChoice-field">Sahabat kontribusi</label>
-          <label class="text-muted" for="infaqChoice-field"
-            >Pisahkan dengan tanda baca koma ","</label
-          >
+          <label class="text-muted" for="infaqChoice-field">Pisahkan dengan tanda baca koma ","</label>
           <input
             @change="checkField"
             required
@@ -146,9 +124,7 @@
             id="infaqChoice-field"
             :class="{ error: isShowError && errors.infaqChoiceError[0] }"
           />
-          <p v-if="isShowError" class="error">
-            {{ errors.infaqChoiceError[0] }}
-          </p>
+          <p v-if="isShowError" class="error">{{ errors.infaqChoiceError[0] }}</p>
         </div>
       </div>
       <div class="form-group col">
@@ -169,14 +145,10 @@
           @change="onFileChange"
           :class="{ error: isShowError && errors.recordingError[0] }"
         />
-        <p v-if="isShowError" class="error">
-          {{ errors.recordingError[0] }}
-        </p>
+        <p v-if="isShowError" class="error">{{ errors.recordingError[0] }}</p>
       </div>
       <div class="form-group col">
-        <label for="motivation-field"
-          >Ceritakan motivasimu mengikuti program ini!</label
-        >
+        <label for="motivation-field">Ceritakan motivasimu mengikuti program ini!</label>
         <textarea
           @change="checkField"
           required
@@ -186,15 +158,11 @@
           v-model="motivation"
           :class="{ error: isShowError && errors.motivationError[0] }"
         />
-        <p v-if="isShowError" class="error">
-          {{ errors.motivationError[0] }}
-        </p>
+        <p v-if="isShowError" class="error">{{ errors.motivationError[0] }}</p>
       </div>
       <div class="form-group col">
         <label>Darimana kamu mendapatkan informasi program ini ?</label>
-        <p v-if="isShowError" class="error">
-          {{ errors.programInfoReferenceError[0] }}
-        </p>
+        <p v-if="isShowError" class="error">{{ errors.programInfoReferenceError[0] }}</p>
         <div class="checkbox">
           <label for="line-field">Line</label>
           <span class="check">
@@ -369,11 +337,11 @@
       </div>
       <div class="form-group tnc">
         <div class="checkbox">
-          <label class="TermAndConditions2" for="TermAndConditions2-field"
-            >Saya berusaha sebaik mungkin menjaga adab halaqah Quran, misal
+          <label class="TermAndConditions2" for="TermAndConditions2-field">
+            Saya berusaha sebaik mungkin menjaga adab halaqah Quran, misal
             dengan aktif di grup, memberikan kabar jika berhalangan setoran dan
-            menaati peraturan.</label
-          >
+            menaati peraturan.
+          </label>
           <span class="check">
             <svg
               width="18"
@@ -406,9 +374,7 @@
           />
         </div>
       </div>
-      <p v-if="isShowError" class="error">
-        {{ this.errors.TermAndConditionsError[0] }}
-      </p>
+      <p v-if="isShowError" class="error">{{ this.errors.TermAndConditionsError[0] }}</p>
       <button class="register btn primary" @click="submit">Daftar</button>
     </div>
   </section>
@@ -417,8 +383,6 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
-
-const BASE_URL = "http://hqo-backend.herokuapp.com";
 
 export default {
   name: "ProgramRegistration",
@@ -860,32 +824,34 @@ export default {
       }
       const year = new Date().getFullYear();
 
-      axios.get(BASE_URL + "/api/tahfidz/selections/latest/").then(response => {
+      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
         this.periodId = response.data.latest_opened.id;
         this.term = "TahfidzQu_" + year + "_" + this.periodId;
         axios
-          .post(BASE_URL + "/api/tahfidz/selections/" + this.periodId, {
-            "term": this.term,
-            "user": 12,
-            "age": this.age,
-            "domicile": this.domicile,
-            "recording": this.recording,
-            "juz_target_number": this.juzTargetNumber,
-            "juz_number_memorized": this.juzNumberMemorized,
-            "tahsin_experience": this.tahsinExperience,
-            "pilihan_infaq": this.infaqOptionNumber,
-            "selection_period": this.periodId,
-            "referral_names": this.infaqChoice
+          .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId, {
+            'term': this.term,
+            'user': 12,
+            'age': this.age,
+            'domicile': this.domicile,
+            'recording': this.recording,
+            'juz_target_number': this.juzTargetNumber,
+            'juz_number_memorized': this.juzNumberMemorized,
+            'tahsin_experience': this.tahsinExperience,
+            'pilihan_infaq': this.infaqOptionNumber,
+            'selection_period': this.periodId,
+            'referral_names': this.infaqChoice
           })
           .then(response => {
-            this.$store.commit("getHasProgramRegistered", response.data["has_registered"]);
+            this.$store.commit("setHasProgramRegistered", {
+              value: response.data["has_registered"]
+            });
           });
       });
     }
   },
   computed: {
     ...mapGetters(["getTimeline"]),
-    ...mapMutations(["getHasProgramRegistered"])
+    ...mapMutations(["setHasProgramRegistered"])
   }
 };
 </script>

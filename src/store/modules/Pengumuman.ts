@@ -1,13 +1,36 @@
+/* eslint-disable */
 const state = {
-  isTahfizhProgramAccepted: true
+  isTahfizhProgramAccepted: true,
+  registrationEvaluation: {
+    evaluator: "Bob Bobby",
+    report: [
+      {
+        title: "Kesalahan Harakat",
+        content: 2
+      },
+      {
+        title: "Kesalahan Panjang Pendek",
+        content: 2
+      },
+      {
+        title: "Kesalahan Gunnah",
+        content: 2
+      }
+    ]
+  }
 };
+
 const getters = {
   getIsAccepted: () => {
     return state.isTahfizhProgramAccepted;
+  },
+
+  getRegisEvaluation: () => {
+    return state.registrationEvaluation;
   }
 };
 const mutations = {
-  setAccepted: (state: any, payload: any) => {
+  setAccepted: (payload: any) => {
     state.isTahfizhProgramAccepted = payload.value;
   }
 };
