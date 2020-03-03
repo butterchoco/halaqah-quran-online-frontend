@@ -1,6 +1,6 @@
 <template>
   <div class="pengumuman-container col center">
-    <section class="maintenance-container col center">
+    <section class="pengumuman-container col center">
       <MessagePage
         :isPrimary="isPrimary"
         :isDanger="isDanger"
@@ -8,6 +8,7 @@
         :title="title"
         :msg="msg"
         :msg2="msg2"
+        :dataModal="regisEvaluation"
         :goto="goto"
       />
     </section>
@@ -26,7 +27,7 @@ export default {
   name: "PengumumanPage",
   components: { MessagePage },
   computed: {
-    ...mapGetters(["getIsAccepted"])
+    ...mapGetters(["getIsAccepted", "getRegisEvaluation"])
   },
   data() {
     if (this.$store.getters.getIsAccepted) {
@@ -34,7 +35,10 @@ export default {
         img: require("@/assets/img/success-selection-1.png"),
         title: "Selamat Anda Lulus Program!",
         isPrimary: true,
+        isDanger: false,
         msg: "Silahkan pilih jadwal untuk melanjutkan.",
+        msg2: "",
+        regisEvaluation: {},
         goto: [{ str: "Pilih Jadwal", link: "/" }]
       };
     } else {
@@ -43,9 +47,11 @@ export default {
         title: "Mohon Maaf Anda Belum Lulus Program!",
         isDanger: true,
         isPrimary: false,
+        isLihatNilai: true,
         msg: "Kami sarankan untuk tahsin dulu ya kak :)",
         msg2: "Level tahsin yang sesuai adalah Level 2",
-        goto: [{ str: "Lihat Nilai", link: "/" }]
+        regisEvaluation: this.$store.getters.getRegisEvaluation,
+        goto: [{ str: "Lihat Nilai", link: "" }]
       };
     }
   }
@@ -57,7 +63,7 @@ export default {
   min-width: 20%;
   max-height: 40%;
 }
-.maintenance-container {
+.pengumuman-container {
   overflow: hidden;
 }
 </style>
