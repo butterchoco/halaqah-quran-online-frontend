@@ -1,7 +1,9 @@
 <template>
-  <section class="program-registration-container">
-    <div class="registration-form">
-      <h2 class="header-title">Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}</h2>
+  <section class="program-registration-container">    
+    <div v-if="getIsProgramOpened" class="registration-form">
+      <h2 class="header-title">
+        Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}
+      </h2>
       <div class="form-group col">
         <label for="age-field">Usia</label>
         <input
@@ -31,7 +33,9 @@
         <p v-if="isShowError" class="error">{{ errors.domicileError[0] }}</p>
       </div>
       <div class="form-group col">
-        <label for="juzNumberMemorized-field">Jumlah juz yang sudah dihafal</label>
+        <label for="juzNumberMemorized-field"
+          >Jumlah juz yang sudah dihafal</label
+        >
         <input
           @change="checkField"
           required
@@ -43,7 +47,9 @@
           max="30"
           :class="{ error: isShowError && errors.juzNumberMemorizedError[0] }"
         />
-        <p v-if="isShowError" class="error">{{ errors.juzNumberMemorizedError[0] }}</p>
+        <p v-if="isShowError" class="error">
+          {{ errors.juzNumberMemorizedError[0] }}
+        </p>
       </div>
       <div class="form-group col">
         <label for="juzTargetNumber-field">Target juz yang ingin dihafal</label>
@@ -58,7 +64,9 @@
           max="30"
           :class="{ error: isShowError && errors.juzTargetNumberError[0] }"
         />
-        <p v-if="isShowError" class="error">{{ errors.juzTargetNumberError[0] }}</p>
+        <p v-if="isShowError" class="error">
+          {{ errors.juzTargetNumberError[0] }}
+        </p>
       </div>
       <div class="row h-center">
         <div class="form-group col">
@@ -77,11 +85,17 @@
             <option value="1">Ya, pernah</option>
             <option selected value="0">Tidak, belum Pernah</option>
           </select>
-          <p v-if="isShowError" class="error">{{ errors.hasTahsinExperienceError[0] }}</p>
+          <p v-if="isShowError" class="error">
+            {{ errors.hasTahsinExperienceError[0] }}
+          </p>
         </div>
         <div v-if="hasExperience()" class="form-group col optional">
-          <label for="tahsinExperience-field">Kelompok/lembaga yang pernah diikuti</label>
-          <label class="text-muted" for="tahsinExperience-field">Pisahkan dengan tanda baca koma ","</label>
+          <label for="tahsinExperience-field"
+            >Kelompok/lembaga yang pernah diikuti</label
+          >
+          <label class="text-muted" for="tahsinExperience-field"
+            >Pisahkan dengan tanda baca koma ","</label
+          >
           <input
             required
             type="text"
@@ -91,7 +105,9 @@
             id="tahsinExperience-field"
             :class="{ error: isShowError && errors.tahsinExperienceError[0] }"
           />
-          <p v-if="isShowError" class="error">{{ errors.tahsinExperienceError[0] }}</p>
+          <p v-if="isShowError" class="error">
+            {{ errors.tahsinExperienceError[0] }}
+          </p>
         </div>
       </div>
       <div class="row h-center">
@@ -110,11 +126,15 @@
             <option value="2">Paket Berdua (Rp.240.000)</option>
             <option value="3">Paket Bertiga (Rp.280.000)</option>
           </select>
-          <p v-if="isShowError" class="error">{{ errors.infaqOptionNumberError[0] }}</p>
+          <p v-if="isShowError" class="error">
+            {{ errors.infaqOptionNumberError[0] }}
+          </p>
         </div>
         <div v-if="isInfaqTogether" class="form-group col optional">
           <label for="infaqChoice-field">Sahabat kontribusi</label>
-          <label class="text-muted" for="infaqChoice-field">Pisahkan dengan tanda baca koma ","</label>
+          <label class="text-muted" for="infaqChoice-field"
+            >Pisahkan dengan tanda baca koma ","</label
+          >
           <input
             @change="checkField"
             required
@@ -124,7 +144,9 @@
             id="infaqChoice-field"
             :class="{ error: isShowError && errors.infaqChoiceError[0] }"
           />
-          <p v-if="isShowError" class="error">{{ errors.infaqChoiceError[0] }}</p>
+          <p v-if="isShowError" class="error">
+            {{ errors.infaqChoiceError[0] }}
+          </p>
         </div>
       </div>
       <div class="form-group col">
@@ -148,7 +170,9 @@
         <p v-if="isShowError" class="error">{{ errors.recordingError[0] }}</p>
       </div>
       <div class="form-group col">
-        <label for="motivation-field">Ceritakan motivasimu mengikuti program ini!</label>
+        <label for="motivation-field"
+          >Ceritakan motivasimu mengikuti program ini!</label
+        >
         <textarea
           @change="checkField"
           required
@@ -162,7 +186,9 @@
       </div>
       <div class="form-group col">
         <label>Darimana kamu mendapatkan informasi program ini ?</label>
-        <p v-if="isShowError" class="error">{{ errors.programInfoReferenceError[0] }}</p>
+        <p v-if="isShowError" class="error">
+          {{ errors.programInfoReferenceError[0] }}
+        </p>
         <div class="checkbox">
           <label for="line-field">Line</label>
           <span class="check">
@@ -374,8 +400,13 @@
           />
         </div>
       </div>
-      <p v-if="isShowError" class="error">{{ this.errors.TermAndConditionsError[0] }}</p>
+      <p v-if="isShowError" class="error">
+        {{ this.errors.TermAndConditionsError[0] }}
+      </p>
       <button class="register btn primary" @click="submit">Daftar</button>
+    </div>
+    <div v-else>
+      Program Pendaftaran Belum Dibuka
     </div>
   </section>
 </template>
@@ -430,8 +461,29 @@ export default {
   },
   created() {
     this.checkField();
+    this.getLatestPeriod();
   },
   methods: {
+    getLatestPeriod() {
+      axios
+        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
+        .then(response => {
+          if (response.data.latest_opened) {
+            const today = Date.parse(new Date());
+            const startDate = Date.parse(
+              response.data.latest_opened.start_date
+            );
+            const endDate = Date.parse(response.data.latest_opened.end_date);
+            if (today < endDate && today >= startDate) {
+              this.$store.commit("setProgramOpened", { value: true });
+            } else {
+              this.$store.commit("setProgramOpened", { value: false });
+            }
+          } else {
+            this.$store.commit("setProgramOpened", { value: false });
+          }
+        });
+    },
     hideError() {
       this.isShowError = false;
     },
@@ -855,7 +907,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getTimeline", "getUserToken"]),
+    ...mapGetters(["getTimeline", "getUserToken", "getIsProgramOpened"]),
     ...mapMutations(["setHasProgramRegistered"])
   }
 };
