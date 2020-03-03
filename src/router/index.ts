@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
 import NotFound from "@/views/NotFound.vue";
+import SignIn from "@/views/Signin.vue";
 import SignUp from "@/views/Signup.vue";
 import PengumumanPage from "@/views/PengumumanPage.vue";
 import Activation from "@/views/Activation.vue";
@@ -28,6 +29,11 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: SignUp
+  },
+  {
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn
   },
   {
     path: "/about",
