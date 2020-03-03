@@ -16,7 +16,7 @@
             <SignUpForm :inputWidth="inputWidth" />
             <p style="margin-top: 2%;">
               Already have account?
-              <a href>login Here</a>
+              <router-link to="/signin">login Here</router-link>
             </p>
           </b-col>
         </b-row>

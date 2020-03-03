@@ -43,7 +43,6 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import UserInfo from "@/store/modules/UserInfo";
 import { required } from "vuelidate/lib/validators";
 import Vue from "vue";
 import Vuelidate from "vuelidate";
@@ -74,7 +73,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setUserIdentification", "setUserToken"]),
+    ...mapMutations(["setRefreshToken", "setAccessToken"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
@@ -86,12 +85,9 @@ export default {
           "password": this.form.password
         })
         .then(response => {
-          this.$store.commit("setUserIdentification", {
-            value: this.form.username
-          });
-          this.$store.commit("setUserLoggedIn", { value: true });
-          this.$store.commit("setUserToken", { value: this.form.password });
-          this.$router.push('/')
+          this.$store.commit("setRefreshToken", { value: response.data.refresh });
+          this.$store.commit("setAccessToken", { value: response.data.access });
+          window.location.pathname = "/"
         })
         .catch(error => {
           // do nothing
@@ -109,8 +105,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getUserIdentification", "getUserToken"]),
-    ...mapMutations(["setUserLoggedIn"]),
     inputStyle() {
       return "width: " + this.inputWidth * 2 + "px";
     }

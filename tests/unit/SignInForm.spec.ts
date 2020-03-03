@@ -2,9 +2,11 @@ import SignInForm from "@/components/SignInForm.vue";
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vue from "vue";
 import BootstrapVue from "bootstrap-vue";
+import VueRouter from 'vue-router';
 
 const localVue = createLocalVue();
 localVue.use(BootstrapVue);
+localVue.use(VueRouter)
 
 const factory = (values = {}) => {
   return shallowMount(SignInForm, {

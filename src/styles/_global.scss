@@ -135,7 +135,7 @@ section {
 a {
   color: $black;
   outline: none;
-  text-decoration: none;
+  text-decoration: none !important;
   cursor: pointer;
 }
 
