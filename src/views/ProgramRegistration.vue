@@ -491,6 +491,7 @@ export default {
         return;
       }
       this.recording = files[0];
+      console.log(this.recording)
     },
     checkInfaqOptionField() {
       const infaqOptionError = "Isian 'Pilihan Kontribusi Infaq' harus dipilih";
