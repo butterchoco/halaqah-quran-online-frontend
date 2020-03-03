@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: "ErrorPage",
   props: {
     img: String,
     title: String,

@@ -1,30 +1,35 @@
 image: node:10.15.3
 
-cache:
-  untracked: true
-  paths:
-    - node_modules/
-
 stages:
-  - setup
+  - install_dependencies
   - test
   - sonar
   - build
   - deploy
 
+install_dependencies:
+  stage: install_dependencies
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules
+    expire_in: 5 hours
+
+linting_source_code:
+  stage: test
+  script:
+    - npm run lint
+
 test:
   stage: test
+  script:
+    - npm run test:unit -- --coverage
+  coverage: '/All\sfiles.*?\s+(\d+.\d+)/'
   artifacts:
     paths:
       - ./coverage/lcov.info
-    expire_in: 1 week
-  script:
-    - npm install --progress=false
-    - npm run test:unit -- --coverage
-  only:
-    - master
-    - staging
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+    expire_in: 5 hours
 
 SonarScanner:
   image: addianto/sonar-scanner-cli:latest
@@ -35,21 +40,28 @@ SonarScanner:
       -Dsonar.login=$SONARQUBE_TOKEN
       -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME
-  only:
-    - master
-    - staging
-    - development
   dependencies:
     - test
 
 build:
   stage: build
   script:
-    - npm install --progress=false
     - npm run build
   artifacts:
     paths:
       - dist
+    expire_in: 5 hours
+  only:
+    - master
+    - staging
+
+deploy:
+  stage: deploy
+  script:
+    - npm i -g netlify-cli
+    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod --timeout=900
+  dependencies:
+    - build
   only:
     - master
 
@@ -57,8 +69,8 @@ deploy:
   stage: deploy
   script:
     - npm i -g netlify-cli
-    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --timeout=900
   dependencies:
     - build
   only:
-    - master
+    - staging
