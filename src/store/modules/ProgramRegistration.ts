@@ -4,13 +4,13 @@ const state = {
 };
 
 const getters = {
-  getHasProgramRegistered: () => {
+  getHasProgramRegistered: (state: any) => {
     return state.HasProgramRegistered;
   }
 };
 
 const mutations = {
-  setProgramRegistration: (payload: any) => {
+  setHasProgramRegistered: (state: any, payload: any) => {
     state.HasProgramRegistered = payload.value;
   }
 };

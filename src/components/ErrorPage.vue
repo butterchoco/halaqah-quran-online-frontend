@@ -1,8 +1,8 @@
 <template>
-  <div class="error-container col center">
+  <div class="error-container">
     <img class="hero-message" :src="img" alt="Error Message" />
     <h3 class="header-title">{{ title }}</h3>
-    <h4 class="message">{{ msg }}</h4>
+    <p class="message">{{ msg }}</p>
     <router-link v-if="goto" :to="goto.link">
       <button class="btn primary">{{ goto.str }}</button>
     </router-link>
@@ -21,18 +21,27 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.hero-message {
-  max-width: 20rem;
+<style lang="scss" scoped>
+div.error-container {
+  overflow: hidden;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
 }
 
-.error-container {
-  min-width: 20%;
+img.hero-message {
+  max-width: 40%;
   max-height: 40%;
 }
 
-.header-title {
-  text-align: center;
-  color: $primary;
+h2 {
+  margin-bottom: $gap-sm-2;
+}
+
+.message {
+  margin-bottom: $gap-m-2;
 }
 </style>

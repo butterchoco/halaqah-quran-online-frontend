@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 import Vue from "vue";
 import Vuelidate from "vuelidate";
@@ -90,7 +90,7 @@ export default {
           window.location.pathname = "/"
         })
         .catch(error => {
-          // do nothing
+          console.log(error)
         })
         .finally(() => (this.isLoading = false));
     },

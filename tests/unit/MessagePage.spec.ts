@@ -15,7 +15,7 @@ describe("MessagePage Data", () => {
     const prop = {
       msg: "this is a message",
       title: "this is a title",
-      img: require("@/assets/img/success-selection-1.png"),
+      img: require("@/assets/img/success-selection.png"),
       goto: [
         {
           link: "/",
@@ -37,7 +37,7 @@ describe("MessagePage Data", () => {
       isPrimary: false,
       msg: "this is a message",
       title: "this is a title",
-      img: require("@/assets/img/success-selection-1.png"),
+      img: require("@/assets/img/success-selection.png"),
       goto: [
         {
           link: "/",
