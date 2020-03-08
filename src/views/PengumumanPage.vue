@@ -32,7 +32,7 @@ export default {
   data() {
     if (this.$store.getters.getIsAccepted) {
       return {
-        img: require("@/assets/img/success-selection.png"),
+        img: require("@/assets/img/success-selection-1.png"),
         title: "Selamat Anda Lulus Program!",
         isPrimary: true,
         isDanger: false,
@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .pengumuman-container {
   min-width: 20%;
   max-height: 40%;

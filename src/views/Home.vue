@@ -2,10 +2,26 @@
   <div>
     <img class="vector svg-1" src="@/assets/img/Vector 8.png" alt="vector-8" />
     <img class="vector svg-2" src="@/assets/img/Vector 9.png" alt="vector-9" />
-    <img class="vector svg-3" src="@/assets/img/Vector 10.png" alt="vector-10" />
-    <img class="vector svg-4" src="@/assets/img/Vector 11.png" alt="vector-11" />
-    <img class="vector svg-5" src="@/assets/img/Vector 12.png" alt="vector-12" />
-    <img class="vector svg-6" src="@/assets/img/Vector 13.png" alt="vector-13" />
+    <img
+      class="vector svg-3"
+      src="@/assets/img/Vector 10.png"
+      alt="vector-10"
+    />
+    <img
+      class="vector svg-4"
+      src="@/assets/img/Vector 11.png"
+      alt="vector-11"
+    />
+    <img
+      class="vector svg-5"
+      src="@/assets/img/Vector 12.png"
+      alt="vector-12"
+    />
+    <img
+      class="vector svg-6"
+      src="@/assets/img/Vector 13.png"
+      alt="vector-13"
+    />
     <img class="vector svg-7" src="@/assets/img/Vector 8.png" alt="vector-8" />
     <img class="vector svg-8" src="@/assets/img/Vector 9.png" alt="vector-9" />
     <section class="hero-container">
@@ -15,8 +31,10 @@
         <span class="isClosed" v-else>Ditutup</span>
       </h1>
       <p class="header-description">{{ getHeaderDescription }}</p>
-      <router-link to="/program-registration">
-        <button v-if="getIsProgramOpened" class="daftar-program btn primary">Daftar Sekarang !</button>
+      <router-link to="/program-registration"
+        ><button v-if="getIsProgramOpened" class="daftar-program btn primary">
+          Daftar Sekarang !
+        </button>
       </router-link>
     </section>
     <section class="timeline-container">
@@ -66,7 +84,11 @@
               src="@/assets/img/profile-img.png"
               alt="default-profile-img"
             />
-            <img :src="data.image" v-if="data.image != ''" alt="teacher-profile" />
+            <img
+              :src="data.image"
+              v-if="data.image != ''"
+              alt="teacher-profile"
+            />
           </div>
           <h4 class="teacher-name">{{ data.name }}</h4>
           <p class="teacher-details">
@@ -101,7 +123,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
@@ -115,9 +137,7 @@ export default {
       "getAllTeachers",
       "getAllCurriculums",
       "getAllFacilities"
-    ]),
-    ...mapMutations(["setProgramOpened"]),
-    ...mapActions(["setProgramOpened"])
+    ])
   },
   created() {
     this.getLatestPeriod();
@@ -141,9 +161,7 @@ export default {
           } else {
             this.$store.commit("setProgramOpened", { value: false });
           }
-        }).catch((error) => {
-          console.log(error)
-        })
+        });
     }
   }
 };

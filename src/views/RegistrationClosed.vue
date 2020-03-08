@@ -28,13 +28,13 @@ export default {
       isDanger: true,
       msg: "Waktu pendaftaran sudah habis. Silakan tunggu proses seleksi.",
       msg2: "",
-      goto: [{ str: "Kembali ke beranda", link: "/" }]
+      goto : [{str: "Kembali ke beranda", link: "/"} ]
     };
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .page-container {
   min-width: 20%;
   max-height: 40%;

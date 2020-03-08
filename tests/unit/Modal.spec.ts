@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Modal from "@/components/Modal.vue";
 
 describe("Modal", () => {
@@ -23,14 +23,14 @@ describe("Modal", () => {
     }
   };
   const toggleModal = jest.fn();
-  const wrapper = shallowMount(Modal, {
+  let wrapper = shallowMount(Modal, {
     propsData: prop,
     methods: {
       toggleModal
     }
   });
 
-  it("renders data when passed", async () => {
+  it("renders data when passed", () => {
     wrapper.find(".close-btn").trigger("click");
     wrapper.vm.$nextTick();
     expect(wrapper.props().isDanger).toBe(true);

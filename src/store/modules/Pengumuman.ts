@@ -21,11 +21,11 @@ const state = {
 };
 
 const getters = {
-  getIsAccepted: (state: any) => {
+  getIsAccepted: () => {
     return state.isTahfizhProgramAccepted;
   },
 
-  getRegisEvaluation: (state: any) => {
+  getRegisEvaluation: () => {
     return state.registrationEvaluation;
   }
 };

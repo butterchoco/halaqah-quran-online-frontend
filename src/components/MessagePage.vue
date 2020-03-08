@@ -1,5 +1,5 @@
 <template>
-  <div class="message-container col center vector-background">
+  <div class="message-container col center">
     <img class="hero-message" :src="img" alt="Message" />
     <h3 class="header-title" :class="[isDanger ? 'red' : '']">{{ title }}</h3>
     <p class="message">{{ msg }}</p>
@@ -16,6 +16,11 @@
       </router-link>
     </div>
     <Modal v-if="isModal" @exit="toggleModal" :isDanger="isDanger" :dataModal="dataModal" />
+
+    <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
+    <img src="@/assets/img/vector-5.png" alt="vector" class="svg-5" />
+    <img src="@/assets/img/vector-6.png" alt="vector" class="svg-6" />
+    <img src="@/assets/img/vector-7.png" alt="vector" class="svg-7" />
   </div>
 </template>
 
@@ -47,7 +52,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @media only screen and (min-width: 768px) {
   h1.header-title {
     font-size: $h1 !important;
@@ -97,5 +102,41 @@ export default {
 
 .red {
   color: #eb4d55;
+}
+
+.svg-4 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  max-width: 40%;
+  max-height: 20%;
+}
+
+.svg-5 {
+  position: absolute;
+  z-index: -2;
+  bottom: 0;
+  left: 0;
+  max-width: 40%;
+  max-height: 25%;
+}
+
+.svg-6 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  max-width: 40%;
+  max-height: 50%;
+}
+
+.svg-7 {
+  position: absolute;
+  z-index: -2;
+  bottom: 0;
+  right: 0;
+  max-width: 30%;
+  max-height: 50%;
 }
 </style>

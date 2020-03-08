@@ -159,40 +159,36 @@ const state = {
 };
 
 const getters = {
-  getIsProgramOpened: (state: any) => {
+  getIsProgramOpened: () => {
     return state.isProgramOpened;
   },
-  getTimeline: (state: any) => {
+  getTimeline: () => {
     return state.home.timeline;
   },
-  getHeaderDescription: (state: any) => {
+  getHeaderDescription: () => {
     return state.home.headerDescription;
   },
-  getCurriculumDescription: (state: any) => {
+  getCurriculumDescription: () => {
     return state.home.curriculumDescription;
   },
-  getAllTeachers: (state: any) => {
+  getAllTeachers: () => {
     return state.home.teachers;
   },
-  getAllCurriculums: (state: any) => {
+  getAllCurriculums: () => {
     return state.home.curriculums;
   },
-  getAllFacilities: (state: any) => {
+  getAllFacilities: () => {
     return state.home.facilities;
   }
 };
 
 const mutations = {
-  setProgramOpened: (state: any, payload: any) => {
+  setProgramOpened: (state:any, payload:any) => {
     state.isProgramOpened = payload.value;
   }
 };
 
-const actions = {
-  setProgramOpened: ({ commit }: any, payload: any) => {
-    commit("setProgramOpened", payload)
-  }
-};
+const actions = {};
 
 export default {
   state,

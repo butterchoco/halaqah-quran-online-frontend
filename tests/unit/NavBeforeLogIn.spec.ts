@@ -1,12 +1,13 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import NavLoggedIn from "@/components/NavLoggedIn.vue";
+import NavBeforeLogin from "@/components/NavBeforeLogin.vue";
+import App from "@/App.vue";
 import VueRouter from "vue-router";
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
 
-describe("NavLoggedIn Data", () => {
-  let wrapper = shallowMount(NavLoggedIn, {
+describe("NavBeforeLogin Data", () => {
+  let wrapper = shallowMount(NavBeforeLogin, {
     localVue
   });
 
@@ -26,7 +27,7 @@ describe("NavLoggedIn Data", () => {
 
   it("calls windowToggle function", () => {
     const windowToggle = jest.fn();
-    wrapper = shallowMount(NavLoggedIn, {
+    wrapper = shallowMount(NavBeforeLogin, {
       localVue,
       methods: {
         windowToggle
@@ -36,23 +37,4 @@ describe("NavLoggedIn Data", () => {
     expect(windowToggle).toBeCalled();
   });
 
-  it("calls profileDropdownActive function", () => {
-    const profileDropdownActive = jest.fn();
-    wrapper = shallowMount(NavLoggedIn, {
-      localVue,
-      data() {
-        return {
-          isDropdownActive: true,
-          isProfileDropdownActive: false,
-        }
-      },
-      methods: {
-        profileDropdownActive
-      }
-    })
-    wrapper.vm.$nextTick();
-    expect(wrapper.vm.$data.isProfileDropdownActive).toBe(false);
-    wrapper.find(".profile").trigger("click");
-    expect(wrapper.vm.$data.isProfileDropdownActive).toBe(true);
-  })
 });

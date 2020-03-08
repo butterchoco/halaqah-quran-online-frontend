@@ -4,12 +4,12 @@ import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
 
 describe("RegistrationSuccess.vue", () => {
   const store = Store;
-  const wrapper = shallowMount(RegistrationSuccess, {
+  let wrapper = shallowMount(RegistrationSuccess, {
     store
   });
 
   it("renders data when passed", () => {
-    const expectedData = {
+    let expectedData = {
       img: require("@/assets/img/registration-success.png"),
       title: "Selamat Proses Daftar Berhasil!",
       isPrimary: true,

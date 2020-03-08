@@ -4,12 +4,12 @@ import RegistrationClosed from "@/views/RegistrationClosed.vue";
 
 describe("RegistrationClosed.vue", () => {
   const store = Store;
-  const wrapper = shallowMount(RegistrationClosed, {
+  let wrapper = shallowMount(RegistrationClosed, {
     store
   });
 
   it("renders data when passed", () => {
-    const expectedData = {
+    let expectedData = {
       img: require("@/assets/img/failed-selection.png"),
       title: "Pendaftaran program sudah ditutup!",
       isPrimary: false,

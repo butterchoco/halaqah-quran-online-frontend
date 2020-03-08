@@ -34,6 +34,10 @@
 
 .program-registration-container {
   padding: $gap-m-2 $gap-m-1;
+  overflow: hidden;
+  background: url("../assets/img/Bg-2.png") no-repeat;
+  background-position-y: bottom;
+  background-size: contain;
 }
 
 p.error {
@@ -90,7 +94,6 @@ p.error {
 
   .row {
     flex-wrap: wrap;
-    margin: 0;
   }
 
   .form-group {
@@ -100,7 +103,6 @@ p.error {
 
     label {
       font-size: 14px;
-
       &.text-muted {
         font-size: 12px;
         color: gray;
@@ -236,7 +238,8 @@ p.error {
     }
 
     select {
-      background: url("../assets/img/arrow-down-green.png") no-repeat right $white;
+      background: url("../assets/img/arrow-down-green.png") no-repeat right
+        $white;
       background-position-x: 95%;
       padding: $gap-sm-2 3rem $gap-sm-2 $gap-sm-4;
       appearance: none;
