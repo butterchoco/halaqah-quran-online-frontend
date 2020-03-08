@@ -48,9 +48,7 @@
                   <option selected value="4">4 Kesalahan</option>
                   <option value="5">5 Kesalahan</option>
                 </select>
-                <p v-if="isShowError" class="error">
-                  {{ errors.harakatMistakeError[0] }}
-                </p>
+                <p v-if="isShowError" class="error">{{ errors.harakatMistakeError[0] }}</p>
               </div>
             </div>
             <div class="bottom"></div>
@@ -114,7 +112,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/styles/programRegistrationForm.scss";
 
 .header-title {

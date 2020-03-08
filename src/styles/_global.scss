@@ -9,6 +9,7 @@ body {
   margin: 0;
   scroll-behavior: smooth;
 }
+
 body {
   overflow-x: hidden;
 }
@@ -16,6 +17,7 @@ body {
 * {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  outline: none;
 }
 
 h1,
@@ -100,7 +102,6 @@ section {
   border: 0;
   padding: $gap-sm-1 $gap-sm-4;
   border-radius: 20px;
-  margin-top: $gap-m-1;
 
   &.primary {
     background: $primary;
@@ -137,8 +138,18 @@ a {
   outline: none;
   text-decoration: none !important;
   cursor: pointer;
+
+  &:hover {
+    color: $primary;
+  }
 }
 
 .image-fluid {
   max-width: 100%;
+}
+
+.vector-background {
+  background: url("../assets/img/Bg-2.png") no-repeat;
+  background-position-y: bottom;
+  background-size: 100%;
 }

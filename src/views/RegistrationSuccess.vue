@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page-container {
   min-width: 20%;
   max-height: 40%;

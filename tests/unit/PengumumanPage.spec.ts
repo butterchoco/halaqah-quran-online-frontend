@@ -13,7 +13,7 @@ describe("PengumumanPage.vue", () => {
   });
 
   it("renders data when passed isTahfizhProgramAccepted true", () => {
-    let expectedData = {
+    const expectedData = {
       img: require("@/assets/img/maintenance.png"),
       msg: "Silahkan pilih jadwal untuk melanjutkan.",
       title: "Selamat Anda Lulus Program!",

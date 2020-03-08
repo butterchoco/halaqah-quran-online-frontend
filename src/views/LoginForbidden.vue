@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="maintenance-container vector-background col center">
     <ErrorMaintenance :img="img" :title="title" :msg="msg" :goto="goto" />
   </section>
 </template>
@@ -13,12 +13,12 @@ export default {
   },
   data() {
     return {
-      img: require("@/assets/img/404-not-found.png"),
-      title: "404 Not Found",
-      msg: "Where are you going ? Nobody here.",
+      img: require("@/assets/img/failed-selection.png"),
+      title: "You are not logged in !",
+      msg: "Login first to access this page",
       goto: {
-        link: "/",
-        str: "Back to home"
+        str: "Login to my account",
+        link: "/signin"
       }
     };
   }
@@ -26,4 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.maintenance-container {
+  height: inherit;
+}
 </style>

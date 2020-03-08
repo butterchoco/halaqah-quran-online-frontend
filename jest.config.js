@@ -5,5 +5,6 @@ module.exports = {
     "src/views/*.vue",
     "src/router/*",
     "src/store/*"
-  ]
+  ],
+  coverageReporters: ["html"]
 };
