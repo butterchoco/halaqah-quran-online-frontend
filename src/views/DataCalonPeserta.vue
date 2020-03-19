@@ -1,64 +1,64 @@
 <template>
   <div>
-    <div class="table-container col center">
-      <h3 class="header-title">Data Calon Peserta</h3>
-      <table id="table-calon-peserta">
-        <tr>
-          <th>Nama</th>
-          <th>Username</th>
-          <th>Rekaman</th>
-          <th>Action</th>
-        </tr>
-        <tr v-for="(data, index) in datacalon" :key="index">
-          <td>{{ data.display_name }}</td>
-          <td>{{ data.username }}</td>
-          <td>{{ data.recording }}</td>
-          <td>
-            <button class="btn" @click="toggleModal()">Nilai Laporan</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div v-if="isModal" class="modal-container">
-      <div class="modal-overlay">
-        <div class="modal">
-          <div class="close-btn" @click="toggleModal()">x</div>
-          <div class="modal-header">
-            <h3 class="header-title">Seleksi Peserta</h3>
-            <p class="header-title">Joko Anwar</p>
-          </div>
-          <div class="modal-content">
-            <div class="registration-form">
-              <div class="form-group col optional">
-                <label for="harakatMistake-field">Kesalahan harakat</label>
-                <select
-                  name="harakatMistake-field"
-                  id="harakatMistake-field"
-                  @change="checkField"
-                  v-model="harakatMistake"
-                  placeholder="Pilih Opsi"
-                  :class="{
-                    error: isShowError && errors.harakatMistakeError[0]
-                  }"
-                >
-                  <option disabled hidden value>Pilih Opsi</option>
-                  <option selected value="1">1 Kesalahan</option>
-                  <option value="2">2 Kesalahan</option>
-                  <option value="3">3 Kesalahan</option>
-                  <option selected value="4">4 Kesalahan</option>
-                  <option value="5">5 Kesalahan</option>
-                </select>
-                <p v-if="isShowError" class="error">
-                  {{ errors.harakatMistakeError[0] }}
-                </p>
+    <div v-if="isSelector">
+      <div v-if="datacalon">
+        <div class="table-container col center">
+          <h3 class="header-title">Data Calon Peserta</h3>
+          <table id="table-calon-peserta">
+            <tr>
+              <th>Nama</th>
+              <th>Username</th>
+              <th>Rekaman</th>
+              <th>Action</th>
+            </tr>
+            <tr v-for="(data, index) in datacalon" :key="index">
+              <td>{{ data.display_name }}</td>
+              <td>{{ data.username }}</td>
+              <td>
+                <a href="data.recording">Download Recording</a>
+              </td>
+              <td>
+                <button class="btn" @click="toggleModal(data)">Nilai Laporan</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div v-if="isModal" class="modal-container">
+          <div class="modal-overlay">
+            <div class="modal">
+              <div class="close-btn" @click="toggleModal()">x</div>
+              <div class="modal-header">
+                <h3 class="header-title">Seleksi Peserta</h3>
+                <p class="header-title">Peserta: {{studentModalName}}</p>
               </div>
+              <div class="modal-content">
+                <div class="registration-form">
+                  <form @submit="handleSubmit" method="post">
+                    <label>Kesalahan Harakat</label>
+                    <input required type="text" v-model="form.harakatMistake" />
+                    <label for="mad-mistake">Kesalahan Panjang Pendek</label>
+                    <input required type="text" v-model="form.madMistake" />
+                    <label for="gunnah-mistake">Kesalahan Gunnah</label>
+                    <input required type="text" v-model="form.gunnahMistake" />
+                    <label for="lulus-checkbox">Lulus/Tidak Lulus</label>
+                    <input type="checkbox" v-model="form.isLulus" />
+                    <label for="level">Level Tahsin Yang Disarankan(Optional)</label>
+                    <input type="text" v-model="form.levelTahsin" />
+                    <label for="catatan">Catatan</label>
+                    <textarea placeholder="Isi catatan untuk murid ini" v-model="form.catatan"></textarea>
+                    <button type="submit">Submit</button>
+                  </form>
+                </div>
+                <div class="bottom"></div>
+              </div>
+              <div class="modal-footer"></div>
             </div>
-            <div class="bottom"></div>
           </div>
-          <div class="modal-footer"></div>
         </div>
       </div>
+      <div v-else>Belum ada pendaftar</div>
     </div>
+    <div v-else>Kamu tidak memiliki hak akses ke halaman ini.</div>
   </div>
 </template>
 
@@ -67,54 +67,129 @@ import { mapGetters } from "vuex";
 import axios from "axios";
 export default {
   name: "DataCalonPeserta",
-  computed: {
-    ...mapGetters(["getCalonPeserta, getUSerToken"])
-  },
   data() {
     return {
       periodId: "",
       datacalon: "",
-      isModal: false
+      isModal: false,
+      isSelector: false,
+      studentModalName: "",
+      studentUserName: "",
+      form : {
+        harakatMistake: "", 
+        madMistake: "", 
+        gunnahMistake: "", 
+        isLulus: false, 
+        levelTahsin: 0, 
+        catatan:""}
     };
   },
-  created() {
+  mounted() {
     this.getData();
   },
+  computed: {
+    ...mapGetters(["getCalonPeserta", "getAccessToken", "getRefreshToken"])
+  },
   methods: {
-    toggleModal() {
+    toggleModal(dataStudent) {
       this.isModal = !this.isModal;
+      this.studentModalName = dataStudent.display_name;
+      this.studentUserName = dataStudent.username;
     },
-    getData() {
-      const token = this.$store.getUserToken;
-
-      axios
-        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
-        .then(response => {
-          this.periodId = response.data.latest_opened.id;
-          localStorage.setItem("token", token);
-          axios.defaults.headers.common["Authorization"] = token;
-          axios
-            .get(
-              process.env.VUE_APP_URL +
-                "/api/tahfidz/selections/" +
-                this.periodId +
-                "/users/",
-              {
-                headers: {
-                  Authorization: "JWT " + token
+    handleSubmit(event) {
+      event.preventDefault();
+      const token = this.$store.getters.getAccessToken;
+      axios.get(process.env.VUE_APP_URL + "/api/auth/users/me/", {
+            headers: {
+              Authorization: "JWT " + token
+            }}).then(response => {
+              const userId = response.data.id; 
+              let studentId = "";
+              for (let i = 0; i < this.datacalon.length; i++) {
+                if (this.datacalon[i].username == this.studentUserName) {
+                  studentId = this.datacalon[i].id;
+                  break;
                 }
               }
-            )
-            .then(response => {
-              this.datacalon = response.data.candidates;
+              axios.post(process.env.VUE_APP_URL + "/selection/participant/?id=" + studentId,
+                {
+
+                  "evaluator": userId, 
+                    "harakat_mistake": this.form.harakatMistake, 
+                    "mad_mistake": this.form.madMistake, 
+                    "gunnah_mistake": this.form.gunnahMistake,
+                    "tahsin_level":this.form.levelTahsin,
+                    "is_passed": this.form.isLulus,
+                    "note": this.form.catatan 
+                },{
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "JWT " + token
+                },
             });
-        });
+      });
+    },
+    getData() {
+      const token = this.$store.getters.getAccessToken;
+      if (token) {
+        axios
+          .get(process.env.VUE_APP_URL + "/api/auth/users/me/roles/", {
+            headers: {
+              Authorization: "JWT " + token
+            }
+          })
+          .then(response => {
+            let selector = false;
+            for (let i = 0; i < response.data.roles.length; i++) {
+              if (
+                response.data.roles[i].role_id == 3 ||
+                response.data.roles[i].role_id == 4
+              ) {
+                selector = true;
+              }
+            }
+            if (selector) {
+              this.isSelector = true;
+              axios
+                .get(
+                  process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/"
+                )
+                .then(response => {                  
+                  this.periodId = response.data.latest_opened.id;
+                  axios.defaults.headers.common["Authorization"] = token;
+                  axios
+                    .get(
+                      process.env.VUE_APP_URL +
+                        "/api/tahfidz/selections/" +
+                        this.periodId +
+                        "/users/",
+                      {
+                        headers: {
+                          Authorization: "JWT " + token
+                        }
+                      }
+                    )
+                    .then(response => {
+                      this.datacalon = response.data.candidates;
+                    });
+                }).catch(error => {
+                  alert("Belum ada periode yang buka")
+                });
+            } else {
+              this.isSelector = false;
+              window.location.pathname = "/";
+            }
+          });
+      } else {
+        this.isSelector = false;
+        window.location.pathname = "/";
+      }
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 @import "@/styles/programRegistrationForm.scss";
 
 .header-title {
@@ -157,14 +232,12 @@ export default {
 
 .modal-container {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
-  left: 0;
-  top: 0;
+  width: 50vw;
+  height: 50vh;
 
   .modal-overlay {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.1);
   }
 

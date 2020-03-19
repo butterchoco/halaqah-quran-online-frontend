@@ -3,11 +3,7 @@
     <div class="header-mobile">
       <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
       <div class="right-header">
-        <div
-          class="mob-btn"
-          @click="dropdownActivate"
-          :class="{ active: isDropdownActive }"
-        >
+        <div class="mob-btn" @click="dropdownActivate" :class="{ active: isDropdownActive }">
           <div class="line one"></div>
           <div class="line two"></div>
         </div>
@@ -24,17 +20,24 @@
         <li class="nav-link">
           <router-link class="link about" to="/about">about</router-link>
         </li>
+        <li class="nav-link">
+          <router-link
+            v-if="isSelector"
+            class="link about"
+            to="/data-calon-peserta"
+          >Data Calon Peserta</router-link>
+        </li>
       </ul>
       <div class="profile-container">
         <div class="profile btn primary" @click="profileDropdownActivate">
           <div class="row center">
             <div class="profile-icon">
               <i class="material-icons">people</i>
-              </div>
+            </div>
             <p>{{ user.name }}</p>
-          <div class="circle">
-            <img src="@/assets/img/arrow-down.png" alt="arrow" />
-          </div>
+            <div class="circle">
+              <img src="@/assets/img/arrow-down.png" alt="arrow" />
+            </div>
           </div>
         </div>
         <ul class="nav-profile" v-if="isProfileDropdownActive">
@@ -57,11 +60,13 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations } from "vuex";
+import axios from "axios";
 export default {
   data() {
     return {
       isDropdownActive: false,
+      isSelector: false,
       isProfileDropdownActive: false,
       mobile: true,
       user: {
@@ -74,6 +79,29 @@ export default {
     logout() {
       this.$store.commit("removeToken");
       window.location.pathname = "/";
+    },
+    getUserRole() {
+      const token = this.$store.getters.getAccessToken;
+      axios
+        .get(process.env.VUE_APP_URL + "/api/auth/users/me/roles/", {
+          headers: {
+            Authorization: "JWT " + token
+          }
+        })
+        .then(response => {
+          let selector = false;
+          for (let i = 0; i < response.data.roles.length; i++) {
+            if (
+              response.data.roles[i].description == "Role: teacher" ||
+              response.data.roles[i].description == "Role: student selector"
+            ) {
+              selector = true;
+            }
+          }
+          if (selector) {
+            this.isSelector = true;
+          }
+        });
     },
     dropdownActivate() {
       this.isDropdownActive = !this.isDropdownActive;
@@ -90,6 +118,7 @@ export default {
   },
   mounted() {
     this.windowToggle();
+    this.getUserRole();
   }
 };
 </script>
