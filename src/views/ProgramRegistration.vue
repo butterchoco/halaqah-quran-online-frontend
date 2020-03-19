@@ -413,7 +413,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "ProgramRegistration",
@@ -466,7 +466,8 @@ export default {
   },
   methods: {
     getLatestPeriod() {
-      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
+      axios
+        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
         .then(response => {
           if (response.data.latest_opened) {
             const today = Date.parse(new Date());
@@ -873,36 +874,46 @@ export default {
         this.showError();
         return;
       }
-      const formData = new FormData()
+      const formData = new FormData();
       const year = new Date().getFullYear();
-      axios.get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/").then(response => {
-        this.periodId = response.data.latest_opened.id;
-        this.term = "TahfidzQu_" + year + "_" + this.periodId;
-        const token = this.$store.getters.getUserToken
-        formData.append('term', this.term)
-        formData.append('user', 12)
-        formData.append('age', this.age)
-        formData.append('domicile', this.domicile)
-        formData.append('recording', this.recording)
-        formData.append('juz_target_number', this.juzTargetNumber)
-        formData.append('juz_number_memorized', this.juzNumberMemorized)
-        formData.append('tahsin_experience', this.tahsinExperience)
-        formData.append('pilihan_infaq', this.infaqOptionNumber)
-        formData.append('selection_period', this.periodId)
-        formData.append('referral_names', this.infaqChoice)
-        axios
-          .post(process.env.VUE_APP_URL + "/api/tahfidz/selections/" + this.periodId + "/", formData, { headers: {
-            'Content-Type': 'multipart/form-data',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: "JWT " + token
-            }})
-          .then(response => {
-            this.$store.commit("setHasProgramRegistered", {
-              value: response.data["has_registered"]
+      axios
+        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
+        .then(response => {
+          this.periodId = response.data.latest_opened.id;
+          this.term = "TahfidzQu_" + year + "_" + this.periodId;
+          const token = this.$store.getters.getUserToken;
+          formData.append("term", this.term);
+          formData.append("user", 12);
+          formData.append("age", this.age);
+          formData.append("domicile", this.domicile);
+          formData.append("recording", this.recording);
+          formData.append("juz_target_number", this.juzTargetNumber);
+          formData.append("juz_number_memorized", this.juzNumberMemorized);
+          formData.append("tahsin_experience", this.tahsinExperience);
+          formData.append("pilihan_infaq", this.infaqOptionNumber);
+          formData.append("selection_period", this.periodId);
+          formData.append("referral_names", this.infaqChoice);
+          axios
+            .post(
+              process.env.VUE_APP_URL +
+                "/api/tahfidz/selections/" +
+                this.periodId +
+                "/",
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: "JWT " + token
+                }
+              }
+            )
+            .then(response => {
+              this.$store.commit("setHasProgramRegistered", {
+                value: response.data["has_registered"]
+              });
+              this.$router.push("/regis-success");
             });
-            this.$router.push("/regis-success")
-          });
-      });
+        });
     }
   },
   computed: {

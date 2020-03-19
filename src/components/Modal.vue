@@ -34,7 +34,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .modal-container {
   position: absolute;
   width: 100vw;
