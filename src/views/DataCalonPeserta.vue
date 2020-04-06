@@ -172,7 +172,7 @@ export default {
                     .then(response => {
                       this.datacalon = response.data.candidates;
                     });
-                }).catch(error => {
+                }).catch(() => {
                   alert("Belum ada periode yang buka")
                 });
             } else {
@@ -189,8 +189,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scope>
-@import "@/styles/programRegistrationForm.scss";
+<style lang="scss" scoped>
+@import "@/styles/form.scss";
 
 .header-title {
   text-align: center;

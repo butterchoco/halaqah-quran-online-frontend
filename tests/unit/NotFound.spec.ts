@@ -8,10 +8,10 @@ describe("NotFound.vue", () => {
         img: require("@/assets/img/404-not-found.png"),
         title: "404 Not Found",
         msg: "Where are you going ? Nobody here.",
-        goto: {
+        goto: [{
           link: "/",
           str: "Back to home"
-        }
+        }]
       };
     }
     const wrapper = shallowMount(NotFound);

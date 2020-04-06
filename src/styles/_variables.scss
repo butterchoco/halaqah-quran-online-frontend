@@ -1,9 +1,17 @@
 //----- COlOR SPECTRUM -----//
+:root {
+    --primary: #40bfc1;
+    --secondary: #ffb677;
+    --danger: #eb4d55;
+    --white: #f3f3f3;
+    --black: #1b262c;
+}
 $primary: #40bfc1;
 $secondary: #ffb677;
 $danger: #eb4d55;
 $white: #f3f3f3;
 $black: #1b262c;
+
 
 //------ SIZE BENCHMARK -----//
 $h1: 48px;

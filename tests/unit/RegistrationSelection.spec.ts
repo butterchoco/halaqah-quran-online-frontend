@@ -1,12 +1,29 @@
-import { shallowMount } from "@vue/test-utils";
-import RegistrationSelection from "@/views/RegistrationSelection.vue";
-import store from "@/store/index.ts";
-
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import Announcement from "@/views/Announcement.vue";
+import Store from "./services/dummystore";
+import Vuex from "vuex"
 import { BRow, BCol, BImg, BButton, BModal } from "bootstrap-vue"
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
-describe("RegistrationSelection.vue", () => {
-  let wrapper = shallowMount(RegistrationSelection, {
+describe("Announcement.vue", () => {
+  const store = new Vuex.Store(Store)
+  function data() {
+    return {
+      img: require("@/assets/img/404-not-found.png"),
+      title: "Tidak ada pengumuman",
+      msg: "Silahkan menunggu beberapa hari lagi !",
+      goto: [
+        {
+          link: "/",
+          str: "Back to home"
+        }
+      ]
+    }
+  }
+  const wrapper = shallowMount(Announcement, {
     store,
+    data,
     stubs: {
       "b-row": BRow,
       "b-col": BCol,
@@ -16,21 +33,6 @@ describe("RegistrationSelection.vue", () => {
     },
   })
   it("test data is correct", () => {
-    const data = {
-      isAccepted: false,
-      img: "",
-      title: "",
-      msg: "",
-      msgTrailing: "",
-      msgButton: "",
-      testResult: {
-        name: "",
-        harakatMistake: 0,
-        madMistake: 0,
-        gunnahMistake: 0,
-        msg: ""
-      }
-    }
-    expect(wrapper.vm.$data).toMatchObject(data)
+    expect(wrapper.vm.$data).toMatchObject(data())
   })
 })

@@ -1,9 +1,13 @@
-import { shallowMount } from "@vue/test-utils";
-import Store from "@/store/index.ts";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import Store from "./services/dummystore";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
+import Vuex from "vuex"
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe("RegistrationClosed.vue", () => {
-  const store = Store;
+  const store = new Vuex.Store(Store);
   const wrapper = shallowMount(RegistrationClosed, {
     store
   });

@@ -11,10 +11,10 @@ describe("ErrorPage.vue", () => {
       msg: "Anything",
       title: "title goes here",
       img: require("@/assets/img/404-not-found.png"),
-      goto: {
+      goto: [{
         link: "/",
         str: "Back to home"
-      }
+      }]
     };
     const wrapper = shallowMount(ErrorPage, {
       propsData: prop,

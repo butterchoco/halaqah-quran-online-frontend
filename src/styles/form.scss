@@ -1,0 +1,85 @@
+form {
+    margin-top: 2rem;
+}
+
+input,
+select,
+textarea {
+    border: none;
+    background: $white;
+    padding: $gap-sm-1 $gap-sm-2 !important;
+    border-radius: 20px;
+    outline: none;
+    border: 3px solid transparent;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &::placeholder {
+        font-size: 12px;
+    }
+}
+
+textarea {
+    border-radius: 10px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+    }
+}
+
+input[type="file"] {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: $gap-sm-1;
+}
+
+.custom-file {
+    overflow: hidden;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+}
+
+select {
+    background: url("../assets/img/arrow-down-green.png") no-repeat right $white;
+    background-position-x: 98%;
+    padding: $gap-sm-2 3rem $gap-sm-2 $gap-sm-4;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+
+    &::-ms-expand {
+    background: $primary;
+    color: $white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-weight: 600;
+    }
+
+    option {
+    background-color: $white;
+    border-radius: 20px;
+    border: none;
+    font-weight: bold;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    button[type="submit"] {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}

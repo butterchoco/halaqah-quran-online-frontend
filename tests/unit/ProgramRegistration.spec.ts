@@ -1,122 +1,123 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import store from "@/store/index.ts";
+import Store from "./services/dummystore";
 import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import VueRouter from "vue-router";
+import routes from "./services/dummyRouter"
+import Vuex from "vuex";
+import bootstrap from "bootstrap-vue"
+import Vuelidate from 'vuelidate';
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
+localVue.use(Vuex);
+localVue.use(bootstrap);
+localVue.use(Vuelidate)
 
 describe("ProgramRegistration.vue", () => {
-  let wrapper = shallowMount(ProgramRegistration, {
+  const store = new Vuex.Store(Store)
+  const router = new VueRouter({
+    mode: "history",
+    base: process.env.BASE_URL, routes
+  })
+  function data() {
+    return {
+      form: {
+        age: "12",
+        domicile: "12",
+        recording: new File(["test"], "test"),
+        juzTargetNumber: "12",
+        juzNumberMemorized: "12",
+        hasTahsinExperience: "0",
+        hasTahsinExperienceOption: [
+          { value: 1, text: "Ya, pernah" },
+          { value: 0, text: "Tidak, belum pernah" }
+        ],
+        tahsinExperience: "",
+        infaqOptionNumber: "1",
+        infaqOptionNumberOption: [
+          { value: 1, text: "Paket Sendiri (Rp.200.000)" },
+          { value: 2, text: "Paket Berdua (Rp.240.000)" },
+          { value: 3, text: "Paket Bertiga (Rp.280.000)" }
+        ],
+        referralName1: "",
+        referralName2: "",
+        programInfoReference: ["Line"],
+        programInfoReferenceOptions: [
+          { item: "Line", name: "Line" },
+          { item: "Instagram", name: "Instagram" },
+          { item: "Whatsapp", name: "Whatsapp" },
+          { item: "Facebook", name: "Facebook" },
+          { item: "Other", name: "Others" }
+        ],
+        TermAndConditions: ["tnc1", "tnc2"],
+        TermAndConditionsOptions: [
+          {
+            item: "tnc1",
+            name:
+              "Saya bersedia meluangkan waktu untuk setoran secara langsung(malalui whatsapp call) ke ustadz/ah sepekan minimal sekali dan ujian muroja'ah sepekan sekali"
+          },
+          {
+            item: "tnc2",
+            name:
+              "Saya berusaha sebaik mungkin menjaga adab halaqah Quran, misal dengan aktif di grup, memberikan kabar jika berhalangan setoran dan menaati peraturan."
+          }
+        ]
+      },
+      formData: new FormData()
+    }
+  }
+
+  const createFormData = jest.fn()
+
+  const onSubmit = jest.fn()
+  const validateRecording = jest.fn()
+  const wrapper = shallowMount(ProgramRegistration, {
     store,
-    localVue
+    localVue,
+    router,
+    data,
+    methods: {
+      createFormData,
+      onSubmit,
+    },
+    computed: {
+      validateRecording
+    }
   });
 
-  it("has age in program registration", () => {
-    const ageField = wrapper.find("#age-field");
-    ageField.setValue(20);
-    expect(wrapper.vm.$data.age).toMatch("20");
+  it("renders data when passed", () => {
+    expect(wrapper.vm.$data).toMatchObject(data());
   });
 
-  it("has domicile in program registration", () => {
-    const domicileField = wrapper.find("#domicile-field");
-    domicileField.setValue("Depok");
-    expect(wrapper.vm.$data.domicile).toMatch("Depok");
-  });
-
-  it("has juzNumberMemorized in program registration", () => {
-    const juzNumberMemorizedField = wrapper.find("#juzNumberMemorized-field");
-    juzNumberMemorizedField.setValue(12);
-    expect(wrapper.vm.$data.juzNumberMemorized).toMatch("12");
-  });
-
-  it("has juzTargetNumber in program registration", () => {
-    const juzTargetNumberField = wrapper.find("#juzTargetNumber-field");
-    juzTargetNumberField.setValue(12);
-    expect(wrapper.vm.$data.juzTargetNumber).toMatch("12");
-  });
-
-  it("has hasTahsinExperience in program registration", () => {
-    const hasTahsinExperienceField = wrapper.find("#hasTahsinExperience-field");
-    hasTahsinExperienceField.setValue("1");
-    expect(wrapper.vm.$data.hasTahsinExperience).toMatch("1");
-  });
-
-  it("has tahsinExperience in program registration", () => {
-    const tahsinExperienceField = wrapper.find("#tahsinExperience-field");
-    tahsinExperienceField.setValue("FPI");
-    expect(wrapper.vm.$data.tahsinExperience).toMatch("FPI");
-  });
-
-  it("has infaqOptionNumber in program registration", () => {
-    const infaqOptionNumberField = wrapper.find("#infaqOptionNumber-field");
-    infaqOptionNumberField.setValue("2");
-    expect(wrapper.vm.$data.infaqOptionNumber).toMatch("2");
-  });
-
-  it("has infaqChoice in program registration", () => {
-    const infaqChoiceField = wrapper.find("#infaqChoice-field");
-    infaqChoiceField.setValue("Ahmad Supriyanto");
-    expect(wrapper.vm.$data.infaqChoice).toMatch("Ahmad Supriyanto");
-  });
-
-  it("has instagram in program registration", () => {
-    const instagramField = wrapper.find("#instagram-field");
-    instagramField.setChecked(true);
-    expect(wrapper.vm.$data.programInfoReference.instagram).toBe(true);
-  });
-  it("has whatsapp in program registration", () => {
-    const whatsappField = wrapper.find("#whatsapp-field");
-    whatsappField.setChecked(true);
-    expect(wrapper.vm.$data.programInfoReference.whatsapp).toBe(true);
-  });
-  it("has line in program registration", () => {
-    const lineField = wrapper.find("#line-field");
-    lineField.setChecked(true);
-    expect(wrapper.vm.$data.programInfoReference.line).toBe(true);
-  });
-  it("has facebook in program registration", () => {
-    const facebookField = wrapper.find("#facebook-field");
-    facebookField.setChecked(true);
-    expect(wrapper.vm.$data.programInfoReference.facebook).toBe(true);
-  });
-
-  it("has TermAndConditions1 in program registration", () => {
-    const TermAndConditions1Field = wrapper.find("#TermAndConditions1-field");
-    TermAndConditions1Field.setChecked(true);
-    expect(wrapper.vm.$data.isTnC1Check).toBe(true);
-  });
-
-  it("has TermAndConditions2 in program registration", () => {
-    const TermAndConditions2Field = wrapper.find("#TermAndConditions2-field");
-    TermAndConditions2Field.setChecked(true);
-    expect(wrapper.vm.$data.isTnC2Check).toBe(true);
-  });
-
-  it("calls checkField() when fields change", () => {
-    const checkField = jest.fn();
-    wrapper = shallowMount(ProgramRegistration, {
-      localVue,
-      store,
-      methods: {
-        checkField
+  it("path change when condition true", async () => {
+    store.commit("setSelectionPeriod", {
+      selectionPeriod: {
+        periodId: "1",
+        term: "TahfidzQu_2020_1"
       }
-    });
-    const ageField = wrapper.find("#age-field");
-    ageField.trigger("change");
-    expect(checkField).toBeCalled();
-  });
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$store.getters.getIsProgramOpened).toBe(true)
+  })
 
-  it("calls checkField() first time mounted", async () => {
-    const checkField = jest.fn();
-    wrapper = shallowMount(ProgramRegistration, {
-      localVue,
-      store,
-      methods: {
-        checkField
+  it("path change when condition false", async () => {
+    store.commit("setSelectionPeriod", {
+      selectionPeriod: {
+        periodId: "1",
+        term: "TahfidzQu_2020_1"
       }
-    });
-    await wrapper.vm.$nextTick();
-    expect(checkField).toBeCalled();
-  });
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$store.getters.getIsProgramOpened).toBe(true)
+  })
+
+  it("return true when recording file exist and validateRecording called", () => {
+    expect(wrapper.vm.$data.form.recording).toEqual(data().form.recording)
+  })
+
+  it("call createFormData method", async () => {
+    wrapper.find("#submit").trigger("click")
+    await wrapper.vm.$nextTick()
+  })
+
 });

@@ -1,6 +1,9 @@
 /* eslint-disable */
 const state = {
-  isProgramOpened: true,
+  selectionPeriod: {
+    periodId: "",
+    term: ""
+  },
   home: {
     headerDescription:
       "Program tahfizh menggunakan aplikasi chat Whatsapp sebagai penghubung antara pembimbing dengan peserta. Keutamaan program ini adalah tidak hanya mengedepankan jumlah hafalan, melainkan juga kualitas hafalan yang baik bagi pesertanya karena dibimbing langsung oleh para ustadz dan ustadzah.",
@@ -159,32 +162,41 @@ const state = {
 };
 
 const getters = {
-  getIsProgramOpened: () => {
-    return state.isProgramOpened;
+  getIsProgramOpened: (state: any) => {
+    if (state.selectionPeriod.periodId !== "") {
+      return true
+    }
+    return false;
   },
-  getTimeline: () => {
+  getSelectionPeriodTerm: (state: any) => {
+    return state.selectionPeriod.term
+  },
+  getSelectionPeriodId: (state: any) => {
+    return state.selectionPeriod.periodId
+  },
+  getTimeline: (state: any) => {
     return state.home.timeline;
   },
-  getHeaderDescription: () => {
+  getHeaderDescription: (state: any) => {
     return state.home.headerDescription;
   },
-  getCurriculumDescription: () => {
+  getCurriculumDescription: (state: any) => {
     return state.home.curriculumDescription;
   },
-  getAllTeachers: () => {
+  getAllTeachers: (state: any) => {
     return state.home.teachers;
   },
-  getAllCurriculums: () => {
+  getAllCurriculums: (state: any) => {
     return state.home.curriculums;
   },
-  getAllFacilities: () => {
+  getAllFacilities: (state: any) => {
     return state.home.facilities;
   }
 };
 
 const mutations = {
-  setProgramOpened: (state:any, payload:any) => {
-    state.isProgramOpened = payload.value;
+  setSelectionPeriod: (state: any, payload: any) => {
+    state.selectionPeriod = payload.selectionPeriod
   }
 };
 

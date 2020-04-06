@@ -1,6 +1,6 @@
 <template>
   <section class="maintenance-container vector-background col center">
-    <ErrorMaintenance :img="img" :title="title" :msg="msg" />
+    <ErrorMaintenance :img="img" :title="title" :msg="msg" :goto="goto" />
   </section>
 </template>
 
@@ -13,9 +13,15 @@ export default {
   },
   data() {
     return {
-      img: require("@/assets/img/maintenance.png"),
-      title: "Sorry, this page is under maintenance !",
-      msg: "Please come back later until it's up."
+      img: require("@/assets/img/failed-selection.png"),
+      title: "You are not logged in !",
+      msg: "Login first to access this page",
+      goto: [
+        {
+          str: "Login to my account",
+          link: "/sign/in"
+        }
+      ]
     };
   }
 };
@@ -23,6 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .maintenance-container {
-  min-height: inherit;
+  height: inherit;
 }
 </style>

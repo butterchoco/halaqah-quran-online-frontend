@@ -1,21 +1,11 @@
 <template>
-  <div class="page-container col center">
-    <section class="maintenance-container col center">
-      <MessagePage
-        :isPrimary="isPrimary"
-        :isDanger="isDanger"
-        :img="img"
-        :title="title"
-        :msg="msg"
-        :msg2="msg2"
-        :goto="goto"
-      />
-    </section>
+  <div class="page-container vector-background col center">
+    <MessagePage :img="img" :title="title" :msg="msg" :msg2="msg2" :goto="goto" />
   </div>
 </template>
 
 <script>
-import MessagePage from "@/components/MessagePage.vue";
+import MessagePage from "@/components/ErrorPage.vue";
 
 export default {
   name: "PengumumanPage",
@@ -25,19 +15,17 @@ export default {
       img: require("@/assets/img/registration-success.png"),
       title: "Selamat Proses Daftar Berhasil!",
       isPrimary: true,
+      isDanger: false,
       msg: "Mohon menunggu proses seleksi.",
-      msg2: "Pengumuman proses seleksi akan diumumkan dalam 7 hari ke depan."
+      msg2: "Pengumuman proses seleksi akan diumumkan dalam 7 hari ke depan.",
+      goto: []
     };
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page-container {
-  min-width: 20%;
-  max-height: 40%;
-}
-.maintenance-container {
-  overflow: hidden;
+  min-height: inherit;
 }
 </style>

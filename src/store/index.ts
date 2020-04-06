@@ -1,57 +1,109 @@
+/* eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
 import Pengumuman from "@/store/modules/Pengumuman";
 import Home from "@/store/modules/Home";
 import ProgramRegistration from "@/store/modules/ProgramRegistration";
-import DataCalonPeserta from "@/store/modules/DataCalonPeserta.ts";
+import DataCalonPeserta from "@/store/modules/DataCalonPeserta";
+import AlertError from "@/store/modules/AlertError"
 import createPersistedState from "vuex-persistedstate"
-import * as Cookies from "js-cookie";
-
+import Cookies from "js-cookie"
+import User from "@/services/User"
 Vue.use(Vuex);
 
+const user = {
+  id: "",
+  firstName: "",
+  lastName: "",
+  username: "",
+  email: "",
+  role: [
+    {
+      role_id: 0,
+      description: ""
+    }
+  ],
+  whatsappNumber: "",
+}
+
 export default new Vuex.Store({
-  state : {
+  state: {
+    user: user
   },
-  getters : {
-      getRefreshToken: (state) => {
-          return Cookies.get("RefreshToken");
-      },
-      getAccessToken: (state) => {
-          return Cookies.get("AccessToken");
-      },
-      getSelectionPeriod: (state) => {
-        return Cookies.get("SelectionPeriod")
-      },
-      isUserLoggedIn: (state) => {
-        if (Cookies.get("RefreshToken") != null) {
-          return true
-        }
-        return false
+  getters: {
+    getRefreshToken: (state: any) => {
+      return Cookies.get("HolyKuncen");
+    },
+    getAccessToken: (state: any) => {
+      return Cookies.get("KuncenPuma");
+    },
+    isUserLoggedIn: (state: any) => {
+      if (Cookies.get("HolyKuncen") != null && Cookies.get("KuncenPuma") != null) {
+        return true
       }
+      return false
+    },
+    getFullname: (state: any) => {
+      return state.user.firstName + " " + state.user.lastName
+    },
+    getUsername: (state: any) => {
+      return state.user.username
+    },
+    getUserId: (state: any) => {
+      return state.user.id
+    },
+    getUserRole: (state: any) => {
+      return state.user.role
+    }
   },
-  mutations : {
+  mutations: {
     setRefreshToken: (state: any, payload: any) => {
-      Cookies.set("RefreshToken", payload.value, { expires: 0.5 })
+      Cookies.set("HolyKuncen", payload.value, { expires: 0.5, secure: false })
     },
     setAccessToken: (state: any, payload: any) => {
-      Cookies.set("AccessToken", payload.value, { expires: 0.01 })
+      Cookies.set("KuncenPuma", payload.value, { expires: 0.01, secure: false })
     },
-    setSelectionPeriod: (state: any, payload: any) => {
-      Cookies.set("SelectionPeriod", payload.value)
+    removeToken: (state: any) => {
+      Cookies.remove("KuncenPuma")
+      Cookies.remove("HolyKuncen")
     },
-    removeToken: () => {
-      Cookies.remove("RefreshToken")
-      Cookies.remove("AccessToken")
-      Cookies.remove("SelectionPeriod")
+    removeAccessToken: (state: any) => {
+      Cookies.remove("KuncenPuma")
+    },
+    setUserInfo: (state: any, payload: any) => {
+      state.user.username = payload.username
+      state.user.id = payload.id
+      state.user.firstName = payload.firstName
+      state.user.lastName = payload.lastName,
+        state.user.email = payload.email
+      state.user.whatsappNumber = payload.whatsappNumber
+    },
+    setUser: (state: any, payload: any) => {
+      state.user = payload.user
+    },
+    setUserRole: (state: any, payload: any) => {
+      state.user.role = payload.role
+    }
+  },
+  actions: {
+    resetAccessToken: async ({ dispatch, getters }) => {
+      await User.refreshJWTToken(process.env.VUE_APP_URL, getters.getRefreshToken)
+      setTimeout(() => dispatch('resetAccessToken'), 901000)
+    },
+    resetUserInfo: ({ commit }) => {
+      sessionStorage.clear()
     }
   },
   modules: {
     Home,
     Pengumuman,
     ProgramRegistration,
-    DataCalonPeserta
+    DataCalonPeserta,
+    AlertError
   },
   plugins: [
-    createPersistedState()
+    createPersistedState({
+      storage: window.sessionStorage
+    })
   ]
 });

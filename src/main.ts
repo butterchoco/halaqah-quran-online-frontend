@@ -10,11 +10,11 @@ import "@/styles/_global.scss";
 import "@/styles/_variables.scss";
 import Axios from "axios";
 import Vuelidate from "vuelidate";
-Vue.use(Vuelidate);
 
 Vue.prototype.$axios = Axios;
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
+Vue.use(Vuelidate);
 
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem("token");
