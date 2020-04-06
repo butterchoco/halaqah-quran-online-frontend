@@ -1,254 +1,194 @@
 <template>
-  <header id="header" class="header-container">
-    <div class="header-mobile">
-      <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
-      <div class="right-header">
-        <router-link to="/sign/in">
-        <button class="login btn primary" v-if="mobile">
-          <svg class="login-icon" viewBox="0 0 24 24">
-            <path
-              d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-            /></svg
-          >login
-        </button>
-        </router-link>
-        <div
-          class="mob-btn"
-          @click="dropdownActivate"
-          :class="{ active: isDropdownActive }"
-        >
-          <div class="line one"></div>
-          <div class="line two"></div>
-        </div>
-      </div>
-    </div>
-    <nav class="nav-container" v-if="isDropdownActive">
+  <header class="header-container">
+    <nav class="nav-container">
+      <img class="logo-nav desktop" src="@/assets/logo.png" alt="logo" />
       <ul>
         <li>
-          <router-link class="nav-link home" to="/">home</router-link>
+          <router-link class="nav-link" to="/">
+            <span class="material-icons mobile">home</span>
+            <p>Beranda</p>
+          </router-link>
         </li>
         <li>
-          <router-link class="nav-link program" to="/program"
-            >program</router-link
-          >
+          <router-link class="nav-link" to="/program">
+            <span class="material-icons mobile">work</span>
+            <p>Program</p>
+          </router-link>
         </li>
         <li>
-          <router-link class="nav-link about" to="/about">about</router-link>
+          <router-link class="nav-link" to="/about">
+            <span class="material-icons mobile">supervised_user_circle</span>
+            <p>Tentang</p>
+          </router-link>
         </li>
       </ul>
-      <router-link to="/sign/in">
-      <button class="login btn primary" v-if="!mobile">
-        <svg class="login-icon" viewBox="0 0 24 24">
-          <path
-            d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-          /></svg
-        >login
-      </button>
-      </router-link>
     </nav>
+    <div class="right-header">
+      <img class="logo-nav mobile" src="@/assets/logo.png" alt="logo" />
+      <div class="wrapper-link">
+        <router-link class="nav-link" to="/sign/up">Daftar</router-link>
+        <router-link class="nav-link" to="/sign/in">
+          <button class="login btn primary">Masuk</button>
+        </router-link>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
+import store from "@/store";
+
 export default {
-  data() {
-    return {
-      isDropdownActive: false,
-      mobile: true
-    };
-  },
-  methods: {
-    dropdownActivate() {
-      this.isDropdownActive = !this.isDropdownActive;
-    },
-    windowToggle() {
-      if (window.innerWidth > 768) {
-        this.isDropdownActive = true;
-        this.mobile = false;
-      }
-    }
-  },
-  mounted() {
-    this.windowToggle();
+  name: "NavBeforeLogin",
+  created() {
+    store.dispatch("hideAlertError");
+    store.dispatch("resetUserInfo");
+    store.commit("removeToken");
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @media only screen and (min-width: 768px) {
+  .nav-link {
+    width: 140px;
+  }
+
   .header-container {
-    flex-direction: row !important;
-    padding: 10px 0;
-    height: 8vh;
-
-    .header-mobile {
-      width: auto !important;
-      margin: auto 0 auto 10% !important;
-    }
-
-    .mob-btn {
-      display: none !important;
-    }
-
-    .logo-nav {
-      margin: auto $gap-m-1 auto 10% !important;
-    }
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 10vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: white !important;
+    box-shadow: 0 4px 10px rgba($color: #aaa, $alpha: 0.1) !important;
 
     .nav-container {
-      flex-direction: row !important;
+      width: auto !important;
+      position: static !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-left: 5% !important;
+      background: transparent;
+      box-shadow: none !important;
 
       ul {
-        width: auto !important;
-        flex-direction: row !important;
+        list-style: none !important;
+        margin: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
 
-        a {
-          width: 140px !important;
-          display: flex;
+        li {
+          display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-
-          &:hover {
-            background: transparent !important;
-            color: $black !important;
-            font-weight: bold;
-          }
         }
       }
     }
 
-    .login {
-      margin: auto $gap-m-1 !important;
+    .right-header {
+      width: auto !important;
+      position: static !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      margin-right: 5% !important;
+      background: transparent !important;
+      box-shadow: none !important;
+
+      button {
+        margin: 0 !important;
+      }
     }
+  }
+
+  .mobile {
+    display: none !important;
+  }
+
+  .desktop {
+    display: block !important;
   }
 }
 
-.scrolledHeader {
-  box-shadow: 0 4px 20px rgba($color: #222, $alpha: 0.05);
-  transition: box-shadow 0.5s ease;
+.mobile {
+  display: block;
+}
+
+.desktop {
+  display: none;
+}
+
+i.material-icons:hover {
+  color: $primary;
 }
 
 .header-container {
   position: fixed;
-  top: 0;
-  left: 0;
   z-index: 200;
-  background: white;
-  box-shadow: 0 4px 10px rgba($color: #eee, $alpha: 0.4);
-  width: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-
-  .right-header {
-    display: flex;
-  }
-
-  .header-mobile {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .mob-btn {
-    border: 1px solid $white;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    padding: $gap-sm-2;
-    width: 46px;
-    margin: auto 2rem auto 1rem;
-
-    div.line {
-      background: #222;
-      width: 24px;
-      height: 1px;
-      transition: all 0.5s ease;
-
-      &.two {
-        margin-top: $gap-sm-1;
-      }
-    }
-
-    &.active {
-      div.line {
-        &.one {
-          width: 10px;
-        }
-
-        &.two {
-          width: 16px;
-        }
-      }
-    }
-  }
-
-  .logo-nav {
-    margin: 1rem 2rem 1rem 10%;
-    height: 42px;
-    width: 42px;
-  }
-
-  .login {
-    margin: auto 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $gap-sm-1 $gap-sm-4;
-    cursor: pointer;
-
-    .login-icon {
-      fill: white;
-      max-width: 16px;
-      margin-right: $gap-sm-1;
-    }
-
-    &:hover > .login-icon {
-      fill: $black;
-    }
-  }
 
   .nav-container {
-    height: 100%;
+    height: 8vh;
     width: 100%;
+    background: white;
+    box-shadow: 4px 0 10px rgba($color: #aaa, $alpha: 0.1);
+    position: inherit;
+    bottom: 0;
+    left: 0;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
 
     ul {
       width: inherit;
-      height: inherit;
-      text-decoration: none;
       list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      margin: 0 10%;
 
-      li {
-        flex: 1;
-        width: 100%;
-        height: inherit;
+      a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-        a.nav-link {
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          width: 100%;
-          height: inherit;
-          padding: $gap-m-1 $gap-m-2;
-          font-size: 14px;
-          cursor: pointer;
-
-          &:hover {
-            background: $primary;
-            color: white;
-          }
+        &:active {
+          color: $primary;
         }
       }
+    }
+  }
+
+  .right-header {
+    width: 100%;
+    height: 8vh;
+    background: white;
+    box-shadow: 0 4px 10px rgba($color: #aaa, $alpha: 0.1);
+    position: inherit;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      margin-left: 5%;
+      max-height: 60%;
+    }
+
+    .wrapper-link {
+      margin-right: 5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

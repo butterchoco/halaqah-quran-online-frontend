@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit.stop.prevent="onSubmit" :style="inputStyle" autocomplete="off">
+    <b-form @submit.stop.prevent="onSubmit" autocomplete="off">
       <b-form-group id="input-group-1" label="Username" label-for="input-1">
         <b-form-input
           id="input-1"
@@ -30,7 +30,7 @@
       </b-form-group>
       <div class="btn-container">
         <b-button type="submit" variant="none" ref="btn-submit" class="primary">Login</b-button>
-        <p>
+        <p class="mt-4">
           or
           <router-link to="/sign/up">Create New Account</router-link>
         </p>
@@ -62,11 +62,8 @@
 <script>
 import axios from "axios";
 import store from "@/store";
-import { mapGetters } from "vuex";
 import { required } from "vuelidate/lib/validators";
-require("@/styles/reusable/form.css");
-require("@/styles/reusable/loading.css");
-require("@/styles/reusable/modal.css");
+
 export default {
   props: {
     inputWidth: Number
@@ -125,7 +122,7 @@ export default {
               window.location.pathname = "/";
             });
         })
-        .catch(error => {
+        .catch(() => {
           this.$bvModal.show("signin-modal");
         })
         .finally(() => (this.isLoading = false));
@@ -149,6 +146,8 @@ export default {
 };
 </script>
 
-<style scoped src="@/styles/reusable/form.css"></style>
-<style scoped src="@/styles/reusable/loading.css"></style>
-<style scoped src="@/styles/reusable/modal.css"></style>
+<style lang="scss" scoped>
+@import "@/styles/form.scss";
+@import "@/styles/reusable/loading.scss";
+@import "@/styles/reusable/modal.scss";
+</style>

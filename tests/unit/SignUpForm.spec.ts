@@ -8,7 +8,7 @@ import Vuelidate from "vuelidate";
 jest.mock("axios");
 const localVue = createLocalVue();
 localVue.use(BootstrapVue);
-localVue.use(Vuelidate);
+localVue.use(Vuelidate)
 
 const factory = (values = {}) => {
   return shallowMount(SignUpForm, {

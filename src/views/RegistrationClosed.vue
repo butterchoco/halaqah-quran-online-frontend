@@ -1,21 +1,19 @@
 <template>
-  <div class="page-container col center">
-    <section class="maintenance-container col center">
-      <MessagePage
-        :isPrimary="isPrimary"
-        :isDanger="isDanger"
-        :img="img"
-        :title="title"
-        :msg="msg"
-        :msg2="msg2"
-        :goto="goto"
-      />
-    </section>
+  <div class="page-container vector-background col center">
+    <MessagePage
+      :isPrimary="isPrimary"
+      :isDanger="isDanger"
+      :img="img"
+      :title="title"
+      :msg="msg"
+      :msg2="msg2"
+      :goto="goto"
+    />
   </div>
 </template>
 
 <script>
-import MessagePage from "@/components/MessagePage.vue";
+import MessagePage from "@/components/ErrorPage.vue";
 
 export default {
   name: "PengumumanPage",
@@ -28,18 +26,14 @@ export default {
       isDanger: true,
       msg: "Waktu pendaftaran sudah habis. Silakan tunggu proses seleksi.",
       msg2: "",
-      goto : [{str: "Kembali ke beranda", link: "/"} ]
+      goto: [{ str: "Kembali ke beranda", link: "/" }]
     };
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page-container {
-  min-width: 20%;
-  max-height: 40%;
-}
-.maintenance-container {
-  overflow: hidden;
+  min-height: inherit;
 }
 </style>

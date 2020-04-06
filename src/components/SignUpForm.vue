@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-form @submit.stop.prevent="onSubmit" :style="inputStyle" autocomplete="off">
+    <b-form @submit.stop.prevent="onSubmit" autocomplete="off">
       <b-row>
-        <b-col>
+        <b-col sm="12" lg="6">
           <b-form-group id="input-group-1" label="Username" label-for="input-1">
             <b-form-input
               id="input-1"
@@ -44,7 +44,7 @@
             >Please enter a valid number</b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <b-col>
+        <b-col sm="12" lg="6">
           <b-form-group id="input-group-4" label="Email" label-for="input-4">
             <b-form-input
               id="input-4"
@@ -134,10 +134,8 @@
 </template>
 
 <script>
-import axios from "axios"
-require("@/styles/reusable/form.css");
-require("@/styles/reusable/loading.css");
-require("@/styles/reusable/modal.css");
+import axios from "axios";
+
 import {
   required,
   minLength,
@@ -251,18 +249,9 @@ export default {
       }
     },
     postForm() {
-      const nameArr = this.form.fullname.split(" ")
-      const firstName = nameArr.splice(0,1)
-      let lastName = ""
-      function concateLastname(value, index, array) {
-        if (index != nameArr.length - 1) {
-          lastName += value + " " 
-        }
-        else {
-          lastName += value
-        }
-      }
-      nameArr.forEach(concateLastname)
+      const nameArr = this.form.fullname.split(" ");
+      const firstName = nameArr[0];
+      const lastName = nameArr.slice(1, nameArr.length).join(" ");
       axios
         .post(process.env.VUE_APP_URL + "/api/auth/users/", {
           "username": this.form.username,
@@ -305,6 +294,8 @@ export default {
 };
 </script>
 
-<style scoped src="@/styles/reusable/form.css"></style>
-<style scoped src="@/styles/reusable/loading.css"></style>
-<style scoped src="@/styles/reusable/modal.css"></style>
+<style lang="scss" scoped>
+@import "@/styles/form.scss";
+@import "@/styles/reusable/loading.scss";
+@import "@/styles/reusable/modal.scss";
+</style>

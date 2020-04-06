@@ -1,514 +1,516 @@
 <template>
-  <section class="program-registration-container">    
-    <div v-if="getIsProgramOpened" class="registration-form">
-      <h2 class="header-title">
-        Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}
-      </h2>
-      <div class="form-group col">
-        <label for="age-field">Usia</label>
-        <input
-          @change="checkField"
-          required
-          type="number"
-          name="age-field"
-          id="age-field"
-          v-model="age"
-          min="3"
-          max="100"
-          :class="{ error: isShowError && errors.ageError[0] }"
-        />
-        <p v-if="isShowError" class="error">{{ errors.ageError[0] }}</p>
-      </div>
-      <div class="form-group col">
-        <label for="domicile-field">Domisili</label>
-        <input
-          @change="checkField"
-          required
-          type="text"
-          name="domicile-field"
-          id="domicile-field"
-          v-model="domicile"
-          :class="{ error: isShowError && errors.domicileError[0] }"
-        />
-        <p v-if="isShowError" class="error">{{ errors.domicileError[0] }}</p>
-      </div>
-      <div class="form-group col">
-        <label for="juzNumberMemorized-field"
-          >Jumlah juz yang sudah dihafal</label
-        >
-        <input
-          @change="checkField"
-          required
-          type="number"
-          name="juzNumberMemorized-field"
-          id="juzNumberMemorized-field"
-          v-model="juzNumberMemorized"
-          min="1"
-          max="30"
-          :class="{ error: isShowError && errors.juzNumberMemorizedError[0] }"
-        />
-        <p v-if="isShowError" class="error">
-          {{ errors.juzNumberMemorizedError[0] }}
-        </p>
-      </div>
-      <div class="form-group col">
-        <label for="juzTargetNumber-field">Target juz yang ingin dihafal</label>
-        <input
-          @change="checkField"
-          required
-          type="number"
-          name="juzTargetNumber-field"
-          id="juzTargetNumber-field"
-          v-model="juzTargetNumber"
-          min="1"
-          max="30"
-          :class="{ error: isShowError && errors.juzTargetNumberError[0] }"
-        />
-        <p v-if="isShowError" class="error">
-          {{ errors.juzTargetNumberError[0] }}
-        </p>
-      </div>
-      <div class="row h-center">
-        <div class="form-group col">
-          <label for="hasTahsinExperience-field">Pengalaman Tahsin</label>
-          <select
-            name="hasTahsinExperience-field"
-            id="hasTahsinExperience-field"
-            @change="checkField"
-            v-model="hasTahsinExperience"
-            placeholder="Pilih Opsi"
-            :class="{
-              error: isShowError && errors.hasTahsinExperienceError[0]
-            }"
-          >
-            <option disabled hidden value>Pilih Opsi</option>
-            <option value="1">Ya, pernah</option>
-            <option selected value="0">Tidak, belum Pernah</option>
-          </select>
-          <p v-if="isShowError" class="error">
-            {{ errors.hasTahsinExperienceError[0] }}
-          </p>
-        </div>
-        <div v-if="hasExperience()" class="form-group col optional">
-          <label for="tahsinExperience-field"
-            >Kelompok/lembaga yang pernah diikuti</label
-          >
-          <label class="text-muted" for="tahsinExperience-field"
-            >Pisahkan dengan tanda baca koma ","</label
-          >
-          <input
-            required
-            type="text"
-            name="tahsinExperience-field"
-            @change="checkField"
-            v-model="tahsinExperience"
-            id="tahsinExperience-field"
-            :class="{ error: isShowError && errors.tahsinExperienceError[0] }"
-          />
-          <p v-if="isShowError" class="error">
-            {{ errors.tahsinExperienceError[0] }}
-          </p>
-        </div>
-      </div>
-      <div class="row h-center">
-        <div class="form-group col optional">
-          <label for="infaqOptionNumber-field">Pilihan Kontribusi Infaq</label>
-          <select
-            name="infaqOptionNumber-field"
-            id="infaqOptionNumber-field"
-            @change="checkField"
-            v-model="infaqOptionNumber"
-            placeholder="Pilih Opsi"
-            :class="{ error: isShowError && errors.infaqOptionNumberError[0] }"
-          >
-            <option disabled hidden value>Pilih Opsi</option>
-            <option selected value="1">Paket Sendiri (Rp.200.000)</option>
-            <option value="2">Paket Berdua (Rp.240.000)</option>
-            <option value="3">Paket Bertiga (Rp.280.000)</option>
-          </select>
-          <p v-if="isShowError" class="error">
-            {{ errors.infaqOptionNumberError[0] }}
-          </p>
-        </div>
-        <div v-if="isInfaqTogether" class="form-group col optional">
-          <label for="infaqChoice-field">Sahabat kontribusi</label>
-          <label class="text-muted" for="infaqChoice-field"
-            >Pisahkan dengan tanda baca koma ","</label
-          >
-          <input
-            @change="checkField"
-            required
-            type="text"
-            name="infaqChoice-field"
-            v-model="infaqChoice"
-            id="infaqChoice-field"
-            :class="{ error: isShowError && errors.infaqChoiceError[0] }"
-          />
-          <p v-if="isShowError" class="error">
-            {{ errors.infaqChoiceError[0] }}
-          </p>
-        </div>
-      </div>
-      <div class="form-group col">
-        <label for="recording-field">Upload Rekaman Bacaan</label>
-        <label class="text-muted" for="recording-field">
-          Format file: Namamu_TahfidzQu {{ getTimeline.generation }}
-          <br />(".aac", ".mpeg", ".ogg", ".x-wav", ".webm", ".3gpp", ".wav",
-          ".m4a")
-        </label>
-        <input
-          required
-          type="file"
-          name="recording-field"
-          id="recording-field"
-          ref="recordingField"
-          min="1"
-          max="30"
-          @change="onFileChange"
-          :class="{ error: isShowError && errors.recordingError[0] }"
-        />
-        <p v-if="isShowError" class="error">{{ errors.recordingError[0] }}</p>
-      </div>
-      <div class="form-group col">
-        <label for="motivation-field"
-          >Ceritakan motivasimu mengikuti program ini!</label
-        >
-        <textarea
-          @change="checkField"
-          required
-          id="motivation-field"
-          rows="4"
-          cols="50"
-          v-model="motivation"
-          :class="{ error: isShowError && errors.motivationError[0] }"
-        />
-        <p v-if="isShowError" class="error">{{ errors.motivationError[0] }}</p>
-      </div>
-      <div class="form-group col">
-        <label>Darimana kamu mendapatkan informasi program ini ?</label>
-        <p v-if="isShowError" class="error">
-          {{ errors.programInfoReferenceError[0] }}
-        </p>
-        <div class="checkbox">
-          <label for="line-field">Line</label>
-          <span class="check">
-            <svg
-              v-if="programInfoReference.line"
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+  <section class="vector-background">
+    <b-container v-if="getIsProgramOpened" class="form-container py-5">
+      <h2 class="header-title">Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}</h2>
+      <b-form @submit.stop.prevent="onSubmit">
+        <b-row align-v="start">
+          <b-col sm="12">
+            <b-form-checkbox-group
+              id="TermAndConditions"
+              class="my-4"
+              v-model="form.TermAndConditions"
+              name="TermAndConditions"
+              :options="form.TermAndConditionsOptions"
+              :state="validateState('TermAndConditions')"
+              aria-describedby="TermAndConditions-live-feedback"
+              value-field="item"
+              text-field="name"
+            ></b-form-checkbox-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6" lg="5">
+            <b-form-group id="age-group" label="Umur" label-for="age">
+              <b-form-input
+                id="age"
+                size="sm"
+                type="number"
+                v-model="form.age"
+                placeholder="Masukkan umur . . . contoh : 12"
+                :state="validateState('age')"
+                aria-describedby="age-live-feedback"
+                @change="touchForm('age')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="age-live-feedback"
+                class="error_age"
+              >Masukkan umur dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6" lg="5">
+            <b-form-group id="domicile-group" label="Domisili" label-for="domicile">
+              <b-form-input
+                id="domicile"
+                size="sm"
+                v-model="form.domicile"
+                :state="validateState('domicile')"
+                placeholder="Masukkan domisili . . . contoh : Depok"
+                aria-describedby="domicile-live-feedback"
+                @change="touchForm('domicile')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="domicile-live-feedback"
+                class="error_domicile"
+              >Masukkan domisili dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6" lg="5">
+            <b-form-group
+              id="juzNumberMemorized-group"
+              label="Jumlah Juz yang dihafal"
+              label-for="juzNumberMemorized"
             >
-              <path
-                d="M1 9.5L6.5 16L17 1"
-                stroke="#1B262C"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            @change="checkField"
-            required
-            hidden
-            type="checkbox"
-            name="line-field"
-            id="line-field"
-            ref="lineField"
-            min="1"
-            max="30"
-            v-model="programInfoReference.line"
-          />
-        </div>
-        <div class="checkbox">
-          <label for="whatsapp-field">Whatsapp</label>
-          <span class="check">
-            <svg
-              v-if="programInfoReference.whatsapp"
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <b-form-input
+                id="juzNumberMemorized"
+                type="number"
+                size="sm"
+                placeholder="Masukkan jumlah juz . . . contoh : 12"
+                v-model="form.juzNumberMemorized"
+                :state="validateState('juzNumberMemorized')"
+                aria-describedby="juzNumberMemorized-live-feedback"
+                @change="touchForm('juzNumberMemorized')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="juzNumberMemorized-live-feedback"
+                class="error_juzNumberMemorized"
+              >Masukkan jumlah dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6" lg="5">
+            <b-form-group
+              id="juzTargetNumber-group"
+              label="Target juz yang ingin dihafal"
+              label-for="juzTargetNumber"
             >
-              <path
-                d="M1 9.5L6.5 16L17 1"
-                stroke="#1B262C"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            @change="checkField"
-            required
-            hidden
-            type="checkbox"
-            name="whatsapp-field"
-            id="whatsapp-field"
-            ref="whatsappField"
-            min="1"
-            max="30"
-            v-model="programInfoReference.whatsapp"
-          />
-        </div>
-        <div class="checkbox">
-          <label for="instagram-field">Instagram</label>
-          <span class="check">
-            <svg
-              v-if="programInfoReference.instagram"
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <b-form-input
+                id="juzTargetNumber"
+                type="number"
+                size="sm"
+                v-model="form.juzTargetNumber"
+                placeholder="Masukkan jumlah juz . . . contoh : 18"
+                :state="validateState('juzTargetNumber')"
+                aria-describedby="juzTargetNumber-live-feedback"
+                @change="touchForm('juzTargetNumber')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="juzTargetNumber-live-feedback"
+                class="error_juzTargetNumber"
+              >Masukkan jumlah dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6">
+            <b-form-group
+              id="hasTahsinExperience-group"
+              label="Pengalaman Tahsin"
+              label-for="hasTahsinExperience"
             >
-              <path
-                d="M1 9.5L6.5 16L17 1"
-                stroke="#1B262C"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            @change="checkField"
-            required
-            hidden
-            type="checkbox"
-            name="instagram-field"
-            id="instagram-field"
-            ref="instagramField"
-            min="1"
-            max="30"
-            v-model="programInfoReference.instagram"
-          />
-        </div>
-        <div class="checkbox">
-          <label for="facebook-field">Facebook</label>
-          <span class="check">
-            <svg
-              v-if="programInfoReference.facebook"
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <b-form-select
+                id="hasTahsinExperience"
+                v-model="form.hasTahsinExperience"
+                :options="form.hasTahsinExperienceOption"
+                placeholder="Masukkan umur . . . contoh : 12"
+                :state="validateState('hasTahsinExperience')"
+                aria-describedby="hasTahsinExperience-live-feedback"
+                @change="touchForm('hasTahsinExperience')"
+              >
+                <template v-slot:first>
+                  <b-form-select-option :value="null" disabled>Pilih Opsi</b-form-select-option>
+                </template>
+              </b-form-select>
+            </b-form-group>
+          </b-col>
+          <b-col sm="12" md="6" v-if="form.hasTahsinExperience == 1">
+            <b-form-group
+              id="tahsinExperience-group"
+              label="Belajar di mana ?"
+              label-for="tahsinExperience"
             >
-              <path
-                d="M1 9.5L6.5 16L17 1"
-                stroke="#1B262C"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            @change="checkField"
-            required
-            hidden
-            type="checkbox"
-            name="facebook-field"
-            id="facebook-field"
-            ref="facebookField"
-            min="1"
-            max="30"
-            v-model="programInfoReference.facebook"
-          />
-        </div>
-      </div>
-      <div class="form-group tnc">
-        <div class="checkbox">
-          <label class="TermAndConditions1" for="TermAndConditions1-field">
-            Saya bersedia meluangkan waktu untuk setoran secara langsung
-            (malalui whatsapp call) ke ustadz/ah sepekan minimal sekali dan
-            ujian muroja'ah sepekan sekali
-          </label>
-          <span class="check">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              v-if="isTnC1Check"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <b-form-input
+                id="tahsinExperience"
+                size="sm"
+                placeholder="Kelompok/lembaga yang pernah diikuti"
+                v-model="form.tahsinExperience"
+                :state="validateState('tahsinExperience')"
+                aria-describedby="tahsinExperience-live-feedback"
+                @change="touchForm('tahsinExperience')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="tahsinExperience-live-feedback"
+                class="error_tahsinExperience"
+              >Masukkan kelompok dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6">
+            <b-form-group
+              id="infaqOptionNumber-group"
+              label="Pilihan Kontribusi Infaq"
+              label-for="infaqOptionNumber"
             >
-              <path
-                d="M1 9.5L6.5 16L17 1"
-                stroke="#1B262C"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            @change="checkField"
-            required
-            hidden
-            type="checkbox"
-            name="TermAndConditions1-field"
-            id="TermAndConditions1-field"
-            ref="TermAndConditions1Field"
-            min="1"
-            max="30"
-            v-model="isTnC1Check"
-          />
-        </div>
-      </div>
-      <div class="form-group tnc">
-        <div class="checkbox">
-          <label class="TermAndConditions2" for="TermAndConditions2-field">
-            Saya berusaha sebaik mungkin menjaga adab halaqah Quran, misal
-            dengan aktif di grup, memberikan kabar jika berhalangan setoran dan
-            menaati peraturan.
-          </label>
-          <span class="check">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              v-if="isTnC2Check"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <b-form-select
+                id="infaqOptionNumber"
+                v-model="form.infaqOptionNumber"
+                :options="form.infaqOptionNumberOption"
+                :state="validateState('infaqOptionNumber')"
+                aria-describedby="infaqOptionNumber-live-feedback"
+                @change="touchForm('infaqOptionNumber')"
+              >
+                <template v-slot:first>
+                  <b-form-select-option :value="null" disabled>Pilih Opsi</b-form-select-option>
+                </template>
+              </b-form-select>
+            </b-form-group>
+          </b-col>
+          <b-col sm="12" md="6" v-if="form.infaqOptionNumber === 2 || form.infaqOptionNumber === 3">
+            <b-form-group
+              id="referralName1-group"
+              v-if="form.infaqOptionNumber === 2 || form.infaqOptionNumber === 3"
+              label="Sahabat kontribusi 1"
+              label-for="referralName1"
             >
-              <path
-                d="M1 9.5L6.5 16L17 1"
-                stroke="#1B262C"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            @change="checkField"
-            required
-            hidden
-            type="checkbox"
-            name="TermAndConditions2-field"
-            id="TermAndConditions2-field"
-            ref="TermAndConditions2Field"
-            min="1"
-            max="30"
-            v-model="isTnC2Check"
-          />
-        </div>
-      </div>
-      <p v-if="isShowError" class="error">
-        {{ this.errors.TermAndConditionsError[0] }}
-      </p>
-      <button class="register btn primary" @click="submit">Daftar</button>
-    </div>
-    <div v-else>
-      Program Pendaftaran Belum Dibuka
-    </div>
+              <b-form-input
+                id="referralName1"
+                size="sm"
+                placeholder="Masukkan username teman kamu di sini"
+                v-model="form.referralName1"
+                :state="validateState('referralName1')"
+                aria-describedby="referralName1-live-feedback"
+                @change="touchForm('referralName1')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="referralName1-live-feedback"
+                class="error_referralName1"
+              >Masukkan sahabat kontribusi 1 dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+            <b-form-group
+              id="referralName2-group"
+              v-if="form.infaqOptionNumber === 3"
+              label="Sahabat kontribusi 2"
+              label-for="referralName2"
+            >
+              <b-form-input
+                id="referralName2"
+                size="sm"
+                placeholder="Masukkan username teman kamu di sini"
+                v-model="form.referralName2"
+                :state="validateState('referralName2')"
+                aria-describedby="referralName2-live-feedback"
+                @change="touchForm('referralName2')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="referralName2-live-feedback"
+                class="error_referralName2"
+              >Masukkan sahabat kontribusi 2 dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6" lg="5">
+            <b-form-group
+              class="form-group"
+              id="recording-group"
+              label="Upload Rekaman Bacaan"
+              description="Format file: Namamu_TahfidzQu_Angkatan ('.aac', '.mpeg', '.ogg', '.x-wav', '.webm', '.3gpp', '.wav',
+          '.m4a', '.mp3')"
+              label-for="recording"
+            >
+              <b-form-file
+                id="recording"
+                size="sm"
+                ref="recording"
+                v-model="form.recording"
+                :state="validateRecording"
+                aria-describedby="recording-live-feedback"
+              ></b-form-file>
+              <b-form-invalid-feedback
+                id="recording-live-feedback"
+                class="error_recording"
+              >Upload file rekaman bacaan dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6" lg="6">
+            <b-form-group
+              id="motivation-group"
+              label="Ceritakan motivasimu mengikuti program ini!"
+              label-for="motivation"
+            >
+              <b-form-textarea
+                id="motivation"
+                v-model="form.motivation"
+                placeholder="Masukkan motivasi kamu di sini..."
+                :state="validateState('motivation')"
+                aria-describedby="motivation-live-feedback"
+                rows="3"
+                max-rows="4"
+              ></b-form-textarea>
+              <b-form-invalid-feedback
+                id="motivation-live-feedback"
+                class="error_motivation"
+              >Masukkan motivasi kamu mengikuti program ini</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12">
+            <b-form-group
+              id="programInfoReference-group"
+              class="mt-4"
+              label="Darimana kamu mendapatkan informasi program ini ?"
+              label-for="programInfoReference"
+            >
+              <b-form-checkbox-group
+                id="programInfoReference"
+                v-model="form.programInfoReference"
+                name="programInfoReference"
+                button-variant="primary"
+                :options="form.programInfoReferenceOptions"
+                value-field="item"
+                text-field="name"
+                :state="validateState('programInfoReference')"
+                aria-describedby="programInfoReference-live-feedback"
+              ></b-form-checkbox-group>
+              <b-form-invalid-feedback
+                id="programInfoReference-live-feedback"
+                class="error_programInfoReference"
+              >Masukkan platform darimana info berasal</b-form-invalid-feedback>
+
+              <b-col cols="6">
+                <b-form-input
+                  id="programInfoReferenceAdditional"
+                  size="sm"
+                  class="mt-2"
+                  placeholder="Pisahkan dengan koma jika lebih dari satu platform . . ."
+                  v-if="form.programInfoReference.includes('Other')"
+                  v-model="form.programInfoReferenceAdditional"
+                  :state="validateState('programInfoReferenceAdditional')"
+                  aria-describedby="programInfoReferenceAdditional-live-feedback"
+                  @change="touchForm('programInfoReferenceAdditional')"
+                ></b-form-input>
+                <b-form-invalid-feedback
+                  id="programInfoReferenceAdditional-live-feedback"
+                  class="error_programInfoReferenceAdditional"
+                >Masukkan platform darimana info berasal</b-form-invalid-feedback>
+              </b-col>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-button
+          id="submit"
+          type="submit"
+          size="sm"
+          ref="btn-submit"
+          variant="none"
+          class="primary mt-4"
+        >Daftar</b-button>
+      </b-form>
+    </b-container>
+    <div v-else>Program Pendaftaran Belum Dibuka</div>
   </section>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
+import {
+  required,
+  requiredIf,
+  minLength,
+  maxLength,
+  numeric
+} from "vuelidate/lib/validators";
+
+import { mapGetters } from "vuex";
+import router from "@/router";
+import User from "@/services/User";
 
 export default {
   name: "ProgramRegistration",
   components: {},
   data() {
     return {
-      displayError: "",
-      errors: {
-        ageError: [],
-        domicileError: [],
-        recordingError: [],
-        juzTargetNumberError: [],
-        juzNumberMemorizedError: [],
-        hasTahsinExperienceError: [],
-        tahsinExperienceError: [],
-        infaqOptionNumberError: [],
-        infaqChoiceError: [],
-        programInfoReferenceError: [],
-        motivationError: [],
-        TermAndConditionsError: []
+      form: {
+        age: "",
+        domicile: "",
+        recording: null,
+        juzTargetNumber: "",
+        juzNumberMemorized: "",
+        hasTahsinExperience: "",
+        hasTahsinExperienceOption: [
+          { value: 1, text: "Ya, pernah" },
+          { value: 0, text: "Tidak, belum pernah" }
+        ],
+        tahsinExperience: "",
+        infaqOptionNumber: "",
+        infaqOptionNumberOption: [
+          { value: 1, text: "Paket Sendiri (Rp.200.000)" },
+          { value: 2, text: "Paket Berdua (Rp.240.000)" },
+          { value: 3, text: "Paket Bertiga (Rp.280.000)" }
+        ],
+        referralName1: "",
+        referralName2: "",
+        programInfoReference: [],
+        programInfoReferenceOptions: [
+          { item: "Line", name: "Line" },
+          { item: "Instagram", name: "Instagram" },
+          { item: "Whatsapp", name: "Whatsapp" },
+          { item: "Facebook", name: "Facebook" },
+          { item: "Other", name: "Others" }
+        ],
+        TermAndConditions: [],
+        TermAndConditionsOptions: [
+          {
+            item: "tnc1",
+            name:
+              "Saya bersedia meluangkan waktu untuk setoran secara langsung(malalui whatsapp call) ke ustadz/ah sepekan minimal sekali dan ujian muroja'ah sepekan sekali"
+          },
+          {
+            item: "tnc2",
+            name:
+              "Saya berusaha sebaik mungkin menjaga adab halaqah Quran, misal dengan aktif di grup, memberikan kabar jika berhalangan setoran dan menaati peraturan."
+          }
+        ]
       },
-      isShowError: false,
-      userId: "",
-      term: "",
-      age: "",
-      domicile: "",
-      recording: "",
-      juzTargetNumber: "",
-      juzNumberMemorized: "",
-      hasTahsinExperience: "",
-      tahsinExperience: "",
-      isInfaqTogether: false,
-      infaqOptionNumber: "",
-      infaqChoice: [],
-      programInfoReference: {
-        line: false,
-        whatsapp: false,
-        intagram: false,
-        facebook: false
-      },
-      motivation: "",
-      isTnC1Check: false,
-      isTnC2Check: false,
-      canSubmit: false
+      pathTo: {
+        0: "/login-forbidden",
+        1: "/regis-success",
+        2: "/regis-success",
+        3: "/forbidden",
+        4: "/forbidden"
+      }
     };
   },
+  validations: {
+    form: {
+      age: {
+        required,
+        numeric,
+        minLength: minLength(1),
+        maxLength: maxLength(100)
+      },
+      domicile: {
+        required,
+        minLength: minLength(1)
+      },
+      juzTargetNumber: {
+        required,
+        numeric,
+        minLength: minLength(1),
+        maxLength: maxLength(30)
+      },
+      juzNumberMemorized: {
+        required,
+        numeric,
+        minLength: minLength(1),
+        maxLength: maxLength(30)
+      },
+      hasTahsinExperience: {
+        required
+      },
+      tahsinExperience: {
+        requiredIf: requiredIf("hasTahsinExperience" === 1)
+      },
+      infaqOptionNumber: {
+        required
+      },
+      referralName1: {
+        required
+      },
+      referralName2: {
+        required
+      },
+      motivation: {
+        required
+      },
+      programInfoReference: {
+        required
+      },
+      programInfoReferenceAdditional: {
+        requiredIf: requiredIf("programInfoReference".includes("Other"))
+      },
+      TermAndConditions: {
+        required,
+        minLength: minLength(2)
+      }
+    }
+  },
   created() {
-    this.checkField();
-    this.getLatestPeriod();
+    if (!this.getIsProgramOpened) {
+      router.push("/regis-closed");
+      return;
+    }
+    if (this.getHasProgramRegistered) {
+      router.push("/regis-success");
+    }
+    if (
+      this.pathTo[this.getUserRole[this.getUserRole.length - 1].role_id] !==
+      undefined
+    ) {
+      router.push(
+        this.pathTo[this.getUserRole[this.getUserRole.length - 1].role_id]
+      );
+      return;
+    }
   },
   methods: {
-    getLatestPeriod() {
-      axios
-        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
-        .then(response => {
-          if (response.data.latest_opened) {
-            const today = Date.parse(new Date());
-            const startDate = Date.parse(
-              response.data.latest_opened.start_date
-            );
-            const endDate = Date.parse(response.data.latest_opened.end_date);
-            if (today < endDate && today >= startDate) {
-              this.$store.commit("setProgramOpened", { value: true });
-            } else {
-              this.$store.commit("setProgramOpened", { value: false });
-            }
-          } else {
-            this.$store.commit("setProgramOpened", { value: false });
-          }
-        });
+    touchForm(name) {
+      this.$v.form[name].$touch();
     },
-    hideError() {
-      this.isShowError = false;
+    validateState(name) {
+      const { $dirty, $error } = this.$v.form[name];
+      return $dirty ? !$error : null;
     },
-    showError() {
-      this.isShowError = true;
-    },
-    removeElementInArray(arr, value) {
-      const index = arr.indexOf(value);
-      if (index > -1) {
-        arr.splice(index, 1);
-      }
-    },
-    hasExperience() {
-      if (this.hasTahsinExperience == "1") {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    onFileChange() {
-      const files = this.$refs.recordingField.files;
-      if (!files.length) {
+    onSubmit() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
         return;
+      } else {
+        this.isLoading = true;
+        this.postForm();
       }
+    },
+    postForm() {
+      User.sendProgramRegistrationForm(
+        process.env.VUE_APP_URL,
+        this.getAccessToken,
+        this.getSelectionPeriodId,
+        this.form
+      ).then(() => {
+        router.push("/regis-success");
+      });
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getTimeline: "getTimeline",
+      getAccessToken: "getAccessToken",
+      getIsProgramOpened: "getIsProgramOpened",
+      getUserId: "getUserId",
+      getUserRole: "getUserRole",
+      getSelectionPeriodId: "getSelectionPeriodId",
+      getSelectionPeriodTerm: "getSelectionPeriodTerm",
+      getHasProgramRegistered: "getHasProgramRegistered"
+    }),
+    validateRecording() {
+      const files = this.form.recording;
+      if (files == null) return false;
       const expectedExtensionFiles = [
         "aac",
         "mpeg",
@@ -517,412 +519,27 @@ export default {
         "webm",
         "3gpp",
         "wav",
-        "m4a"
+        "m4a",
+        "mp3"
       ];
-      const extensionFiles = files[0].name.split(".")[1];
-      const formatMessageError = "File harus mempunyai format yang sesuai !";
-      const recordingFieldNotFilled =
-        "Upload rekaman bacaan anda terlebih dahulu !";
-      if (expectedExtensionFiles.includes(extensionFiles)) {
-        if (this.errors.recordingError.includes(formatMessageError)) {
-          this.removeElementInArray(
-            this.errors.recordingError,
-            formatMessageError
-          );
-        }
-        if (this.errors.recordingError.includes(recordingFieldNotFilled)) {
-          this.removeElementInArray(
-            this.errors.recordingError,
-            recordingFieldNotFilled
-          );
-        }
-      } else {
-        if (!this.errors.recordingError.includes(formatMessageError)) {
-          this.errors.recordingError.unshift(formatMessageError);
-        }
-        return;
-      }
-      this.recording = files[0];
-    },
-    checkInfaqOptionField() {
-      const infaqOptionError = "Isian 'Pilihan Kontribusi Infaq' harus dipilih";
-
-      if (this.infaqOptionNumber == "2" || this.infaqOptionNumber == "3") {
-        this.isInfaqTogether = true;
-      } else {
-        this.isInfaqTogether = false;
-      }
-
-      if (this.infaqOptionNumber != "") {
-        if (this.errors.infaqOptionNumberError.includes(infaqOptionError)) {
-          this.removeElementInArray(
-            this.errors.infaqOptionNumberError,
-            infaqOptionError
-          );
-        }
-
-        if (this.infaqOptionNumber == "2" || this.infaqOptionNumber == "3") {
-          const infaqChoiceFieldNotFilled =
-            "Isian 'Sahabat Kontribusi' harus dipilih";
-          if (this.infaqChoice != "") {
-            if (
-              this.errors.infaqChoiceError.includes(infaqChoiceFieldNotFilled)
-            ) {
-              this.removeElementInArray(
-                this.errors.infaqChoiceError,
-                infaqChoiceFieldNotFilled
-              );
-            }
-
-            const friendsMaximumExceededError =
-              "Sahabat Kontribusi melebihi kapasitas paket yang dipilih !";
-            const infaqChoiceNotExpected =
-              "Sahabat Kontribusi harus diisi sesuai paket !";
-            if (
-              this.infaqChoice.split(",").length >
-              Number(this.infaqOptionNumber) - 1
-            ) {
-              if (
-                !this.errors.infaqChoiceError.includes(
-                  friendsMaximumExceededError
-                )
-              ) {
-                this.errors.infaqChoiceError.unshift(
-                  friendsMaximumExceededError
-                );
-              }
-            } else if (
-              this.infaqChoice.split(",").length <
-              Number(this.infaqOptionNumber) - 1
-            ) {
-              if (
-                !this.errors.infaqChoiceError.includes(infaqChoiceNotExpected)
-              ) {
-                this.errors.infaqChoiceError.unshift(infaqChoiceNotExpected);
-              }
-            } else {
-              if (
-                this.errors.infaqChoiceError.includes(
-                  friendsMaximumExceededError
-                )
-              ) {
-                this.removeElementInArray(
-                  this.errors.infaqChoiceError,
-                  friendsMaximumExceededError
-                );
-              } else if (
-                this.errors.infaqChoiceError.includes(infaqChoiceNotExpected)
-              ) {
-                this.removeElementInArray(
-                  this.errors.infaqChoiceError,
-                  infaqChoiceNotExpected
-                );
-              }
-            }
-          } else {
-            if (
-              !this.errors.infaqChoiceError.includes(infaqChoiceFieldNotFilled)
-            ) {
-              this.errors.infaqChoiceError.unshift(infaqChoiceFieldNotFilled);
-            }
-          }
-        }
-      } else {
-        if (!this.errors.infaqOptionNumberError.includes(infaqOptionError)) {
-          this.errors.infaqOptionNumberError.unshift(infaqOptionError);
-        }
-      }
-    },
-    checkTahsinExperienceField() {
-      const hasTahsinExpFieldNotFilled =
-        "Isian 'Pengalaman Tahsin' harus dipilih !";
-
-      if (this.hasTahsinExperience != "") {
-        if (
-          this.errors.hasTahsinExperienceError.includes(
-            hasTahsinExpFieldNotFilled
-          )
-        ) {
-          this.removeElementInArray(
-            this.errors.hasTahsinExperienceError,
-            hasTahsinExpFieldNotFilled
-          );
-        }
-
-        if (this.hasTahsinExperience == "1") {
-          const tahsinExperienceFieldNotFilled =
-            "Isian 'Kelompok/lembaga yang pernah diikuti' harus diisi !";
-          if (this.tahsinExperience != "") {
-            if (
-              this.errors.tahsinExperienceError.includes(
-                tahsinExperienceFieldNotFilled
-              )
-            ) {
-              this.removeElementInArray(
-                this.errors.tahsinExperienceError,
-                tahsinExperienceFieldNotFilled
-              );
-            }
-          } else {
-            if (
-              !this.errors.tahsinExperienceError.includes(
-                tahsinExperienceFieldNotFilled
-              )
-            ) {
-              this.errors.tahsinExperienceError.unshift(
-                tahsinExperienceFieldNotFilled
-              );
-            }
-          }
-        }
-      } else {
-        if (
-          !this.errors.hasTahsinExperienceError.includes(
-            hasTahsinExpFieldNotFilled
-          )
-        ) {
-          this.errors.hasTahsinExperienceError.unshift(
-            hasTahsinExpFieldNotFilled
-          );
-        }
-      }
-    },
-    checkJuzTargetNumber() {
-      const juzTargetFieldNotFilled =
-        "Isian 'Target juz yang ingin dihafal' harus diisi lengkap !";
-      if (this.juzTargetNumber != "") {
-        if (
-          this.errors.juzTargetNumberError.includes(juzTargetFieldNotFilled)
-        ) {
-          this.removeElementInArray(
-            this.errors.juzTargetNumberError,
-            juzTargetFieldNotFilled
-          );
-        }
-      } else {
-        if (
-          !this.errors.juzTargetNumberError.includes(juzTargetFieldNotFilled)
-        ) {
-          this.errors.juzTargetNumberError.unshift(juzTargetFieldNotFilled);
-        }
-      }
-    },
-    checkAgeField() {
-      const ageFieldNotFilled = "Isian 'Usia' harus diisi lengkap !";
-      if (this.age != "") {
-        if (this.errors.ageError.includes(ageFieldNotFilled)) {
-          this.removeElementInArray(this.errors.ageError, ageFieldNotFilled);
-        }
-      } else {
-        if (!this.errors.ageError.includes(ageFieldNotFilled)) {
-          this.errors.ageError.unshift(ageFieldNotFilled);
-        }
-      }
-    },
-    checkDomicileField() {
-      const domicileFieldNotFilled = "Isian 'Domisili' harus diisi lengkap !";
-      if (this.domicile != "") {
-        if (this.errors.domicileError.includes(domicileFieldNotFilled)) {
-          this.removeElementInArray(
-            this.errors.domicileError,
-            domicileFieldNotFilled
-          );
-        }
-      } else {
-        if (!this.errors.domicileError.includes(domicileFieldNotFilled)) {
-          this.errors.domicileError.unshift(domicileFieldNotFilled);
-        }
-      }
-    },
-    checkJuzNumberMemorizedField() {
-      const juzMemorizedFieldNotFilled =
-        "Isian 'Jumlah juz yang sudah dihafal' harus diisi lengkap !";
-      if (this.juzNumberMemorized != "") {
-        if (
-          this.errors.juzNumberMemorizedError.includes(
-            juzMemorizedFieldNotFilled
-          )
-        ) {
-          this.removeElementInArray(
-            this.errors.juzNumberMemorizedError,
-            juzMemorizedFieldNotFilled
-          );
-        }
-      } else {
-        if (
-          !this.errors.juzNumberMemorizedError.includes(
-            juzMemorizedFieldNotFilled
-          )
-        ) {
-          this.errors.juzNumberMemorizedError.unshift(
-            juzMemorizedFieldNotFilled
-          );
-        }
-      }
-    },
-    checkRecordingField() {
-      const recordingFieldNotFilled =
-        "Upload rekaman bacaan anda terlebih dahulu !";
-
-      if (this.recording != "") {
-        if (this.errors.recordingError.includes(recordingFieldNotFilled)) {
-          this.removeElementInArray(
-            this.errors.recordingError,
-            recordingFieldNotFilled
-          );
-        }
-      } else {
-        if (!this.errors.recordingError.includes(recordingFieldNotFilled)) {
-          this.errors.recordingError.unshift(recordingFieldNotFilled);
-        }
-      }
-    },
-    checkMotivationField() {
-      const motivationFieldNotFilled = "Isian 'motivasi' harus diisi lengkap !";
-      if (this.motivation != "") {
-        if (this.errors.motivationError.includes(motivationFieldNotFilled)) {
-          this.removeElementInArray(
-            this.errors.motivationError,
-            motivationFieldNotFilled
-          );
-        }
-      } else {
-        if (!this.errors.motivationError.includes(motivationFieldNotFilled)) {
-          this.errors.motivationError.unshift(motivationFieldNotFilled);
-        }
-      }
-    },
-    checkTnCField() {
-      const tncNotChecked =
-        "Ceklis Persetujuan dan Ketentuan terlebih dahulu !";
-      if (this.isTnC1Check == true && this.isTnC2Check == true) {
-        if (this.errors.TermAndConditionsError.includes(tncNotChecked)) {
-          this.removeElementInArray(
-            this.errors.TermAndConditionsError,
-            tncNotChecked
-          );
-        }
-      } else {
-        if (!this.errors.TermAndConditionsError.includes(tncNotChecked)) {
-          this.errors.TermAndConditionsError.unshift(tncNotChecked);
-        }
-      }
-    },
-    checkInformationReferenceField() {
-      const programInfoReferenceFieldNotFilled =
-        "Isian 'Darimana mendapatkan informasi program ini' harus diisi lengkap !";
-      if (
-        this.programInfoReference.line != "" ||
-        this.programInfoReference.whatsapp != "" ||
-        this.programInfoReference.intagram != "" ||
-        this.programInfoReference.facebook != ""
-      ) {
-        if (
-          this.errors.programInfoReferenceError.includes(
-            programInfoReferenceFieldNotFilled
-          )
-        ) {
-          this.removeElementInArray(
-            this.errors.programInfoReferenceError,
-            programInfoReferenceFieldNotFilled
-          );
-        }
-      } else {
-        if (
-          !this.errors.programInfoReferenceError.includes(
-            programInfoReferenceFieldNotFilled
-          )
-        ) {
-          this.errors.programInfoReferenceError.unshift(
-            programInfoReferenceFieldNotFilled
-          );
-        }
-      }
-    },
-    checkField() {
-      this.checkAgeField();
-
-      this.checkDomicileField();
-
-      this.checkJuzNumberMemorizedField();
-
-      this.checkJuzTargetNumber();
-
-      this.checkTahsinExperienceField();
-
-      this.checkInfaqOptionField();
-
-      this.checkRecordingField();
-
-      this.checkMotivationField();
-
-      this.checkInformationReferenceField();
-
-      this.checkTnCField();
-    },
-    hasError() {
-      let key;
-      for (key in this.errors) {
-        if (this.errors[key].length != 0) {
-          return true;
-        }
-      }
+      const extensionFiles = files.name.split(".")[1];
+      if (expectedExtensionFiles.includes(extensionFiles)) return true;
       return false;
-    },
-    submit() {
-      if (this.hasError()) {
-        this.showError();
-        return;
-      }
-      const formData = new FormData();
-      const year = new Date().getFullYear();
-      axios
-        .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
-        .then(response => {
-          this.periodId = response.data.latest_opened.id;
-          this.term = "TahfidzQu_" + year + "_" + this.periodId;
-          const token = this.$store.getters.getUserToken;
-          formData.append("term", this.term);
-          formData.append("user", 12);
-          formData.append("age", this.age);
-          formData.append("domicile", this.domicile);
-          formData.append("recording", this.recording);
-          formData.append("juz_target_number", this.juzTargetNumber);
-          formData.append("juz_number_memorized", this.juzNumberMemorized);
-          formData.append("tahsin_experience", this.tahsinExperience);
-          formData.append("pilihan_infaq", this.infaqOptionNumber);
-          formData.append("selection_period", this.periodId);
-          formData.append("referral_names", this.infaqChoice);
-          axios
-            .post(
-              process.env.VUE_APP_URL +
-                "/api/tahfidz/selections/" +
-                this.periodId +
-                "/",
-              formData,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                  Authorization: "JWT " + token
-                }
-              }
-            )
-            .then(response => {
-              this.$store.commit("setHasProgramRegistered", {
-                value: response.data["has_registered"]
-              });
-              this.$router.push("/regis-success");
-            });
-        });
     }
-  },
-  computed: {
-    ...mapGetters(["getTimeline", "getUserToken", "getIsProgramOpened"]),
-    ...mapMutations(["setHasProgramRegistered"])
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/programRegistrationForm.scss";
+@import "@/styles/form.scss";
+
+.form-container {
+  padding: 0 10%;
+}
+
+@media only screen and (max-width: 768px) {
+  .form-container {
+    padding: 0 5%;
+  }
+}
 </style>

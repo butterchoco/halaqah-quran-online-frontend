@@ -1,13 +1,16 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import Store from "@/store/index.ts";
+import Store from "./services/dummystore";
 import Home from "@/views/Home.vue";
 import VueRouter from "vue-router";
+import Vuex from "vuex"
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
+localVue.use(Vuex)
 
 describe("Home.vue", () => {
-  const store = Store;
+  const store = new Vuex.Store(Store)
+
   const wrapper = shallowMount(Home, {
     store,
     localVue
@@ -29,7 +32,14 @@ describe("Home.vue", () => {
   it("has timeline correctly", () => {
     expect(wrapper.vm.$store.getters.getTimeline).toBeTruthy();
   });
-  it("has IsProgramOpened correctly", () => {
+  it("has IsProgramOpened correctly", async () => {
+    store.commit("setSelectionPeriod", {
+      selectionPeriod: {
+        periodId: "1",
+        term: "TahfidzQu_2020_1"
+      }
+    })
+    await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.getters.getIsProgramOpened).toBeTruthy();
   });
   it("has AllCurriculum correctly", () => {

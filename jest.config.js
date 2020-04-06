@@ -5,5 +5,10 @@ module.exports = {
     "src/views/*.vue",
     "src/router/*",
     "src/store/*"
-  ]
+  ],
+  coverageReporters: ["text", "html"],
 };
+
+process.env = Object.assign(process.env, {
+  VUE_APP_URL: 'http://localhost:8000',
+});

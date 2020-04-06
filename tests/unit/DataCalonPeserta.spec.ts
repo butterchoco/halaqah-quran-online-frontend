@@ -12,7 +12,7 @@ describe("Data Calon Peserta", () => {
     store
   });
   it("selector sees participant list", () => {
-      const getData = jest.fn()
+    const getData = jest.fn()
     function data() {
       return {
         periodId: 1,
@@ -38,13 +38,13 @@ describe("Data Calon Peserta", () => {
       };
     }
     wrapper = shallowMount(DataCalonPeserta, {
-        localVue,
-        stubs: ["router-link", "router-view"],
-        store,
-        data: data,
-        methods: {
-            getData
-        }
+      localVue,
+      stubs: ["router-link", "router-view"],
+      store,
+      data: data,
+      methods: {
+        getData
+      }
     });
     expect(wrapper.find("#table-calon-peserta").text()).toContain(
       "Bobby bobby"
@@ -82,9 +82,8 @@ describe("Data Calon Peserta", () => {
       localVue,
       stubs: ["router-link", "router-view"]
     });
-    console.log(wrapper.find("div").text());
     expect(wrapper.find("div").text()).toMatch(
-        "Kamu tidak memiliki hak akses ke halaman ini."
-      );
+      "Kamu tidak memiliki hak akses ke halaman ini."
+    );
   });
 });

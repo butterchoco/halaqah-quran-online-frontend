@@ -1,42 +1,36 @@
 <template>
-  <div>
-    <section class="primary-container">
-      <b-container fluid class="secondary-container">
-        <b-row>
-          <b-col class="main-cross-center-center">
-            <b-img
-              :src="require('../assets/img/authentication.png')"
-              class="responsive-image"
-              alt="authentication"
-            />
-            <h1 class="title">HALAQAH QURAN ONLINE</h1>
-          </b-col>
-          <b-col v-if="signinFlag" class="main-cross-center-center" ref="form_container">
-            <h2 class="subtitle" ref="title">Member Login</h2>
-            <SignInForm :inputWidth="inputWidth"/>
-          </b-col>
-          <b-col v-else class="main-cross-center-center" ref="form_container">
-            <h2 class="subtitle" ref="title">Create Your Account</h2>
-            <SignUpForm :inputWidth="inputWidth" />
-          </b-col>
-        </b-row>
-      </b-container>
-      <Background />
-    </section>
-  </div>
+  <section class="primary-container vector-background">
+    <b-container class="secondary-container py-5">
+      <b-row align-v="center" class="third-container">
+        <b-col class="hero-container" sm="12" md="6" align-h="center">
+          <b-img
+            :src="require('../assets/img/authentication.png')"
+            class="responsive-image"
+            alt="authentication"
+          />
+          <h1 class="title">HALAQAH QURAN ONLINE</h1>
+        </b-col>
+        <b-col v-if="signinFlag" sm="12" md="6" align-h="center" ref="form_container">
+          <h2 class="subtitle" ref="title">Member Login</h2>
+          <SignInForm :inputWidth="inputWidth" />
+        </b-col>
+        <b-col v-else sm="12" md="6" align-h="center" ref="form_container">
+          <h2 class="subtitle" ref="title">Create Your Account</h2>
+          <SignUpForm :inputWidth="inputWidth" />
+        </b-col>
+      </b-row>
+    </b-container>
+  </section>
 </template>
 
 <script>
-import SignInForm from "@/components/SignInForm"
-import SignUpForm from "@/components/SignUpForm"
-import Background from "@/components/Backgrounds/first_background"
-import Vue from "vue";
-require("@/styles/reusable/sign.css");
+import SignInForm from "@/components/SignInForm";
+import SignUpForm from "@/components/SignUpForm";
+
 export default {
   components: {
     SignInForm,
-    SignUpForm,
-    Background
+    SignUpForm
   },
   name: "Sign",
   data() {
@@ -46,11 +40,11 @@ export default {
     };
   },
   watch: {
-    $route(to, from) {
+    $route() {
       if (this.$route.path == "/sign/in") {
-        this.signinFlag = true
+        this.signinFlag = true;
       } else {
-        this.signinFlag = false
+        this.signinFlag = false;
       }
     }
   },
@@ -67,5 +61,19 @@ export default {
 };
 </script>
 
-<style scoped src="@/styles/reusable/sign.css">
+<style lang="scss" scoped>
+@import "@/styles/reusable/sign.scss";
+.primary-container {
+  min-height: inherit;
+}
+
+.secondary-container {
+  min-height: inherit;
+}
+
+.third-container {
+  min-height: inherit;
+  width: inherit;
+  margin: 0;
+}
 </style>

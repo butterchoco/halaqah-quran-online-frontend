@@ -1,24 +1,16 @@
 <template>
-  <div class="activation-container col center">
-    <section class="main-container col center">
-      <b-img :src="img" alt="Message" fluid />
-      <h3 id="first_balancer">{{ title }}</h3>
-      <b-button
-        variant="none"
-        class="primary"
-      >{{ msgButton }}</b-button>
-    </section>
-    <Background />
-  </div>
+  <section class="main-container vector-background col center">
+    <ErrorPage :img="img" :title="title" :msg="msg" :goto="goto" />
+  </section>
 </template>
 
 <script>
-import MessagePage from "@/components/MessagePage.vue";
-import Background from "@/components/Backgrounds/second_background";
+import ErrorPage from "@/components/ErrorPage.vue";
 import axios from "axios";
+
 export default {
   name: "ActivationPage",
-  components: { Background },
+  components: { ErrorPage },
   data() {
     return {
       img: "",
@@ -29,16 +21,18 @@ export default {
   },
   methods: {
     isActivated() {
-      this.img = require("../assets/img/success-selection-1.png");
-      this.title = "Your account has been activated";
-      this.msg = "Please login to continue using the application";
-      this.msgButton = "Go to login page"
+      this.img = require("../assets/img/success-selection.png");
+      this.title = "Selamat akun anda sudah aktif!";
+      this.isPrimary = true;
+      this.msg = "Silahkan login untuk melanjutkan menggunakan aplikasi";
+      this.goto = [{ str: "Go to login page", link: "/sign/in" }];
     },
     isExpired() {
-      this.img = require("../assets/img/failed-selection-2.png");
-      this.title = "Activation link has expired";
-      this.msg = "Please resend the email verification";
-      this.msgButton = "Resend Verification"
+      this.img = require("../assets/img/failed-selection.png");
+      this.title = "Link aktivasi akun expired";
+      this.isPrimary = true;
+      this.msg = "Silahkan kirim ulang verifikasi email";
+      this.goto = [{ str: "Resend Verification", link: "#" }];
     }
   },
   created() {
@@ -57,22 +51,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.activation-container {
-  min-width: 20%;
-  max-height: 40%;
-
-  .main-container {
-    overflow: hidden;
-  }
-
-  #first_balancer {
-    margin-top: 1%;
-    margin-bottom: 1%;
-  }
-
-  #second_balancer {
-    margin-top: 2% !important;
-  }
-}
+<style lang="scss" scoped>
 </style>
