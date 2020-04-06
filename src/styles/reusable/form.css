@@ -1,0 +1,49 @@
+form {
+    margin-top: 2rem;
+}
+
+input {
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    border: none !important;
+    border-color: transparent !important;
+}
+
+p {
+    padding-left: 2%;
+    font-family: "poppins";
+    font-weight: 300;
+    font-size: 16px;
+    display: inline-block;
+    margin: 0;
+}
+
+a {
+    font-weight: 600;
+    font-family: "poppins";
+    font-size: 16px;
+    color: #1b262c;
+}
+
+a:hover {
+    font-weight: 600;
+    font-family: "poppins";
+    font-size: 16px;
+    color: #40bfc1;
+    text-decoration: none;
+}
+
+.btn-container {
+    padding-top: 5%;
+}
+
+button {
+    margin-top: 0px !important;
+    border-radius: 20px;
+}
+
+.form-control.is-valid,
+.was-validated :valid.form-control {
+    border-color: inherit !important;
+    background-image: inherit !important;
+}

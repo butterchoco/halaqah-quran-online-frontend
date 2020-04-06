@@ -3,10 +3,12 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vue from "vue";
 import BootstrapVue from "bootstrap-vue";
 import VueRouter from 'vue-router';
+import Vuelidate from "vuelidate";
 
 const localVue = createLocalVue();
 localVue.use(BootstrapVue);
-localVue.use(VueRouter)
+localVue.use(VueRouter);
+localVue.use(Vuelidate);
 
 const factory = (values = {}) => {
   return shallowMount(SignInForm, {
@@ -29,7 +31,7 @@ describe("SignInForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_username").text()).toContain(
-      "This field is required"
+      "Username is required"
     );
   });
   it("render an error when password is not filled", async () => {
@@ -37,7 +39,7 @@ describe("SignInForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_password").text()).toContain(
-      "This field is required"
+      "Password is required"
     );
   });
   it("does not render an error when username and password is valid", async () => {

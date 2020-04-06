@@ -9,14 +9,12 @@
         <button
           v-for="(data, index) in goto"
           :key="index"
-          @click="toggleModal()"
+          @click="toggleModal"
           class="btn"
           :class="[isPrimary ? 'primary' : '']"
         >{{ data.str }}</button>
       </router-link>
     </div>
-    <Modal v-if="isModal" @exit="toggleModal" :isDanger="isDanger" :dataModal="dataModal" />
-
     <img src="@/assets/img/vector-4.png" alt="vector" class="svg-4" />
     <img src="@/assets/img/vector-5.png" alt="vector" class="svg-5" />
     <img src="@/assets/img/vector-6.png" alt="vector" class="svg-6" />
@@ -25,10 +23,9 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import Vue from "vue"
 export default {
   name: "MessagePage",
-  components: { Modal },
   props: {
     isDanger: Boolean,
     isPrimary: Boolean,
@@ -41,18 +38,18 @@ export default {
   },
   data() {
     return {
-      isModal: false
-    };
+      bus: new Vue()
+    }
   },
   methods: {
     toggleModal() {
-      this.isModal = !this.isModal;
+      this.bus.$emit('setActive')
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media only screen and (min-width: 768px) {
   h1.header-title {
     font-size: $h1 !important;

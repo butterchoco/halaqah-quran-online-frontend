@@ -1,52 +1,72 @@
 <template>
-  <b-form @submit.stop.prevent="onSubmit" :style="inputStyle">
-    <b-form-group id="input-group-1" label="Username" label-for="input-1">
-      <b-form-input
-        id="input-1"
-        class="custom-input"
-        v-model="form.username"
-        :state="validateState('username')"
-        aria-describedby="input-1-live-feedback"
-      ></b-form-input>
-      <b-form-invalid-feedback
-        id="input-1-live-feedback"
-        class="error_username"
-      >This field is required</b-form-invalid-feedback>
-    </b-form-group>
-    <b-form-group id="input-group-5" label="Password" label-for="input-5">
-      <b-form-input
-        id="input-5"
-        v-model="form.password"
-        type="password"
-        class="custom-input"
-        :state="validateState('password')"
-        aria-describedby="input-2-live-feedback"
-      ></b-form-input>
-      <b-form-invalid-feedback
-        id="input-2-live-feedback"
-        class="error_password"
-      >This field is required</b-form-invalid-feedback>
-    </b-form-group>
-    <div class="btn-container">
-      <b-button disabled v-if="isLoading" class="primary">
-        <span class="spinner-grow spinner-grow-sm"></span>
-        Login..
-      </b-button>
-      <b-button v-else type="submit" variant="none" ref="btn-submit" class="primary">Login</b-button>
-      <p>
-        OR
-        <router-link to="/signup">Create New Account</router-link>
-      </p>
-    </div>
-  </b-form>
+  <div>
+    <b-form @submit.stop.prevent="onSubmit" :style="inputStyle" autocomplete="off">
+      <b-form-group id="input-group-1" label="Username" label-for="input-1">
+        <b-form-input
+          id="input-1"
+          class="custom-input"
+          v-model="form.username"
+          :state="validateState('username')"
+          aria-describedby="input-1-live-feedback"
+        ></b-form-input>
+        <b-form-invalid-feedback
+          id="input-1-live-feedback"
+          class="error_username"
+        >Username is required</b-form-invalid-feedback>
+      </b-form-group>
+      <b-form-group id="input-group-2" label="Password" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          class="custom-input"
+          v-model="form.password"
+          type="password"
+          :state="validateState('password')"
+          aria-describedby="input-2-live-feedback"
+        ></b-form-input>
+        <b-form-invalid-feedback
+          id="input-2-live-feedback"
+          class="error_password"
+        >Password is required</b-form-invalid-feedback>
+      </b-form-group>
+      <div class="btn-container">
+        <b-button type="submit" variant="none" ref="btn-submit" class="primary">Login</b-button>
+        <p>
+          or
+          <router-link to="/sign/up">Create New Account</router-link>
+        </p>
+      </div>
+    </b-form>
+    <div v-if="isLoading" id="cover-spin"></div>
+    <b-modal id="signin-modal" size="sm" hide-header-close centered>
+      <div class="modal-img-container">
+        <b-img :src="modal.image" class="modal-image" alt="modal-image" fluid />
+      </div>
+      <div class="modal-align-center">
+        <h3>{{ modal.title }}</h3>
+        <p>{{ modal.message }}</p>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <b-button
+          type="button"
+          @click="ok"
+          size="sm"
+          variant="none"
+          class="primary"
+          id="modal-button"
+        >{{ modal.button }}</b-button>
+      </template>
+    </b-modal>
+  </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import axios from "axios";
+import store from "@/store";
+import { mapGetters } from "vuex";
 import { required } from "vuelidate/lib/validators";
-import Vue from "vue";
-import Vuelidate from "vuelidate";
-Vue.use(Vuelidate);
+require("@/styles/reusable/form.css");
+require("@/styles/reusable/loading.css");
+require("@/styles/reusable/modal.css");
 export default {
   props: {
     inputWidth: Number
@@ -59,6 +79,12 @@ export default {
       form: {
         username: "",
         password: ""
+      },
+      modal: {
+        title: "Invalid Credentials",
+        image: require("../assets/img/success-selection.png"),
+        message: "No active account found with the given credentials",
+        button: "Try Again"
       }
     };
   },
@@ -73,24 +99,34 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setRefreshToken", "setAccessToken"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
     },
     postForm() {
-      this.$axios
+      axios
         .post(process.env.VUE_APP_URL + "/api/auth/jwt/create/", {
-          "username": this.form.username,
-          "password": this.form.password
+          username: this.form.username,
+          password: this.form.password
         })
         .then(response => {
-          this.$store.commit("setRefreshToken", { value: response.data.refresh });
-          this.$store.commit("setAccessToken", { value: response.data.access });
-          window.location.pathname = "/"
+          store.commit("setRefreshToken", {
+            value: response.data.refresh
+          });
+          store.commit("setAccessToken", {
+            value: response.data.access
+          });
+          axios
+            .get(process.env.VUE_APP_URL + "/api/tahfidz/selections/latest/")
+            .then(response => {
+              store.commit("setSelectionPeriod", {
+                value: response.data.latest_opened.id
+              });
+              window.location.pathname = "/";
+            });
         })
         .catch(error => {
-          // do nothing
+          this.$bvModal.show("signin-modal");
         })
         .finally(() => (this.isLoading = false));
     },
@@ -106,42 +142,13 @@ export default {
   },
   computed: {
     inputStyle() {
-      return "width: " + this.inputWidth * 2 + "px";
+      const halfWidth = this.inputWidth * 0.5;
+      return "width: " + halfWidth + "px";
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-input {
-  background-color: #f3f3f3;
-  border-radius: 20px;
-  border: none !important;
-  border-color: transparent !important;
-}
-button {
-  margin-top: 0px !important;
-  border-radius: 20px;
-}
-form {
-  margin-top: 3%;
-}
-p {
-  padding-left: 2%;
-  font-family: "poppins";
-  font-weight: 300;
-  font-size: 16px;
-  display: inline-block;
-  margin: 0;
-}
-
-a {
-  font-weight: 600;
-  font-family: "poppins";
-  font-size: 16px;
-  color: $black;
-}
-.btn-container {
-  padding-top: 2%;
-}
-</style>
+<style scoped src="@/styles/reusable/form.css"></style>
+<style scoped src="@/styles/reusable/loading.css"></style>
+<style scoped src="@/styles/reusable/modal.css"></style>

@@ -1,0 +1,36 @@
+.modal-align-center {
+    text-align: center;
+}
+
+.modal-align-center h3 {
+    font-family: "poppins";
+    font-weight: 600;
+    font-size: 24px;
+    color: #40bfc1;
+}
+
+.modal-align-center p {
+    margin-top: 5%;
+    font-family: "poppins";
+    font-size: 12px;
+}
+
+.modal-img-container {
+    margin: 10%;
+}
+
+.modal-image {
+    margin-bottom: 5%;
+}
+
+#modal-button {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.modal-content {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 20px !important;
+    border-width: 0ch !important;
+}

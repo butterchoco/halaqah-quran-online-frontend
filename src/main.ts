@@ -9,6 +9,8 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@/styles/_global.scss";
 import "@/styles/_variables.scss";
 import Axios from "axios";
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
 
 Vue.prototype.$axios = Axios;
 Vue.use(BootstrapVue);

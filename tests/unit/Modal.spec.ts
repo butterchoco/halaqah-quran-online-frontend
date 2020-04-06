@@ -23,7 +23,7 @@ describe("Modal", () => {
     }
   };
   const toggleModal = jest.fn();
-  let wrapper = shallowMount(Modal, {
+  const wrapper = shallowMount(Modal, {
     propsData: prop,
     methods: {
       toggleModal

@@ -3,7 +3,7 @@
     <div class="header-mobile">
       <img class="logo-nav" src="@/assets/logo.png" alt="logo" />
       <div class="right-header">
-        <router-link to="/signin">
+        <router-link to="/sign/in">
         <button class="login btn primary" v-if="mobile">
           <svg class="login-icon" viewBox="0 0 24 24">
             <path
@@ -36,7 +36,7 @@
           <router-link class="nav-link about" to="/about">about</router-link>
         </li>
       </ul>
-      <router-link to="/signin">
+      <router-link to="/sign/in">
       <button class="login btn primary" v-if="!mobile">
         <svg class="login-icon" viewBox="0 0 24 24">
           <path
