@@ -1,0 +1,55 @@
+.primary-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.secondary-container {
+    height: 100%;
+    position: absolute;
+}
+
+.row {
+    height: 100%;
+}
+
+img.responsive-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+.col.main-cross-center-center {
+    justify-content: center;
+    align-items: center;
+}
+
+h1.title {
+    font-size: 48px;
+    color: black;
+    font-weight: 600;
+}
+
+h2.subtitle {
+    font-size: 36px;
+    color: #1b262c;
+    font-weight: normal;
+}
+
+@media only screen and (max-width: 1440px) {
+    img.responsive-image {
+        width: 100% !important;
+        max-width: 350px !important;
+        height: auto !important;
+    }
+    h1.title {
+        font-size: 36px !important;
+        color: black !important;
+        font-weight: 600 !important;
+    }
+    h2.subtitle {
+        font-size: 24px !important;
+        color: #1b262c !important;
+        font-weight: normal !important;
+    }
+}

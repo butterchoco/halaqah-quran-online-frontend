@@ -14,13 +14,16 @@ export default new Vuex.Store({
   },
   getters : {
       getRefreshToken: (state) => {
-          return Cookies.get("KuncenPuma");
+          return Cookies.get("RefreshToken");
       },
       getAccessToken: (state) => {
-          return Cookies.get("HolyKuncen");
+          return Cookies.get("AccessToken");
+      },
+      getSelectionPeriod: (state) => {
+        return Cookies.get("SelectionPeriod")
       },
       isUserLoggedIn: (state) => {
-        if (Cookies.get("HolyKuncen") != null) {
+        if (Cookies.get("RefreshToken") != null) {
           return true
         }
         return false
@@ -28,14 +31,18 @@ export default new Vuex.Store({
   },
   mutations : {
     setRefreshToken: (state: any, payload: any) => {
-      Cookies.set("KuncenPuma", payload.value, { expires: 0.5 })
+      Cookies.set("RefreshToken", payload.value, { expires: 0.5 })
     },
     setAccessToken: (state: any, payload: any) => {
-      Cookies.set("HolyKuncen", payload.value, { expires: 0.01 })
+      Cookies.set("AccessToken", payload.value, { expires: 0.01 })
+    },
+    setSelectionPeriod: (state: any, payload: any) => {
+      Cookies.set("SelectionPeriod", payload.value)
     },
     removeToken: () => {
-      Cookies.remove("KuncenPuma")
-      Cookies.remove("HolyKuncen")
+      Cookies.remove("RefreshToken")
+      Cookies.remove("AccessToken")
+      Cookies.remove("SelectionPeriod")
     }
   },
   modules: {

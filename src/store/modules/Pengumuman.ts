@@ -1,6 +1,6 @@
 /* eslint-disable */
 const state = {
-  isTahfizhProgramAccepted: true,
+  isTahfizhProgramAccepted: false,
   registrationEvaluation: {
     evaluator: "Bob Bobby",
     report: [

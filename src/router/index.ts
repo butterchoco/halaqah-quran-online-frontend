@@ -5,9 +5,8 @@ import About from "@/views/About.vue";
 import Program from "@/views/Program.vue";
 import DataCalonPeserta from "@/views/DataCalonPeserta.vue";
 import NotFound from "@/views/NotFound.vue";
-import SignIn from "@/views/Signin.vue";
-import SignUp from "@/views/Signup.vue";
-import PengumumanPage from "@/views/PengumumanPage.vue";
+import Sign from "@/views/Sign.vue";
+import RegistrationSelection from "@/views/RegistrationSelection.vue";
 import Activation from "@/views/Activation.vue";
 import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
@@ -27,14 +26,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/signup",
-    name: "SignUp",
-    component: SignUp
-  },
-  {
-    path: "/signin",
-    name: "SignIn",
-    component: SignIn
+    path: "/sign/:indicator",
+    name: "Sign",
+    component: Sign
   },
   {
     path: "/about",
@@ -49,7 +43,7 @@ const routes = [
   {
     path: "/pengumuman",
     name: "pengumuman",
-    component: PengumumanPage
+    component: RegistrationSelection
   },
   {
     path: "/activate/:uid/:token",

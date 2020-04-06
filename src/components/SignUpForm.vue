@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit.stop.prevent="onSubmit" :style="inputStyle">
+    <b-form @submit.stop.prevent="onSubmit" :style="inputStyle" autocomplete="off">
       <b-row>
         <b-col>
           <b-form-group id="input-group-1" label="Username" label-for="input-1">
@@ -10,12 +10,11 @@
               v-model="form.username"
               :state="validateState('username')"
               aria-describedby="input-1-live-feedback"
-              @keyup="touchForm('username')"
             ></b-form-input>
             <b-form-invalid-feedback
               id="input-1-live-feedback"
               class="error_username"
-            >Please enter a valid username</b-form-invalid-feedback>
+            >You can use letters, numbers, and _</b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="input-group-2" label="Full Name" label-for="input-2">
             <b-form-input
@@ -24,12 +23,11 @@
               v-model="form.fullname"
               :state="validateState('fullname')"
               aria-describedby="input-2-live-feedback"
-              @keyup="touchForm('fullname')"
             ></b-form-input>
             <b-form-invalid-feedback
               id="input-2-live-feedback"
               class="error_fullname"
-            >Please enter a valid name</b-form-invalid-feedback>
+            >Requires first and last name</b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="input-group-3" label="No. Whatsapp" label-for="input-3">
             <b-form-input
@@ -39,7 +37,6 @@
               :state="validateState('number')"
               aria-describedby="input-3-live-feedback"
               type="number"
-              @keyup="touchForm('number')"
             ></b-form-input>
             <b-form-invalid-feedback
               id="input-3-live-feedback"
@@ -55,7 +52,6 @@
               v-model="form.email"
               :state="validateState('email')"
               aria-describedby="input-4-live-feedback"
-              @keyup="touchForm('email')"
             ></b-form-input>
             <b-form-invalid-feedback
               id="input-4-live-feedback"
@@ -70,7 +66,6 @@
               :state="validateState('password')"
               aria-describedby="input-5-live-feedback"
               type="password"
-              @keyup="touchForm('password')"
             ></b-form-input>
             <b-form-invalid-feedback
               id="input-5-live-feedback"
@@ -85,7 +80,6 @@
               :state="validateState('passwordValidation')"
               aria-describedby="input--live-feedback"
               type="password"
-              @keyup="touchForm('passwordValidation')"
             ></b-form-input>
             <b-form-invalid-feedback
               id="input-6-live-feedback"
@@ -94,10 +88,19 @@
           </b-form-group>
         </b-col>
       </b-row>
-      <b-button type="submit" size="sm" ref="btn-submit" variant="none" class="primary">Register</b-button>
+      <div class="btn-container">
+        <b-button type="submit" size="sm" ref="btn-submit" variant="none" class="primary">Register</b-button>
+        <p style="margin-top: 2%;">
+          Already have account?
+          <router-link to="/sign/in">login Here</router-link>
+        </p>
+      </div>
     </b-form>
-    <b-modal id="registration-modal" size="sm" centered hide-footer>
-      <b-img :src="modal.image" class="responsive-image" alt="modal-image" fluid />
+    <div v-if="isLoading" id="cover-spin"></div>
+    <b-modal id="registration-modal" size="sm" hide-header-close centered>
+      <div class="modal-img-container">
+        <b-img :src="modal.image" class="modal-image" alt="modal-image" fluid />
+      </div>
       <div class="modal-align-center">
         <h3>{{ modal.title }}</h3>
         <p>
@@ -105,19 +108,36 @@
           <br />
           <b>{{ modal.trailingMessage }}</b>
         </p>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
         <b-button
+          v-if="modal.isSuccess"
           type="button"
-          @click="hideModal"
+          @click="toSignin"
           size="sm"
           variant="none"
           class="primary"
+          id="modal-button"
         >{{ modal.button }}</b-button>
-      </div>
+        <b-button
+          v-else
+          type="button"
+          @click="ok"
+          size="sm"
+          variant="none"
+          class="primary"
+          id="modal-button"
+        >{{ modal.button }}</b-button>
+      </template>
     </b-modal>
   </div>
 </template>
 
 <script>
+import axios from "axios"
+require("@/styles/reusable/form.css");
+require("@/styles/reusable/loading.css");
+require("@/styles/reusable/modal.css");
 import {
   required,
   minLength,
@@ -132,9 +152,6 @@ import {
   hasNumber,
   fullNameValid
 } from "../validator";
-import Vue from "vue";
-import Vuelidate from "vuelidate";
-Vue.use(Vuelidate);
 
 export default {
   name: "SignUpForm",
@@ -156,10 +173,11 @@ export default {
       },
       modal: {
         title: "",
+        image: "",
         message: "",
         trailingMessage: "",
-        image: "",
-        button: ""
+        button: "",
+        isSuccess: false
       }
     };
   },
@@ -198,15 +216,13 @@ export default {
     }
   },
   methods: {
-    touchForm(name) {
-      this.$v.form[name].$touch();
-    },
     registrationSuccess(value) {
       this.modal.title = "Registration Success";
       this.modal.image = require("../assets/img/success-email.png");
       this.modal.message = value + " telah bergabung di hafidzisme";
       this.modal.trailingMessage = "Silahkan cek email untuk aktivasi akun!";
       this.modal.button = "Go to login page";
+      this.modal.isSuccess = true;
       this.$bvModal.show("registration-modal");
     },
     registrationFailure(value, secondValue) {
@@ -215,6 +231,7 @@ export default {
       this.modal.message = value;
       this.modal.trailingMessage = secondValue;
       this.modal.button = "Try Again";
+      this.modal.isSuccess = false;
       this.$bvModal.show("registration-modal");
     },
     hideModal() {
@@ -234,62 +251,60 @@ export default {
       }
     },
     postForm() {
-      this.$axios.post( process.env.VUE_APP_URL + "/api/auth/users/", {
-        "username": this.form.username,
-        "email": this.form.email,
-        "password": this.form.password,
-        "re_password": this.form.passwordValidation,
-        "first_name": this.form.fullname.split()[0],
-        "last_name": this.form.fullname.split()[1],
-        "whatsapp_number": this.form.number,
-      })
-      .then(() => {
-        this.isLoggedin = true;
-        this.registrationSuccess(this.form.username);
-      })
-      .catch(error => {
-        if (error.response.data.username) {
-          this.registrationFailure("Please try again!", error.response.data.username[0]);
-        } else {
-          this.registrationFailure("Please try again latter", "Website temporarily unavailable");
+      const nameArr = this.form.fullname.split(" ")
+      const firstName = nameArr.splice(0,1)
+      let lastName = ""
+      function concateLastname(value, index, array) {
+        if (index != nameArr.length - 1) {
+          lastName += value + " " 
         }
-      });
+        else {
+          lastName += value
+        }
+      }
+      nameArr.forEach(concateLastname)
+      axios
+        .post(process.env.VUE_APP_URL + "/api/auth/users/", {
+          "username": this.form.username,
+          "email": this.form.email,
+          "password": this.form.password,
+          "re_password": this.form.passwordValidation,
+          "first_name": firstName,
+          "last_name": lastName,
+          "whatsapp_number": this.form.number
+        })
+        .then(() => {
+          this.isLoggedin = true;
+          this.registrationSuccess(this.form.username);
+        })
+        .catch(error => {
+          if (error.response.data.username) {
+            this.registrationFailure(
+              "Please try again!",
+              error.response.data.username[0]
+            );
+          } else {
+            this.registrationFailure(
+              "Please try again latter",
+              "Website temporarily unavailable"
+            );
+          }
+        })
+        .finally(() => (this.isLoading = false));
+    },
+    toSignin() {
+      this.$router.push("/sign/in");
     }
   },
   computed: {
     inputStyle() {
-      return "width: " + this.inputWidth * 2 + "px";
+      const halfWidth = this.inputWidth * 0.7;
+      return "width: " + halfWidth + "px";
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-input {
-  background-color: #f3f3f3;
-  border-radius: 20px;
-  border: none !important;
-  border-color: transparent !important;
-}
-button {
-  border-radius: 20px;
-}
-.modal-align-center {
-  text-align: center;
-}
-.modal-align-center h3 {
-  font-family: "poppins";
-  font-weight: 600;
-  font-size: 24px;
-  color: $primary;
-}
-
-.modal-align-center p {
-  margin-top: 5%;
-  font-family: "poppins";
-  font-size: 12px;
-}
-img.responsive-image {
-  margin-bottom: 5%;
-}
-</style>
+<style scoped src="@/styles/reusable/form.css"></style>
+<style scoped src="@/styles/reusable/loading.css"></style>
+<style scoped src="@/styles/reusable/modal.css"></style>

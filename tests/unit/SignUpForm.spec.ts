@@ -3,10 +3,12 @@ import SignUpForm from "@/components/SignUpForm.vue";
 import Vue from "vue";
 import flushPromises from "flush-promises";
 import BootstrapVue from "bootstrap-vue";
+import Vuelidate from "vuelidate";
 
 jest.mock("axios");
 const localVue = createLocalVue();
 localVue.use(BootstrapVue);
+localVue.use(Vuelidate);
 
 const factory = (values = {}) => {
   return shallowMount(SignUpForm, {
@@ -19,7 +21,8 @@ const factory = (values = {}) => {
         }
       };
     },
-    localVue
+    localVue,
+    stubs: ["router-link"]
   });
 };
 
@@ -30,7 +33,7 @@ describe("SignUpForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_username").text()).toContain(
-      "Please enter a valid username"
+      "You can use letters, numbers, and _"
     );
   });
   it("renders an error when username character is less than 1", async () => {
@@ -38,7 +41,7 @@ describe("SignUpForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_username").text()).toContain(
-      "Please enter a valid username"
+      "You can use letters, numbers, and _"
     );
   });
   it("renders an error when username character is more than 150", async () => {
@@ -46,7 +49,7 @@ describe("SignUpForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_username").text()).toContain(
-      "Please enter a valid username"
+      "You can use letters, numbers, and _"
     );
   });
   it("does not render an error when username match with rules", async () => {
@@ -64,7 +67,7 @@ describe("SignUpForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_fullname").text()).toContain(
-      "Please enter a valid name"
+      "Requires first and last name"
     );
   });
 
@@ -73,7 +76,7 @@ describe("SignUpForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_fullname").text()).toContain(
-      "Please enter a valid name"
+      "Requires first and last name"
     );
   });
 
@@ -82,7 +85,7 @@ describe("SignUpForm.vue", () => {
     wrapper.find({ ref: "btn-submit" }).trigger("click");
     await Vue.nextTick();
     expect(wrapper.find(".error_fullname").text()).toContain(
-      "Please enter a valid name"
+      "Requires first and last name"
     );
   });
 
