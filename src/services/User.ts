@@ -94,6 +94,13 @@ class User {
                                             data.latest_opened.id
                                     }
                                 });
+                            } else {
+                                store.commit("setSelectionPeriod", {
+                                    selectionPeriod: {
+                                        periodId: "",
+                                        term: ""
+                                    }
+                                });
                             }
                         }
                         resolve(data)

@@ -533,6 +533,10 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/form.scss";
 
+form {
+  margin-top: 2rem;
+}
+
 .form-container {
   padding: 0 10%;
 }

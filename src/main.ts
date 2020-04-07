@@ -10,11 +10,13 @@ import "@/styles/_global.scss";
 import "@/styles/_variables.scss";
 import Axios from "axios";
 import Vuelidate from "vuelidate";
+import VueAudio from "vue-audio"
 
 Vue.prototype.$axios = Axios;
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
+Vue.component("vue-audio", VueAudio)
 
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem("token");
