@@ -48,6 +48,7 @@ class User {
                                 role: data.roles
                             });
                         } else {
+                            store.commit("setHasProgramRegistered", { value: false })
                             store.commit("setUserRole", {
                                 role: [
                                     {

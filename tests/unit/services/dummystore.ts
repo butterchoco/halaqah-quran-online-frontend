@@ -279,6 +279,12 @@ const getters = {
     },
     getAnnouncementAvailable: (state: any) => {
         return state.AnnouncementAvailable
+    },
+    getIsPassed: (state: any) => {
+        return state.registrationEvaluation.isPassed
+    },
+    getTahsinLevel: (state: any) => {
+        return state.registrationEvaluation.tahsinLevel
     }
 }
 

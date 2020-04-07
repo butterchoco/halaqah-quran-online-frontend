@@ -1,6 +1,6 @@
 <template>
   <section class="vector-background">
-    <b-container v-if="getIsProgramOpened" class="form-container py-5">
+    <b-container class="form-container py-5">
       <h2 class="header-title">Pendaftaran TahfidzQu Angkatan {{ getTimeline.generation }}</h2>
       <b-form @submit.stop.prevent="onSubmit">
         <b-row align-v="start">
@@ -321,11 +321,11 @@
           ref="btn-submit"
           variant="none"
           class="primary mt-4"
-          @click="onSubmit"
+          @click="$v.$reset"
         >Daftar</b-button>
       </b-form>
     </b-container>
-    <div v-else>Program Pendaftaran Belum Dibuka</div>
+    <div v-if="isLoading" id="cover-spin"></div>
   </section>
 </template>
 
@@ -347,6 +347,7 @@ export default {
   components: {},
   data() {
     return {
+      isLoading: false,
       form: {
         age: "",
         domicile: "",
@@ -426,7 +427,7 @@ export default {
         required
       },
       tahsinExperience: {
-        requiredIf: requiredIf("hasTahsinExperience" === 1)
+        required
       },
       infaqOptionNumber: {
         required
@@ -479,7 +480,43 @@ export default {
       return $dirty ? !$error : null;
     },
     onSubmit() {
-      this.$v.form.$touch();
+      const name = [
+        "age",
+        "domicile",
+        "juzTargetNumber",
+        "juzNumberMemorized",
+        "hasTahsinExperience",
+        "infaqOptionNumber",
+        "tahsinExperience",
+        "referralName1",
+        "referralName2",
+        "motivation",
+        "programInfoReferenceAdditional",
+        "TermAndConditions"
+      ];
+      if (this.form.hasTahsinExperience === 0) {
+        if (this.form.infaqOptionNumber === 1) {
+          name.splice(name.indexOf("referralName1"), 1);
+          name.splice(name.indexOf("referralName2"), 1);
+        } else if (this.form.infaqOptionNumber === 2) {
+          name.splice(name.indexOf("referralName2"), 1);
+        }
+        name.splice(name.indexOf("tahsinExperience"), 1);
+      } else if (this.form.infaqOptionNumber === 1) {
+        if (this.form.hasTahsinExperience === 0) {
+          name.splice(name.indexOf("tahsinExperience"), 1);
+        }
+        name.splice(name.indexOf("referralName1"), 1);
+        name.splice(name.indexOf("referralName2"), 1);
+      } else if (this.form.infaqOptionNumber === 2) {
+        if (this.form.hasTahsinExperience === 0) {
+          name.splice(name.indexOf("tahsinExperience"), 1);
+        }
+        name.splice(name.indexOf("referralName2"), 1);
+      }
+      for (let i = 0; i < name.length; i++) {
+        this.$v.form[name[i]].$touch();
+      }
       if (this.$v.form.$anyError) {
         return;
       } else {
@@ -493,9 +530,13 @@ export default {
         this.getAccessToken,
         this.getSelectionPeriodId,
         this.form
-      ).then(() => {
-        router.push("/regis-success");
-      });
+      )
+        .then(() => {
+          router.push("/regis-success");
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     }
   },
   computed: {

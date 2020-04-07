@@ -44,7 +44,7 @@ export default {
       this.getAccessToken,
       this.getSelectionPeriodId
     )
-      .then(response => {
+      .then(() => {
         if (this.getIsPassed) {
           router.push("/announcement-success");
         } else {
