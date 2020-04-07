@@ -20,7 +20,9 @@ export default {
       getIsAccepted: "getIsAccepted",
       getRegisEvaluation: "getRegisEvaluation",
       getAccessToken: "getAccessToken",
-      getSelectionPeriodId: "getSelectionPeriodId"
+      getSelectionPeriodId: "getSelectionPeriodId",
+      getAnnouncementAvailable: "getAnnouncementAvailable",
+      getIsPassed: "getIsPassed"
     })
   },
   data() {
@@ -41,11 +43,19 @@ export default {
       process.env.VUE_APP_URL,
       this.getAccessToken,
       this.getSelectionPeriodId
-    ).catch(error => {
-      if (error.response.status == 401) {
-        router.push("/login-forbidden");
-      }
-    });
+    )
+      .then(response => {
+        if (this.getIsPassed) {
+          router.push("/announcement-success");
+        } else {
+          router.push("/announcement-failed");
+        }
+      })
+      .catch(error => {
+        if (error.response.status == 401) {
+          router.push("/login-forbidden");
+        }
+      });
   }
 };
 </script>

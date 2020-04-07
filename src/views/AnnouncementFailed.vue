@@ -11,7 +11,7 @@
     />
     <p class="message">
       {{ msg2 }}
-      <strong>level {{ level }}</strong>
+      <strong>level {{ getTahsinLevel }}</strong>
     </p>
     <button id="show-btn" class="score btn" @click="modalShow = !modalShow">Lihat Nilai</button>
     <b-modal v-model="modalShow" class="modal" hide-footer centered :title="getFullname">
@@ -64,6 +64,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      getTahsinLevel: "getTahsinLevel",
       getRegisEvaluation: "getRegisEvaluation",
       getFullname: "getFullname",
       getAnnouncementAvailable: "getAnnouncementAvailable"

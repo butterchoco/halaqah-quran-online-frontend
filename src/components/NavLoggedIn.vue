@@ -49,6 +49,13 @@
             <span class="material-icons mobile">trending_up</span>
             <router-link to="/" class="link" v-on:click.native="dropdownActive">Laporan</router-link>
           </li>
+          <li
+            class="nav-profile-link"
+            v-if="getUserRole[getUserRole.length-1].role_id == 1 || getUserRole[getUserRole.length-1].role_id == 2"
+          >
+            <span class="material-icons mobile">trending_up</span>
+            <router-link to="/pengumuman" class="link" v-on:click.native="dropdownActive">Pengumuman</router-link>
+          </li>
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 4">
             <span class="material-icons mobile">trending_up</span>
             <router-link

@@ -48,10 +48,6 @@ export default {
 
 <style lang="scss" scoped>
 .pengumuman-container {
-  min-width: 20%;
-  max-height: 40%;
-}
-.pengumuman-container {
-  overflow: hidden;
+  min-height: inherit;
 }
 </style>
