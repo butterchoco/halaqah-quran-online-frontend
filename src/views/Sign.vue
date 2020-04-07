@@ -76,4 +76,11 @@ export default {
   width: inherit;
   margin: 0;
 }
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 </style>
