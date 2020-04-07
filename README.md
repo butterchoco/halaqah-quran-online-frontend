@@ -14,11 +14,11 @@
 Frontend for Halaqah Quran Online, made with Vue.js
 
 ## Installation (For Development)
-Before you begin, make sure you have installed Yarn Package Manager. If you have not, please install it first [here](https://classic.yarnpkg.com/en/docs/install)!
+Before you begin, make sure you have installed npm Package Manager. If you have not, please install it first !
 
 If you have installed Yarn, run this code:
 ```
-yarn install
+npm run install
 ```
 
 ## Usage
@@ -27,26 +27,26 @@ Make sure you have followed the steps listed on Installation section.
 ### Compiles and hot-reloads for development
 To run the project, run the command below:
 ```
-yarn serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
 To build the project, run the command below:
 ```
-yarn build
+npm run build
 ```
 
 ### Run your unit tests
 ```
-yarn test:unit
+npm run test:unit
 ```
 
 ### Run your end-to-end tests
 ```
-yarn test:e2e
+npm run test:e2e
 ```
 
 ### Lints and fixes files
 ```
-yarn lint
+npm run lint
 ```
