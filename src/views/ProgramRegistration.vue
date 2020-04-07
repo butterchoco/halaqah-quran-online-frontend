@@ -321,6 +321,7 @@
           ref="btn-submit"
           variant="none"
           class="primary mt-4"
+          @click="onSubmit"
         >Daftar</b-button>
       </b-form>
     </b-container>
