@@ -6,7 +6,7 @@ module.exports = {
     "src/router/*",
     "src/store/*"
   ],
-  coverageReporters: ["text", "html"],
+  coverageReporters: ["lcov"],
 };
 
 process.env = Object.assign(process.env, {
