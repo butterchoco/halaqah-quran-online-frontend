@@ -14,7 +14,7 @@
             <td>{{ data.display_name }}</td>
             <td>{{ data.username }}</td>
             <td>
-              <vue-audio :file="BASE_URL + data.recording" />
+              <vue-audio :file="data.recording" />
             </td>
             <td>
               <button class="btn" @click="toggleModal(data)">Nilai Laporan</button>
@@ -42,7 +42,7 @@
             <td>{{ data.display_name }}</td>
             <td>{{ data.username }}</td>
             <td>
-              <vue-audio :file="BASE_URL + data.recording" />
+              <vue-audio :file="data.recording" />
             </td>
             <td>
               <button class="btn" @click="toggleModalNilai(data)">Lihat Nilai</button>
