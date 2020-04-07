@@ -199,7 +199,7 @@ class User {
                     store.dispatch("setHarakatScore", { value: data["registration_status"]["harakat_mistake"] })
                     store.dispatch("setMadScore", { value: data["registration_status"]["mad_mistake"] })
                     store.dispatch("setGunnahScore", { value: data["registration_status"]["gunnah_mistake"] })
-                    store.dispatch("setPassed", { value: true })
+                    store.dispatch("setPassed", { value: data["registration_status"]["is_passed"] })
                     store.dispatch("setTahsinLevel", { value: data["registration_status"]["tahsin_level"] })
                     store.dispatch("setEvaluator", { value: data["registration_status"]["evaluator_name"] })
                     store.dispatch("setAnnouncementAvailable", { value: true })
