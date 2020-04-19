@@ -2,7 +2,7 @@
   <div id="app">
     <NavLoggedIn v-if="isUserLoggedIn" />
     <NavBeforeLogin v-else />
-    <div :class="[ isUserLoggedIn ? 'mobile' : 'layout']">
+    <div :class="[ isUserLoggedIn ? 'loggedIn' : 'notLoggedIn']">
       <router-view />
     </div>
     <ErrorToast />
@@ -28,22 +28,22 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style>
 @media only screen and (min-width: 768px) {
-  .layout,
-  .mobile {
-    min-height: 90vh !important;
+  .notLoggedIn,
+  .loggedIn {
+    min-height: 878px !important;
     margin-top: 10vh !important;
     margin-bottom: 0 !important;
   }
 }
 
-.layout {
+.notLoggedIn {
   min-height: 84vh;
   margin: 8vh 0;
 }
 
-.mobile {
+.loggedIn {
   min-height: 92vh;
   margin-bottom: 8vh;
   margin-top: 0;

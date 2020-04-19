@@ -1,0 +1,15 @@
+{
+    "cache": false,
+    "all": true,
+    "extension": [
+        ".vue",
+        ".ts"
+    ],
+    "include": [
+        "src/components/*",
+        "src/views/*",
+        "src/router/*",
+        "src/store/*"
+    ],
+    "report-dir": "cypress_coverage"
+}

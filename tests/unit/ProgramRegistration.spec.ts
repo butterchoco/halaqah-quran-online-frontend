@@ -19,105 +19,234 @@ describe("ProgramRegistration.vue", () => {
     mode: "history",
     base: process.env.BASE_URL, routes
   })
-  function data() {
-    return {
-      form: {
-        age: "12",
-        domicile: "12",
-        recording: new File(["test"], "test"),
-        juzTargetNumber: "12",
-        juzNumberMemorized: "12",
-        hasTahsinExperience: "0",
-        hasTahsinExperienceOption: [
-          { value: 1, text: "Ya, pernah" },
-          { value: 0, text: "Tidak, belum pernah" }
-        ],
-        tahsinExperience: "",
-        infaqOptionNumber: "1",
-        infaqOptionNumberOption: [
-          { value: 1, text: "Paket Sendiri (Rp.200.000)" },
-          { value: 2, text: "Paket Berdua (Rp.240.000)" },
-          { value: 3, text: "Paket Bertiga (Rp.280.000)" }
-        ],
-        referralName1: "",
-        referralName2: "",
-        programInfoReference: ["Line"],
-        programInfoReferenceOptions: [
-          { item: "Line", name: "Line" },
-          { item: "Instagram", name: "Instagram" },
-          { item: "Whatsapp", name: "Whatsapp" },
-          { item: "Facebook", name: "Facebook" },
-          { item: "Other", name: "Others" }
-        ],
-        TermAndConditions: ["tnc1", "tnc2"],
-        TermAndConditionsOptions: [
-          {
-            item: "tnc1",
-            name:
-              "Saya bersedia meluangkan waktu untuk setoran secara langsung(malalui whatsapp call) ke ustadz/ah sepekan minimal sekali dan ujian muroja'ah sepekan sekali"
-          },
-          {
-            item: "tnc2",
-            name:
-              "Saya berusaha sebaik mungkin menjaga adab halaqah Quran, misal dengan aktif di grup, memberikan kabar jika berhalangan setoran dan menaati peraturan."
-          }
-        ]
-      },
-      formData: new FormData()
-    }
-  }
-
   const createFormData = jest.fn()
-
-  const onSubmit = jest.fn()
-  const validateRecording = jest.fn()
-  const wrapper = shallowMount(ProgramRegistration, {
+  let wrapper: any = shallowMount(ProgramRegistration, {
     store,
     localVue,
     router,
-    data,
     methods: {
-      createFormData,
-      onSubmit,
+      createFormData
     },
-    computed: {
-      validateRecording
-    }
-  });
-
-  it("renders data when passed", () => {
-    expect(wrapper.vm.$data).toMatchObject(data());
   });
 
   it("path change when condition true", async () => {
-    store.commit("setSelectionPeriod", {
-      selectionPeriod: {
-        periodId: "1",
-        term: "TahfidzQu_2020_1"
-      }
+    store.commit("setPeriodCategory", {
+      value: "registration"
     })
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.$store.getters.getIsProgramOpened).toBe(true)
+    expect(wrapper.vm.$store.getters.getRegistrationPeriodOpened).toBe(true)
   })
 
   it("path change when condition false", async () => {
-    store.commit("setSelectionPeriod", {
-      selectionPeriod: {
-        periodId: "1",
-        term: "TahfidzQu_2020_1"
-      }
+    store.commit("setPeriodCategory", {
+      value: "registration"
     })
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.$store.getters.getIsProgramOpened).toBe(true)
+    expect(wrapper.vm.$store.getters.getRegistrationPeriodOpened).toBe(true)
   })
 
-  it("return true when recording file exist and validateRecording called", () => {
-    expect(wrapper.vm.$data.form.recording).toEqual(data().form.recording)
-  })
-
-  it("call createFormData method", async () => {
-    wrapper.find("#submit").trigger("click")
+  it("call touchForm method and get Error 1", async () => {
+    function data() {
+      return {
+        form: {
+          age: "12",
+          domicile: "12",
+          recording: new File(["test"], "test"),
+          juzTargetNumber: "12",
+          juzNumberMemorized: "12",
+          hasTahsinExperience: 0,
+          tahsinExperience: "test",
+          infaqOptionNumber: 1,
+          referralName1: "test",
+          referralName2: "tesevr",
+          programInfoReference: ["Line"],
+          TermAndConditions: ["tnc1", "tnc2"],
+        }
+      }
+    }
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      data,
+      methods: {
+        createFormData,
+      },
+    });
+    wrapper.vm.touchForm()
     await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$v.form.$anyError).toBe(true)
+  })
+
+  it("call touchForm method and get Error 2", async () => {
+    function data() {
+      return {
+        form: {
+          age: "12",
+          domicile: "12",
+          recording: new File(["test"], "test"),
+          juzTargetNumber: "12",
+          juzNumberMemorized: "12",
+          hasTahsinExperience: 1,
+          tahsinExperience: "test",
+          infaqOptionNumber: 1,
+          referralName1: "test",
+          referralName2: "tesevr",
+          programInfoReference: ["Line"],
+          TermAndConditions: ["tnc1", "tnc2"],
+        }
+      }
+    }
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      data,
+      methods: {
+        createFormData,
+      },
+    });
+    wrapper.vm.touchForm()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$v.form.$anyError).toBe(true)
+  })
+
+  it("call touchForm method and get Error 3", async () => {
+    function data() {
+      return {
+        form: {
+          age: "12",
+          domicile: "12",
+          recording: new File(["test"], "test"),
+          juzTargetNumber: "12",
+          juzNumberMemorized: "12",
+          hasTahsinExperience: 0,
+          tahsinExperience: "test",
+          infaqOptionNumber: 2,
+          referralName1: "test",
+          referralName2: "tesevr",
+          programInfoReference: ["Line"],
+          TermAndConditions: ["tnc1", "tnc2"],
+        }
+      }
+    }
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      data,
+      methods: {
+        createFormData,
+      },
+    });
+    wrapper.vm.touchForm()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$v.form.$anyError).toBe(true)
+  })
+
+  it("call touchForm method and get Error 4", async () => {
+    function data() {
+      return {
+        form: {
+          age: "12",
+          domicile: "12",
+          recording: new File(["test"], "test"),
+          juzTargetNumber: "12",
+          juzNumberMemorized: "12",
+          hasTahsinExperience: 1,
+          tahsinExperience: "test",
+          infaqOptionNumber: 2,
+          referralName1: "test",
+          referralName2: "tesevr",
+          programInfoReference: ["Line"],
+          TermAndConditions: ["tnc1", "tnc2"],
+        }
+      }
+    }
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      data,
+      methods: {
+        createFormData,
+      },
+    });
+    wrapper.vm.touchForm()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$v.form.$anyError).toBe(true)
+  })
+
+  it("call postForm method", async () => {
+    wrapper.vm.postForm()
+    await wrapper.vm.$nextTick()
+  })
+
+  it("call onSubmit method", async () => {
+    wrapper.vm.onSubmit()
+    await wrapper.vm.$nextTick()
+  })
+
+  it("call validateRecording  method", async () => {
+    wrapper.setData({ form: { recording: new File(["test"], "test.mp3") } })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.validateRecording).toBe(true)
+  })
+
+  it("call routerPushTo regis closed method", async () => {
+    const routerPushTo = jest.fn()
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      methods: {
+        routerPushTo
+      },
+    });
+    store.commit("setProgramOpened", { value: true })
+    store.commit("setHasProgramRegistered", { value: true })
+    wrapper.vm.routerPushTo()
+    await wrapper.vm.$nextTick()
+    expect(routerPushTo).toHaveBeenCalled()
+  })
+
+  it("call routerPushTo regis success method", async () => {
+    const routerPushTo = jest.fn()
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      methods: {
+        routerPushTo
+      },
+    });
+    store.commit("setHasProgramRegistered", { value: true })
+    wrapper.vm.routerPushTo()
+    await wrapper.vm.$nextTick()
+    expect(routerPushTo).toHaveBeenCalled()
+  })
+
+  it("call routerPushTo regis closed method", async () => {
+    const routerPushTo = jest.fn()
+    wrapper = shallowMount(ProgramRegistration, {
+      store,
+      localVue,
+      router,
+      methods: {
+        routerPushTo
+      },
+    });
+    store.commit("setProgramOpened", { value: true })
+    store.commit("setHasProgramRegistered", { value: false })
+    store.commit("setUserRole", {
+      role: [{
+        "role_id": 4,
+        "description": ""
+      }]
+    })
+    wrapper.vm.routerPushTo()
+    await wrapper.vm.$nextTick()
+    expect(routerPushTo).toHaveBeenCalled()
   })
 
 });

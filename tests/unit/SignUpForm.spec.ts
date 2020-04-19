@@ -4,12 +4,15 @@ import Vue from "vue";
 import flushPromises from "flush-promises";
 import BootstrapVue from "bootstrap-vue";
 import Vuelidate from "vuelidate";
+import VueRouter from "vue-router";
+import routes from "./services/dummyRouter"
 
 jest.mock("axios");
 const localVue = createLocalVue();
 localVue.use(BootstrapVue);
 localVue.use(Vuelidate)
-
+localVue.use(VueRouter)
+const router = new VueRouter({ routes })
 const factory = (values = {}) => {
   return shallowMount(SignUpForm, {
     data() {
@@ -22,12 +25,81 @@ const factory = (values = {}) => {
       };
     },
     localVue,
-    stubs: ["router-link"]
+    router
   });
 };
 
-// Username Test
 describe("SignUpForm.vue", () => {
+  it("call registrationSuccess method and change the data", async () => {
+    function data() {
+      return {
+        modal: {
+          title: "Pendaftaran Berhasil !",
+          image: require("@/assets/img/success-email.png"),
+          message: "supri telah bergabung di hafidzisme",
+          trailingMessage: "Silahkan cek email untuk aktivasi akun!",
+          button: "Go to login page",
+          isSuccess: true,
+        }
+      }
+    }
+    const wrapper: any = shallowMount(SignUpForm, {
+      localVue,
+    })
+    wrapper.vm.registrationSuccess("supri")
+    expect(wrapper.vm.$data.modal).toMatchObject(data().modal)
+  });
+
+  it("call registrationFailure method and change the data", async () => {
+    function data() {
+      return {
+        modal: {
+          title: "Pendaftaran Gagal !",
+          image: require("@/assets/img/success-selection.png"),
+          message: "test",
+          trailingMessage: "test2",
+          button: "Coba Lagi",
+          isSuccess: false,
+        }
+      }
+    }
+    const wrapper: any = shallowMount(SignUpForm, {
+      localVue,
+    })
+    wrapper.vm.registrationFailure("test", "test2")
+    expect(wrapper.vm.$data.modal).toMatchObject(data().modal)
+  });
+
+  it("call hideModal method", async () => {
+    const wrapper: any = shallowMount(SignUpForm, {
+      localVue,
+    })
+    wrapper.vm.hideModal()
+  });
+
+  it("call onSubmit method", async () => {
+    const wrapper: any = shallowMount(SignUpForm, {
+      localVue,
+    })
+    wrapper.vm.onSubmit()
+  });
+
+  it("call toSignin method", async () => {
+    const wrapper: any = shallowMount(SignUpForm, {
+      localVue,
+    })
+    wrapper.vm.toSignin()
+  });
+
+  it("call postForm method", async () => {
+    const wrapper: any = shallowMount(SignUpForm, {
+      localVue,
+    })
+    wrapper.vm.postForm()
+  });
+});
+
+describe("Username Test", () => {
   it("renders an error when username contains forbidden characters", async () => {
     const wrapper = factory({ username: "azhar*difa*arnanda" });
     wrapper.find({ ref: "btn-submit" }).trigger("click");
@@ -60,8 +132,7 @@ describe("SignUpForm.vue", () => {
   });
 });
 
-// FullName Test
-describe("SignUpForm.vue", () => {
+describe("FullName Test", () => {
   it("renders an error when full name is not letter only", async () => {
     const wrapper = factory({ fullname: "Azhar Difa 99 @$" });
     wrapper.find({ ref: "btn-submit" }).trigger("click");
@@ -98,7 +169,7 @@ describe("SignUpForm.vue", () => {
 });
 
 // Number Test
-describe("SignUpForm.vue", () => {
+describe("Number Test", () => {
   it("renders an error when number is not integer only", async () => {
     const wrapper = factory({ number: "azhar*/" });
     wrapper.find({ ref: "btn-submit" }).trigger("click");
@@ -131,8 +202,7 @@ describe("SignUpForm.vue", () => {
   });
 });
 
-// Email Test
-describe("SignUpForm.vue", () => {
+describe("Email Test", () => {
   it("renders an error when email format is not correct", async () => {
     const wrapper = factory({ email: "aazhard*gmail.com" });
     wrapper.find({ ref: "btn-submit" }).trigger("click");
@@ -149,8 +219,7 @@ describe("SignUpForm.vue", () => {
   });
 });
 
-// Password Test
-describe("SignUpForm.vue", () => {
+describe("Password Test", () => {
   it("renders an error when password doesn't contain atleast 8 characters", async () => {
     const wrapper = factory({ password: "azhar" });
     wrapper.find({ ref: "btn-submit" }).trigger("click");
@@ -191,8 +260,7 @@ describe("SignUpForm.vue", () => {
   });
 });
 
-// Password validation test
-describe("SignUpForm.vue", () => {
+describe("Password validation test", () => {
   it("renders an error when password validation doesn't match", async () => {
     const wrapper = factory({
       password: "AzharDifa99",
@@ -215,8 +283,7 @@ describe("SignUpForm.vue", () => {
   });
 });
 
-// Logged In Test
-describe("SignUpForm.vue", () => {
+describe("Logged In Test", () => {
   it("logged in if form is valid", async () => {
     const wrapper = factory({
       username: "azhar_difa_arnanda",
