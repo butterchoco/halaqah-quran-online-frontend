@@ -14,6 +14,7 @@ import Forbidden from "@/views/ForbiddenRole.vue"
 import LoginForbidden from "@/views/LoginForbidden.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
+import StudentSchedule from "@/views/StudentSchedule.vue"
 
 
 Vue.use(VueRouter);
@@ -93,6 +94,11 @@ const routes = [
     name: "AnnouncementFailed",
     component: AnnouncementFailed
   },
+  {
+    path: "/student-schedule",
+    name: "StudentSchedule",
+    component: StudentSchedule
+  }
 ];
 
 const router = new VueRouter({

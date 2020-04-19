@@ -33,14 +33,11 @@ describe("Home.vue", () => {
     expect(wrapper.vm.$store.getters.getTimeline).toBeTruthy();
   });
   it("has IsProgramOpened correctly", async () => {
-    store.commit("setSelectionPeriod", {
-      selectionPeriod: {
-        periodId: "1",
-        term: "TahfidzQu_2020_1"
-      }
+    store.commit("setPeriodCategory", {
+      value: "registration"
     })
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.$store.getters.getIsProgramOpened).toBeTruthy();
+    expect(wrapper.vm.$store.getters.getRegistrationPeriodOpened).toBeTruthy();
   });
   it("has AllCurriculum correctly", () => {
     expect(wrapper.vm.$store.getters.getAllCurriculums).toBeTruthy();

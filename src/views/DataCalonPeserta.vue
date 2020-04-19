@@ -233,7 +233,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import axios from "axios";
 import router from "@/router";
 import User from "@/services/User";
 
@@ -281,18 +280,16 @@ export default {
         isLulus: false,
         levelTahsin: 0,
         note: ""
-      },
-      BASE_URL: ""
+      }
     };
   },
   mounted() {
     User.getLatestPeriod(process.env.VUE_APP_URL);
-    if (this.getUserRole[this.getUserRole.length - 1].role_id !== 4) {
-      router.push("/forbidden");
-      return;
-    }
-    if (this.getIsProgramOpened) {
-      this.BASE_URL = process.env.VUE_APP_URL;
+    if (this.getUserRole[this.getUserRole.length - 1].role_id == 0) {
+      this.gotoLoginForbidden();
+    } else if (this.getUserRole[this.getUserRole.length - 1].role_id != 4) {
+      this.gotoForbiddenPage();
+    } else if (this.getParticipantSelectionPeriodOpened) {
       this.getDataCalon();
       this.getDataNilaiCalon();
     }
@@ -301,112 +298,70 @@ export default {
     ...mapGetters({
       getCalonPeserta: "getCalonPeserta",
       getAccessToken: "getAccessToken",
-      getRefreshToken: "getRefreshToken",
-      getSelectionPeriodId: "getSelectionPeriodId",
+      getPeriodId: "getPeriodId",
       getUserId: "getUserId",
       getUserRole: "getUserRole",
-      getIsProgramOpened: "getIsProgramOpened"
+      getParticipantSelectionPeriodOpened: "getParticipantSelectionPeriodOpened"
     })
   },
   methods: {
+    gotoForbiddenPage() {
+      router.push("/forbidden");
+    },
+    gotoLoginForbidden() {
+      router.push("/login-forbidden");
+    },
     toggleModalNilai(dataStudent) {
       this.isModalNilai = !this.isModalNilai;
       this.modalNilaiStudent = dataStudent;
-
-      const token = this.getAccessToken;
-      axios
-        .get(
-          process.env.VUE_APP_URL +
-            "/api/selection/evaluation/?id=" +
-            dataStudent.id +
-            "&period=" +
-            this.getSelectionPeriodId,
-          {
-            headers: {
-              Authorization: "JWT " + token
-            }
-          }
-        )
-        .then(response => {
-          this.dataNilaiCalon.harakatMistake = response.data["harakat_mistake"];
-          this.dataNilaiCalon.madMistake = response.data["mad_mistake"];
-          this.dataNilaiCalon.gunnahMistake = response.data["gunnah_mistake"];
-          this.dataNilaiCalon.isLulus = response.data["is_passed"];
-          this.dataNilaiCalon.levelTahsin = response.data["tahsin_level"];
-          this.dataNilaiCalon.note = response.data["note"];
-        });
+      User.getScoreCandidate(
+        process.env.VUE_APP_URL,
+        this.getAccessToken,
+        this.getPeriodId,
+        dataStudent
+      ).then(response => {
+        this.dataNilaiCalon.harakatMistake = response["harakat_mistake"];
+        this.dataNilaiCalon.madMistake = response["mad_mistake"];
+        this.dataNilaiCalon.gunnahMistake = response["gunnah_mistake"];
+        this.dataNilaiCalon.isLulus = response["is_passed"];
+        this.dataNilaiCalon.levelTahsin = response["tahsin_level"];
+        this.dataNilaiCalon.note = response["note"];
+      });
     },
     toggleModal(dataStudent) {
       this.isModal = !this.isModal;
       this.studentModal = dataStudent;
     },
     handleSubmit(dataStudent) {
-      const token = this.getAccessToken;
-      const UserId = this.getUserId;
-      const formData = new FormData();
-      formData.append("evaluator", UserId);
-      formData.append("harakat_mistake", this.form.harakatMistake);
-      formData.append("mad_mistake", this.form.madMistake);
-      formData.append("gunnah_mistake", this.form.gunnahMistake);
-      formData.append("tahsin_level", this.form.levelTahsin);
-      formData.append("is_passed", this.form.isLulus);
-      formData.append("note", this.form.note);
-      axios
-        .post(
-          process.env.VUE_APP_URL +
-            "/api/selection/evaluation/?id=" +
-            dataStudent.id +
-            "&period=" +
-            this.getSelectionPeriodId,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: "JWT " + token
-            }
-          }
-        )
-        .then(() => {
-          this.dataCalon.splice(this.dataCalon.indexOf(dataStudent));
-          this.dataEvaluatedCalon.push(dataStudent);
-          this.isModal = false;
-        });
+      User.sendScoreCandidate(
+        process.env.VUE_APP_URL,
+        this.getAccessToken,
+        this.getPeriodId,
+        this.form,
+        dataStudent
+      ).then(() => {
+        this.dataCalon.splice(this.dataCalon.indexOf(dataStudent));
+        this.dataEvaluatedCalon.push(dataStudent);
+        this.isModal = false;
+      });
     },
     getDataCalon() {
-      const token = this.getAccessToken;
-      axios
-        .get(
-          process.env.VUE_APP_URL +
-            "/api/tahfidz/selections/" +
-            this.getSelectionPeriodId +
-            "/users/",
-          {
-            headers: {
-              Authorization: "JWT " + token
-            }
-          }
-        )
-        .then(response => {
-          this.dataCalon = response.data.candidates;
-        });
+      User.getCandidateData(
+        process.env.VUE_APP_URL,
+        this.getAccessToken,
+        this.getPeriodId
+      ).then(response => {
+        this.dataCalon = response.candidates;
+      });
     },
     getDataNilaiCalon() {
-      const token = this.getAccessToken;
-      axios
-        .get(
-          process.env.VUE_APP_URL +
-            "/api/tahfidz/selections/" +
-            this.getSelectionPeriodId +
-            "/users/?evaluated=true",
-          {
-            headers: {
-              Authorization: "JWT " + token
-            }
-          }
-        )
-        .then(response => {
-          this.dataEvaluatedCalon = response.data.candidates;
-        });
+      User.getAllCandidateScore(
+        process.env.VUE_APP_URL,
+        this.getAccessToken,
+        this.getPeriodId
+      ).then(response => {
+        this.dataEvaluatedCalon = response.candidates;
+      });
     }
   }
 };
@@ -465,25 +420,6 @@ export default {
 
 .data-calon-container {
   min-height: inherit;
-}
-
-.modal-title {
-  font-weight: bold;
-}
-
-.modal-header {
-  border-bottom: 0;
-  padding: 0 1rem;
-}
-
-.modal-footer {
-  border: 0;
-  padding: 0 1rem;
-}
-
-.modal-content {
-  border-radius: 20px;
-  border: 0;
 }
 
 .student-name {

@@ -2,6 +2,8 @@
 import Cookies from "js-cookie"
 
 const state = {
+    accessToken: null,
+    refreshToken: null,
     isProgramOpened: true,
     user: {
         id: "",
@@ -11,7 +13,7 @@ const state = {
         email: "",
         role: [
             {
-                "role_id": 0,
+                "role_id": 5,
                 "description": ""
             }
         ],
@@ -194,31 +196,61 @@ const state = {
                 content: 2
             }
         ],
+        isPassed: false,
+        tahsinLevel: 1,
         note: "Lorem Ipsum"
     },
     HasProgramRegistered: false,
-    selectionPeriod: {
-        periodId: "",
-        term: ""
+    latest_opened: {
+        id: "",
+        term: "",
+        urlWhatsappGroup: "",
+        start_time: "",
+        end_time: "",
+        category: ""
     },
     AnnouncementAvailable: false,
 }
 
 const getters = {
-    getIsProgramOpened: (state: any) => {
-        if (state.selectionPeriod.periodId !== "") {
+    getRegistrationPeriodOpened: (state: any) => {
+        if (state.latest_opened.category === "registration") {
+            return true
+        }
+        return false;
+    },
+    getParticipantSelectionPeriodOpened: (state: any) => {
+        if (state.latest_opened.category === "participant_selection") {
+            return true
+        }
+        return false;
+    },
+    getSchedulePeriodOpened: (state: any) => {
+        if (state.latest_opened.category === "schedule_choice") {
+            return true
+        }
+        return false;
+    },
+    getPaymentPeriodOpened: (state: any) => {
+        if (state.latest_opened.category === "payment") {
+            return true
+        }
+        return false;
+    },
+    getClassPeriodOpened: (state: any) => {
+        if (state.latest_opened.category === "class") {
             return true
         }
         return false;
     },
     getRefreshToken: (state: any) => {
-        return Cookies.get("HolyKuncen");
+        return state.refreshToken;
     },
     getAccessToken: (state: any) => {
-        return Cookies.get("KuncenPuma");
+        return state.accessToken;
     },
     isUserLoggedIn: (state: any) => {
-        if (Cookies.get("HolyKuncen") != null && Cookies.get("KuncenPuma") != null) {
+        if (state.accessToken != null && state.refreshToken != null) {
             return true
         }
         return false
@@ -271,11 +303,23 @@ const getters = {
     getMessageAlertError: (state: any) => {
         return state.alert.messageError
     },
-    getSelectionPeriodTerm: (state: any) => {
-        return state.selectionPeriod.term
+    getUrlWhatsappGroup: (state: any) => {
+        return state.latest_opened.urlWhatsappGroup
     },
-    getSelectionPeriodId: (state: any) => {
-        return state.selectionPeriod.periodId
+    getTermName: (state: any) => {
+        return state.latest_opened.term
+    },
+    getPeriodId: (state: any) => {
+        return state.latest_opened.id
+    },
+    getPeriodStart: (state: any) => {
+        return state.latest_opened.start_time
+    },
+    getPeriodEnd: (state: any) => {
+        return state.latest_opened.end_time
+    },
+    getPeriodCategory: (state: any) => {
+        return state.latest_opened.category
     },
     getAnnouncementAvailable: (state: any) => {
         return state.AnnouncementAvailable
@@ -326,11 +370,23 @@ const mutations = {
     setUserRole: (state: any, payload: any) => {
         state.user.role = payload.role
     },
-    setSelectionPeriod: (state: any, payload: any) => {
-        state.selectionPeriod = payload.selectionPeriod
+    setPeriod: (state: any, payload: any) => {
+        state.latest_opened = payload.latest_opened
     },
-    setAnnouncementAvailable: (payload: any) => {
+    setPeriodCategory: (state: any, payload: any) => {
+        state.latest_opened.category = payload.value
+    },
+    setAnnouncementAvailable: (state: any, payload: any) => {
         state.AnnouncementAvailable = payload.value
+    },
+    setEvaluator: (state: any, payload: any) => {
+        state.registrationEvaluation.evaluator = payload.value
+    },
+    setPassed: (state: any, payload: any) => {
+        state.registrationEvaluation.isPassed = payload.value
+    },
+    setTahsinLevel: (state: any, payload: any) => {
+        state.registrationEvaluation.tahsinLevel = payload.value
     }
 }
 
