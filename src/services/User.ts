@@ -373,6 +373,58 @@ class User {
                 })
         })
     }
+
+    static uploadTransactionProof(env: string | undefined, token: string, termId: string, form: any) {
+        return new Promise((resolve, reject) => {
+            const formData = new FormData();
+            formData.append("payment_proof", form.transactionImg);
+            axios
+                .post(
+                    process.env.VUE_APP_URL +
+                    "/api/tahfidz/" +
+                    termId +
+                    "/me/payment/upload/",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Authorization: "JWT " + token
+                        }
+                    }
+                )
+                .then(response => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    reject(error)
+                    errorHandling(error)
+                });
+        })
+    }
+
+    static getDataPembayaran(env: string | undefined, token: string, termId: string) {
+        return new Promise((resolve, reject) => {
+            axios
+                .get(
+                    env +
+                    "/api/tahfidz/" +
+                    termId +
+                    "/me/payment/status/",
+                    {
+                        headers: {
+                            Authorization: "JWT " + token
+                        }
+                    }
+                )
+                .then(({ data }) => {
+                    resolve(data)
+                }).catch((error) => {
+                    reject(error)
+                    errorHandling(error)
+                })
+        })
+    }
+
 }
 
 export default User;
