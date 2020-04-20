@@ -51,7 +51,7 @@
           </li>
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">swap_horizontal</span>
-            <router-link to="/" class="link" v-on:click.native="dropdownActive">Transaksi</router-link>
+            <router-link to="/transaction" class="link" v-on:click.native="dropdownActive">Transaksi</router-link>
           </li>
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">trending_up</span>

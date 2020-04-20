@@ -11,6 +11,7 @@ import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
 import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
 import Forbidden from "@/views/ForbiddenRole.vue"
+import Transaction from "@/views/Transaction.vue"
 import LoginForbidden from "@/views/LoginForbidden.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
@@ -49,6 +50,11 @@ const routes = [
     path: "/pengumuman",
     name: "pengumuman",
     component: Announcement
+  },
+  {
+    path: "/transaction",
+    name: "Transaction",
+    component: Transaction
   },
   {
     path: "/activate/:uid/:token",
