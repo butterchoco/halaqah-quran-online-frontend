@@ -1,93 +1,94 @@
 <template>
   <div class="pengumuman-container col center">
     <section class="pengumuman-container vector-background col center">
-      
-        <div class="message-container col center">
-              <div  v-if="isPaymentAccepted && isUploaded">
-                <b-row>
-                  <b-col md="6" offset-md="3">
-                    <div class="justify-content-md-center">
-                      <img src="@/assets/img/verified-success.png" alt="menunggu verifikasi">
-                    </div>
-                  </b-col>
-                </b-row>
-                <h1 class="header-title">Pembayaran terverifikasi!</h1>
-                <b-row>
-                  <b-col md="10" offset-md="3">
-                    <p>Silahkan join grup whatsapp dengan link di bawah.</p><br>
-                    <b-button variant="none" class="primary">{{whatsappLink}}</b-button>
-                  </b-col>
-                </b-row>
+      <div class="message-container col center">
+        <div v-if="isPaymentAccepted && isUploaded">
+          <b-row>
+            <b-col md="6" offset-md="3">
+              <div class="justify-content-md-center">
+                <img src="@/assets/img/verified-success.png" alt="menunggu verifikasi" />
               </div>
-
-              <div v-if="isUploaded && isPaymentAccepted === null">
-                    <img class="mx-auto" src="@/assets/img/menunggu-verifikasi.png" alt="menunggu verifikasi">
-                    <h1>Tunggu beberapa saat...</h1> <br>
-                    <p>Proses verifikasi akan berlangsung selama 1x24 jam.</p> <br>
-                    ........        
-              </div>
-              <div v-if="!isUploaded || isUploaded && isPaymentAccepted === false">
-                <div v-if="isPaymentAccepted === false" class="rejected">
-                  <b-alert show variant="danger">
-                  Bukti pembayaran tidak valid. Tolong upload bukti yang valid.</b-alert>
-                </div>
-                <h3 class="header-title black">Pembayaran Infaq</h3>
-                <p>Jumlah yang harus dibayar:</p>
-                <p class="header-title black">
-                  Rp.
-                  <span ref="nominal">{{nominal}}</span>
-                </p>
-                <a @click="copyText('nominal')" id="salin-jumlah">
-                  <small>Salin jumlah</small>
-                </a>
-                <p>Transfer ke rekening berikut:</p>
-                <p>
-                  <span ref="norek">12080921</span> a.n. Qaaf
-                </p>
-                <a @click="copyText('norek')" ref="salin-norek">
-                  <small>Salin no. rekening</small>
-                </a>
-                <br>
-                <b-form @submit.stop.prevent="onSubmit">
-
-                <b-row align-v="start">
-                  <b-col sm="12" md="6" lg="5">
-                    <b-form-group
-                      class="form-group"
-                      id="transaction-group"
-                      label="Upload Bukti Pembayaran"
-                      description="Format file: ('.jpg', '.png')"
-                      label-for="transaction"
-                    >
-                      <b-form-file
-                        id="transaction"
-                        size="sm"
-                        ref="transaction"
-                        v-model="form.transactionImg"
-                        :state="validateTransaction"
-                        aria-describedby="transaction-live-feedback"
-                      ></b-form-file>
-                      <b-form-invalid-feedback
-                        id="transaction-live-feedback"
-                        class="error_transaction"
-                      >Pastikan format file sudah benar</b-form-invalid-feedback>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <br>
-                <b-button
-                  id="submit"
-                  type="submit"
-                  size="sm"
-                  ref="btn-submit"
-                  variant="none"
-                  :state="validateTransaction"
-                  class="primary mt-4"
-                >Selesaikan</b-button>
-                </b-form>
-              </div>
+            </b-col>
+          </b-row>
+          <h1 class="header-title">Pembayaran terverifikasi!</h1>
+          <b-row>
+            <b-col md="10" offset-md="3">
+              <p>Silahkan join grup whatsapp dengan link di bawah.</p>
+              <br />
+              <b-button variant="none" class="primary">{{whatsappLink}}</b-button>
+            </b-col>
+          </b-row>
         </div>
-      
+
+        <div v-if="isUploaded && isPaymentAccepted === null">
+          <img class="mx-auto" src="@/assets/img/menunggu-verifikasi.png" alt="menunggu verifikasi" />
+          <h1>Tunggu beberapa saat...</h1>
+          <br />
+          <p>Proses verifikasi akan berlangsung selama 1x24 jam.</p>
+          <br />........
+        </div>
+        <div v-if="!isUploaded || isUploaded && isPaymentAccepted === false">
+          <div v-if="isPaymentAccepted === false" class="rejected">
+            <b-alert
+              show
+              variant="danger"
+            >Bukti pembayaran tidak valid. Tolong upload bukti yang valid.</b-alert>
+          </div>
+          <h3 class="header-title black">Pembayaran Infaq</h3>
+          <p>Jumlah yang harus dibayar:</p>
+          <p class="header-title black">
+            Rp.
+            <span ref="nominal">{{nominal}}</span>
+          </p>
+          <a @click="copyText('nominal')" id="salin-jumlah">
+            <small>Salin jumlah</small>
+          </a>
+          <p>Transfer ke rekening berikut:</p>
+          <p>
+            <span ref="norek">12080921</span> a.n. Qaaf
+          </p>
+          <a @click="copyText('norek')" ref="salin-norek">
+            <small>Salin no. rekening</small>
+          </a>
+          <br />
+          <b-form @submit.stop.prevent="onSubmit">
+            <b-row align-v="start">
+              <b-col sm="12" md="6" lg="5">
+                <b-form-group
+                  class="form-group"
+                  id="transaction-group"
+                  label="Upload Bukti Pembayaran"
+                  description="Format file: ('.jpg', '.png')"
+                  label-for="transaction"
+                >
+                  <b-form-file
+                    id="transaction"
+                    size="sm"
+                    ref="transaction"
+                    v-model="form.transactionImg"
+                    :state="validateTransaction"
+                    aria-describedby="transaction-live-feedback"
+                  ></b-form-file>
+                  <b-form-invalid-feedback
+                    id="transaction-live-feedback"
+                    class="error_transaction"
+                  >Pastikan format file sudah benar</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <br />
+            <b-button
+              id="submit"
+              type="submit"
+              size="sm"
+              ref="btn-submit"
+              variant="none"
+              :state="validateTransaction"
+              class="primary mt-4"
+            >Selesaikan</b-button>
+          </b-form>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -102,7 +103,7 @@ export default {
   data() {
     return {
       nominal: "",
-      form : {
+      form: {
         transactionImg: null
       },
       isPaymentAccepted: null,
@@ -113,7 +114,7 @@ export default {
   validations: {
     form: {
       transactionImg: {
-        required,
+        required
       }
     }
   },
@@ -122,16 +123,21 @@ export default {
       this.gotoLoginForbidden();
     } else if (this.getUserRole[this.getUserRole.length - 1].role_id != 2) {
       this.gotoForbiddenPage();
-    } else if (this.getUserRole[this.getUserRole.length - 1].role_id == 2) {
+    } else if (!this.getPaymentPeriodOpened) {
+      this.gotoPeriodForbidden();
+    } else {
       this.getDataPembayaran();
     }
   },
   methods: {
     gotoForbiddenPage() {
-      router.push("/forbidden");
+      router.push("/forbidden/role");
     },
     gotoLoginForbidden() {
-      router.push("/login-forbidden");
+      router.push("/forbidden/login");
+    },
+    gotoPeriodForbidden() {
+      router.push("/forbidden/period");
     },
     onSubmit() {
       if (!this.validateTransaction) {
@@ -145,24 +151,23 @@ export default {
         process.env.VUE_APP_URL,
         this.getAccessToken,
         this.getTermName
-      )
-      .then(response => {
+      ).then(response => {
         this.nominal = response.payment.nominal;
-          if (response.payment.status == 0 ) {
-            this.isUploaded = false;
-            this.isPaymentAccepted = null;
-          } else if (response.payment.status == 3 ) {
-            this.isUploaded = true;
-            this.isPaymentAccepted = false;
-          } else if (response.payment.status == 1) {
-            this.isPaymentAccepted = null;
-            this.isUploaded = true;  
-          } else if ( response.payment.status == 2 ) {
-            this.isPaymentAccepted = true;
-            this.isUploaded = true;
-            this.whatsappLink = response.payment.whatsapp_link
-          }
-      })        
+        if (response.payment.status == 0) {
+          this.isUploaded = false;
+          this.isPaymentAccepted = null;
+        } else if (response.payment.status == 3) {
+          this.isUploaded = true;
+          this.isPaymentAccepted = false;
+        } else if (response.payment.status == 1) {
+          this.isPaymentAccepted = null;
+          this.isUploaded = true;
+        } else if (response.payment.status == 2) {
+          this.isPaymentAccepted = true;
+          this.isUploaded = true;
+          this.whatsappLink = response.payment.whatsapp_link;
+        }
+      });
     },
     copyText(str) {
       const el = document.createElement("textarea");
@@ -178,10 +183,9 @@ export default {
         this.getAccessToken,
         this.getTermName,
         this.form
-      )
-      .then(() => {
+      ).then(() => {
         this.getDataPembayaran();
-      })
+      });
     }
   },
   computed: {
@@ -189,23 +193,19 @@ export default {
       getAccessToken: "getAccessToken",
       getUserId: "getUserId",
       getUserRole: "getUserRole",
-      getTermName: "getTermName"
+      getTermName: "getTermName",
+      getPaymentPeriodOpened: "getPaymentPeriodOpened"
     }),
-  validateTransaction() {
+    validateTransaction() {
       const files = this.form.transactionImg;
       if (files == null) return false;
-      const expectedExtensionFiles = [
-        "jpg",
-        "png",
-        "JPG",
-        "PNG"
-      ];
+      const expectedExtensionFiles = ["jpg", "png", "JPG", "PNG"];
       const extensionFilesList = files.name.split(".");
-      const extensionFiles = extensionFilesList[extensionFilesList.length - 1]
+      const extensionFiles = extensionFilesList[extensionFilesList.length - 1];
       if (expectedExtensionFiles.includes(extensionFiles)) return true;
       return false;
     }
-  },
+  }
 };
 </script>
 
@@ -231,7 +231,6 @@ export default {
     max-width: 100% !important;
     font-size: 16px !important;
   }
-
 }
 
 .rejected {

@@ -13,8 +13,8 @@ const state = {
         email: "",
         role: [
             {
-                "role_id": 5,
-                "description": ""
+                role_id: 0,
+                description: ""
             }
         ],
         whatsappNumber: "",
@@ -202,12 +202,12 @@ const state = {
     },
     HasProgramRegistered: false,
     latest_opened: {
-        id: "",
-        term: "",
-        urlWhatsappGroup: "",
-        start_time: "",
-        end_time: "",
-        category: ""
+        id: "1",
+        term: "test",
+        urlWhatsappGroup: "test",
+        start_time: "test",
+        end_time: "test",
+        category: "test"
     },
     AnnouncementAvailable: false,
 }

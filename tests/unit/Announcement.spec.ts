@@ -16,7 +16,7 @@ describe('Announcement.vue', () => {
     const gotoLoginForbidden = jest.fn()
     let wrapper: any;
 
-    it("call method gotoLoginForbidden if role == 5", async () => {
+    it("call method gotoLoginForbidden if role == 0", async () => {
         wrapper = shallowMount(Announcement, {
             localVue,
             store,
@@ -92,7 +92,7 @@ describe('Announcement.vue', () => {
             router
         })
         wrapper.vm.gotoLoginForbidden()
-        router.push("/login-forbidden")
-        expect(wrapper.vm.$route.path).toBe("/login-forbidden")
+        router.push("/forbidden/login")
+        expect(wrapper.vm.$route.path).toBe("/forbidden/login")
     })
 })

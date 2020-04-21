@@ -47,10 +47,13 @@ export default {
       router.push("/announcement-failed");
     },
     gotoLoginForbidden() {
-      router.push("/login-forbidden");
+      router.push("/forbidden/login");
     }
   },
   created() {
+    if (this.getUserRole[this.getUserRole.length - 1].role_id == 0) {
+      this.gotoLoginForbidden();
+    }
     User.getAnnouncementReport(
       process.env.VUE_APP_URL,
       this.getAccessToken,
@@ -58,9 +61,7 @@ export default {
     );
   },
   mounted() {
-    if (this.getUserRole[this.getUserRole.length - 1].role_id != 1) {
-      this.gotoLoginForbidden();
-    } else if (this.getIsPassed) {
+    if (this.getIsPassed) {
       this.gotoAnnouncementSuccess();
     } else {
       this.gotoAnnouncementFailed();

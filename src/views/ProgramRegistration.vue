@@ -30,12 +30,29 @@
                 placeholder="Masukkan umur . . . contoh : 12"
                 :state="validateState('age')"
                 aria-describedby="age-live-feedback"
-                @change="touchForm('age')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="age-live-feedback"
                 class="error_age"
               >Masukkan umur dengan benar</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="start">
+          <b-col sm="12" md="6">
+            <b-form-group id="gender-group" label="Jenis Kelamin" label-for="gender">
+              <b-form-select
+                id="gender"
+                v-model="form.gender"
+                :options="form.genderOption"
+                :state="validateState('gender')"
+                aria-describedby="gender-live-feedback"
+              >
+                <template v-slot:first>
+                  <b-form-select-option :value="null" disabled>Pilih Opsi</b-form-select-option>
+                </template>
+              </b-form-select>
             </b-form-group>
           </b-col>
         </b-row>
@@ -50,7 +67,6 @@
                 :state="validateState('domicile')"
                 placeholder="Masukkan domisili . . . contoh : Depok"
                 aria-describedby="domicile-live-feedback"
-                @change="touchForm('domicile')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="domicile-live-feedback"
@@ -75,7 +91,6 @@
                 v-model="form.juzNumberMemorized"
                 :state="validateState('juzNumberMemorized')"
                 aria-describedby="juzNumberMemorized-live-feedback"
-                @change="touchForm('juzNumberMemorized')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="juzNumberMemorized-live-feedback"
@@ -100,7 +115,6 @@
                 placeholder="Masukkan jumlah juz . . . contoh : 18"
                 :state="validateState('juzTargetNumber')"
                 aria-describedby="juzTargetNumber-live-feedback"
-                @change="touchForm('juzTargetNumber')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="juzTargetNumber-live-feedback"
@@ -121,10 +135,8 @@
                 id="hasTahsinExperience"
                 v-model="form.hasTahsinExperience"
                 :options="form.hasTahsinExperienceOption"
-                placeholder="Masukkan umur . . . contoh : 12"
                 :state="validateState('hasTahsinExperience')"
                 aria-describedby="hasTahsinExperience-live-feedback"
-                @change="touchForm('hasTahsinExperience')"
               >
                 <template v-slot:first>
                   <b-form-select-option :value="null" disabled>Pilih Opsi</b-form-select-option>
@@ -145,7 +157,6 @@
                 v-model="form.tahsinExperience"
                 :state="validateState('tahsinExperience')"
                 aria-describedby="tahsinExperience-live-feedback"
-                @change="touchForm('tahsinExperience')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="tahsinExperience-live-feedback"
@@ -168,7 +179,6 @@
                 :options="form.infaqOptionNumberOption"
                 :state="validateState('infaqOptionNumber')"
                 aria-describedby="infaqOptionNumber-live-feedback"
-                @change="touchForm('infaqOptionNumber')"
               >
                 <template v-slot:first>
                   <b-form-select-option :value="null" disabled>Pilih Opsi</b-form-select-option>
@@ -190,7 +200,6 @@
                 v-model="form.referralName1"
                 :state="validateState('referralName1')"
                 aria-describedby="referralName1-live-feedback"
-                @change="touchForm('referralName1')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="referralName1-live-feedback"
@@ -210,7 +219,6 @@
                 v-model="form.referralName2"
                 :state="validateState('referralName2')"
                 aria-describedby="referralName2-live-feedback"
-                @change="touchForm('referralName2')"
               ></b-form-input>
               <b-form-invalid-feedback
                 id="referralName2-live-feedback"
@@ -304,7 +312,6 @@
                   v-model="form.programInfoReferenceAdditional"
                   :state="validateState('programInfoReferenceAdditional')"
                   aria-describedby="programInfoReferenceAdditional-live-feedback"
-                  @change="touchForm('programInfoReferenceAdditional')"
                 ></b-form-input>
                 <b-form-invalid-feedback
                   id="programInfoReferenceAdditional-live-feedback"
@@ -350,6 +357,11 @@ export default {
       isLoading: false,
       form: {
         age: "",
+        gender: "",
+        genderOption: [
+          { value: "Laki-laki", text: "Laki-laki" },
+          { value: "Perempuan", text: "Perempuan" }
+        ],
         domicile: "",
         recording: null,
         juzTargetNumber: "",
@@ -368,6 +380,7 @@ export default {
         ],
         referralName1: "",
         referralName2: "",
+        motivation: "",
         programInfoReference: [],
         programInfoReferenceOptions: [
           { item: "Line", name: "Line" },
@@ -391,11 +404,11 @@ export default {
         ]
       },
       pathTo: {
-        0: "/login-forbidden",
+        0: "/forbidden/login",
         1: "/regis-success",
         2: "/regis-success",
-        3: "/forbidden",
-        4: "/forbidden"
+        3: "/forbidden/role",
+        4: "/forbidden/role"
       }
     };
   },
@@ -406,6 +419,9 @@ export default {
         numeric,
         minLength: minLength(1),
         maxLength: maxLength(100)
+      },
+      gender: {
+        required
       },
       domicile: {
         required,
@@ -456,11 +472,9 @@ export default {
   created() {
     if (!this.getRegistrationPeriodOpened) {
       this.routerPushTo("/regis-closed");
-    }
-    if (this.getHasProgramRegistered) {
+    } else if (this.getHasProgramRegistered) {
       this.routerPushTo("/regis-success");
-    }
-    if (
+    } else if (
       this.pathTo[this.getUserRole[this.getUserRole.length - 1].role_id] !==
       undefined
     ) {
@@ -524,6 +538,7 @@ export default {
         process.env.VUE_APP_URL,
         this.getAccessToken,
         this.getPeriodId,
+        this.getTermName,
         this.form
       )
         .then(() => {

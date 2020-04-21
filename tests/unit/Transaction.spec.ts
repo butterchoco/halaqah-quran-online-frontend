@@ -14,7 +14,7 @@ describe("Transaction.vue", () => {
   const store = Store;
   let wrapper: any;
 
-  it("redirect to login forbidden page when not logged in",async () => {
+  it("redirect to login forbidden page when not logged in", async () => {
     const gotoLoginForbidden = jest.fn();
     store.commit("setUserRole", {
       role: [
@@ -79,6 +79,7 @@ describe("Transaction.vue", () => {
 
   it("call getDataPembayaran after sudent login", async () => {
     const getDataPembayaran = jest.fn();
+    store.commit("setPeriodCategory", { value: "payment" })
     store.commit("setUserRole", {
       role: [
         {
@@ -215,6 +216,10 @@ describe("Transaction.vue", () => {
   })
 
   it("call uploadTransaction method", async () => {
+    wrapper = shallowMount(Transaction, {
+      localVue,
+      store
+    })
     wrapper.vm.uploadTransaction()
     await wrapper.vm.$nextTick()
   })
@@ -230,7 +235,7 @@ describe("Transaction.vue", () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.validateTransaction).toBe(false)
   })
-  
+
   it("call copyText method", async () => {
     const copyText = jest.fn()
     store.commit("setUserRole", {
@@ -256,7 +261,7 @@ describe("Transaction.vue", () => {
         copyText
       }
     })
-    wrapper.find({ref: "salin-norek"}).trigger("click")
+    wrapper.find({ ref: "salin-norek" }).trigger("click")
     expect(copyText).toHaveBeenCalled()
   })
 

@@ -47,7 +47,11 @@
         <ul class="nav-profile">
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">today</span>
-            <router-link to="/" class="link" v-on:click.native="dropdownActive">Jadwal</router-link>
+            <router-link
+              to="/student-schedule"
+              class="link"
+              v-on:click.native="dropdownActive"
+            >Jadwal</router-link>
           </li>
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">swap_horizontal</span>
@@ -123,6 +127,7 @@ export default {
     store.dispatch("hideAlertError");
     if (this.getRefreshToken == null) {
       this.logout();
+      return;
     }
     this.resetToken();
     User.getInfo(process.env.VUE_APP_URL, this.getAccesstoken);

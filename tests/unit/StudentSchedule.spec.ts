@@ -1,30 +1,46 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils"
 import StudentSchedule from "@/views/StudentSchedule.vue"
+import Store from "./services/dummystore"
 import BootstrapVue from "bootstrap-vue"
+import Vuex from "vuex"
 
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
+localVue.use(Vuex)
 
 describe("StudentSchedule.vue", () => {
     function data() {
         return {
-            selectedDate: new Date().toISOString().split("T")[0],
+            selectedDate: "2020-04-03",
             form: {
-                date: new Date().toISOString().split("T")[0],
-                time: new Date().toISOString().split("T")[1].split("Z")[0].split(".")[0],
-                teacher: "Dr. Drake"
+                date: "2020-04-03",
+                detail: {
+                    id: 1,
+                    time: "22:45:70 AM",
+                    teacher: {
+                        "first_name": "Ahmad",
+                        "last_name": "supri"
+                    },
+                    student: null
+                }
             },
-            availableDate: [
-                {
-                    date: new Date().toISOString().split("T")[0],
-                    time: new Date().toTimeString(),
-                    teacher: "Ust. Drake"
-                },
-            ]
+            availableDate: {
+                "2020-04-03": [{
+                    id: 1,
+                    time: "22:45:70 AM",
+                    teacher: {
+                        "first_name": "Ahmad",
+                        "last_name": "supri"
+                    },
+                    student: null
+                }]
+            }
         }
     }
+    const store = new Vuex.Store(Store)
     let wrapper: any = shallowMount(StudentSchedule, {
         localVue,
+        store,
         data
     })
 
@@ -34,30 +50,22 @@ describe("StudentSchedule.vue", () => {
     })
 
     it("calls method initiateDate when addSelectedDate called and selectedDate is empty string in StudentSchedule", () => {
-        const initiateDate = jest.fn()
+        const printAvailableDate = jest.fn()
         wrapper = shallowMount(StudentSchedule, {
             localVue,
+            store,
             methods: {
-                initiateDate
+                printAvailableDate
             }
         })
         wrapper.vm.addSelectedDate()
-        expect(initiateDate).toHaveBeenCalled()
-    })
-
-    it("calls method joinClass in StudentSchedule", () => {
-        wrapper = shallowMount(StudentSchedule, {
-            localVue,
-            data
-        })
-        wrapper.vm.addSelectedDate()
-        wrapper.vm.joinClass()
-        expect(wrapper.vm.$data.listSelectedDate[wrapper.vm.$data.listSelectedDate.length - 1]).toStrictEqual(data().form)
+        expect(printAvailableDate).toHaveBeenCalled()
     })
 
     it("calls method cancelJoin in StudentSchedule", () => {
         wrapper = shallowMount(StudentSchedule, {
             localVue,
+            store,
             data
         })
         wrapper.vm.addSelectedDate()
