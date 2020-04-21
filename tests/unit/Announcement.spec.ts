@@ -33,6 +33,7 @@ describe('Announcement.vue', () => {
                 "role_id": 1
             }]
         })
+        store.commit("setAnnouncementAvailable", { value: true })
         wrapper = shallowMount(Announcement, {
             localVue,
             store,
@@ -49,6 +50,7 @@ describe('Announcement.vue', () => {
                 "role_id": 1
             }]
         })
+        store.commit("setAnnouncementAvailable", { value: true })
         store.commit("setPassed", { value: true })
         wrapper = shallowMount(Announcement, {
             localVue,

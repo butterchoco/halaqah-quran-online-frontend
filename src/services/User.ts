@@ -195,13 +195,13 @@ class User {
                     }
                 )
                 .then(({ data }) => {
-                    store.dispatch("setHarakatScore", { value: data["registration_status"]["harakat_mistake"] })
-                    store.dispatch("setMadScore", { value: data["registration_status"]["mad_mistake"] })
-                    store.dispatch("setGunnahScore", { value: data["registration_status"]["gunnah_mistake"] })
-                    store.dispatch("setPassed", { value: data["registration_status"]["is_passed"] })
-                    store.dispatch("setTahsinLevel", { value: data["registration_status"]["tahsin_level"] })
-                    store.dispatch("setEvaluator", { value: data["registration_status"]["evaluator_name"] })
-                    store.dispatch("setAnnouncementAvailable", { value: true })
+                    store.commit("setHarakatScore", { value: data["registration_status"]["harakat_mistake"] })
+                    store.commit("setMadScore", { value: data["registration_status"]["mad_mistake"] })
+                    store.commit("setGunnahScore", { value: data["registration_status"]["gunnah_mistake"] })
+                    store.commit("setPassed", { value: data["registration_status"]["is_passed"] })
+                    store.commit("setTahsinLevel", { value: data["registration_status"]["tahsin_level"] })
+                    store.commit("setEvaluator", { value: data["registration_status"]["evaluator_name"] })
+                    store.commit("setAnnouncementAvailable", { value: true })
                     resolve(data)
                 })
                 .catch((error) => {
@@ -449,8 +449,61 @@ class User {
 
     static sendStudentSchedule(env: string | undefined, token: string, scheduleId: any) {
         return new Promise((resolve, reject) => {
-            axios.post(env + "/api/schedule/student/put/assign/" + scheduleId, {
+            axios.put(env + "/api/schedule/student/put/assign/" + scheduleId, {},
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: "JWT " + token
+                    }
+                }
+            ).then(({ data }) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+                errorHandling(error)
+            })
+        })
+    }
+
+    static getTeacherSchedule(env: string | undefined, term: string, token: string) {
+        return new Promise((resolve, reject) => {
+            axios.get(env + "/api/schedule/teacher/get/" + term, {
                 headers: {
+                    Authorization: "JWT " + token
+                }
+            }).then(({ data }) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+                errorHandling(error)
+            })
+        })
+    }
+
+    static sendTeacherSchedule(env: string | undefined, term: string, token: string, startDateTime: string, endDateTime: string) {
+        return new Promise((resolve, reject) => {
+            const formData = new FormData()
+            formData.append("start_datetime", startDateTime)
+            formData.append("end_datetime", endDateTime)
+            axios.post(env + "/api/schedule/teacher/set/" + term, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: "JWT " + token
+                }
+            }).then(({ data }) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+                errorHandling(error)
+            })
+        })
+    }
+
+    static deleteTeacherSchedule(env: string | undefined, token: string, scheduleId: string) {
+        return new Promise((resolve, reject) => {
+            axios.delete(env + "/api/schedule/teacher/delete/" + scheduleId, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
                     Authorization: "JWT " + token
                 }
             }).then(({ data }) => {

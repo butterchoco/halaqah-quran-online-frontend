@@ -44,28 +44,28 @@ const getters = {
   }
 };
 const mutations = {
-  setAccepted: (payload: any) => {
+  setAccepted: (state: any, payload: any) => {
     state.isTahfizhProgramAccepted = payload.value;
   },
-  setHarakatScore: (payload: any) => {
+  setHarakatScore: (state: any, payload: any) => {
     state.registrationEvaluation.report[0].content = payload.value
   },
-  setMadScore: (payload: any) => {
+  setMadScore: (state: any, payload: any) => {
     state.registrationEvaluation.report[1].content = payload.value
   },
-  setGunnahScore: (payload: any) => {
+  setGunnahScore: (state: any, payload: any) => {
     state.registrationEvaluation.report[2].content = payload.value
   },
-  setAnnouncementAvailable: (payload: any) => {
+  setAnnouncementAvailable: (state: any, payload: any) => {
     state.AnnouncementAvailable = payload.value
   },
-  setEvaluator: (payload: any) => {
+  setEvaluator: (state: any, payload: any) => {
     state.registrationEvaluation.evaluator = payload.value
   },
-  setPassed: (payload: any) => {
+  setPassed: (state: any, payload: any) => {
     state.registrationEvaluation.isPassed = payload.value
   },
-  setTahsinLevel: (payload: any) => {
+  setTahsinLevel: (state: any, payload: any) => {
     state.registrationEvaluation.tahsinLevel = payload.value
   }
 };

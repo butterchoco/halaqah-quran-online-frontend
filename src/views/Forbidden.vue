@@ -1,6 +1,13 @@
 <template>
   <section class="maintenance-container vector-background col center">
-    <ErrorMaintenance :img="img" :title="title" :msg="msg" :goto="goto" />
+    <ErrorMaintenance
+      :img="img"
+      :title="title"
+      :msg="msg"
+      :goto="goto"
+      :isPrimary="isPrimary"
+      :isDanger="isDanger"
+    />
   </section>
 </template>
 
@@ -16,15 +23,22 @@ export default {
       img: "",
       title: "",
       msg: "",
-      goto: []
+      goto: [],
+      isPrimary: false,
+      isDanger: true
     };
   },
   methods: {
     roleForbidden() {
-      this.img = "";
-      this.title = "";
-      this.msg = "";
-      this.goto = [];
+      this.img = require("@/assets/img/failed-selection.png");
+      this.title = "Akses ditolak";
+      this.msg = "Anda tidak memiliki hak akses di halaman ini !";
+      this.goto = [
+        {
+          str: "Kembali ke beranda",
+          link: "/"
+        }
+      ];
     },
     loginForbidden() {
       this.img = require("@/assets/img/failed-selection.png");

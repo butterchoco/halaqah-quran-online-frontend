@@ -268,7 +268,7 @@ export default {
           { value: 8, text: "8 Kesalahan" },
           { value: 9, text: "9 Kesalahan" },
           { value: 10, text: "10 Kesalahan" },
-          { value: ">10", text: "Lebih dari 10 Kesalahan" }
+          { value: 11, text: "Lebih dari 10 Kesalahan" }
         ],
         graduationOption: [
           { value: true, text: "Lulus" },

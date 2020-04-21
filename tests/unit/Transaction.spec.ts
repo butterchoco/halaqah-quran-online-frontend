@@ -149,7 +149,7 @@ describe("Transaction.vue", () => {
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.find("b-alert-stub").text()).toMatch(
-      "Bukti pembayaran tidak valid. Tolong upload bukti yang valid."
+      "Bukti pembayaran ditolak. Tolong upload bukti yang valid."
     );
     expect(wrapper.find("h3").text()).toMatch(
       "Pembayaran Infaq"

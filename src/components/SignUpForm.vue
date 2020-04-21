@@ -62,6 +62,7 @@
             <b-form-input
               id="input-5"
               size="sm"
+              ref="password"
               v-model="form.password"
               :state="validateState('password')"
               aria-describedby="input-5-live-feedback"
@@ -72,6 +73,7 @@
               class="error_password"
             >Please enter a valid password</b-form-invalid-feedback>
           </b-form-group>
+          <div class="show-password" @click="showPassword"></div>
           <b-form-group id="input-group-6" label="Repeat Password" label-for="input-6">
             <b-form-input
               id="input-6"
@@ -181,7 +183,8 @@ export default {
         trailingMessage: "",
         button: "",
         isSuccess: false
-      }
+      },
+      isShowPassword: false
     };
   },
   validations: {
@@ -219,6 +222,13 @@ export default {
     }
   },
   methods: {
+    showPassword() {
+      if (this.isShowPassword) {
+        this.$refs.password.setAttribute("type", "string");
+      } else {
+        this.$refs.password.setAttribute("type", "password");
+      }
+    },
     registrationSuccess(value) {
       this.modal.title = "Pendaftaran Berhasil !";
       this.modal.image = require("@/assets/img/success-email.png");
@@ -287,6 +297,13 @@ export default {
 @import "@/styles/form.scss";
 @import "@/styles/reusable/loading.scss";
 @import "@/styles/reusable/modal.scss";
+
+.show-password {
+  height: 32px;
+  width: 32px;
+  background: $primary;
+  border-radius: 50%;
+}
 
 @media only screen and (max-width: 768px) {
   p.signin-nav {

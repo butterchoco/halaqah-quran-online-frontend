@@ -15,6 +15,7 @@ import Transaction from "@/views/Transaction.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
 import StudentSchedule from "@/views/StudentSchedule.vue"
+import TeacherSchedule from "@/views/TeacherSchedule.vue"
 
 
 Vue.use(VueRouter);
@@ -98,6 +99,11 @@ const routes = [
     path: "/student-schedule",
     name: "StudentSchedule",
     component: StudentSchedule
+  },
+  {
+    path: "/teacher-schedule",
+    name: "TeacherSchedule",
+    component: TeacherSchedule
   }
 ];
 

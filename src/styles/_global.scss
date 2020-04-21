@@ -121,6 +121,18 @@ section {
     }
   }
 
+  &.danger {
+    background: $danger;
+    color: white;
+    border: 1px solid transparent;
+
+    &:hover {
+      background: white;
+      color: $black;
+      border: 1px solid $danger;
+    }
+  }
+
   &:hover {
     background: $black;
     color: white;
