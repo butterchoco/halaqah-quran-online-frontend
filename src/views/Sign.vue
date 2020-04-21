@@ -24,8 +24,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import SignInForm from "@/components/SignInForm";
 import SignUpForm from "@/components/SignUpForm";
+import router from "@/router";
 
 export default {
   components: {
@@ -48,11 +50,19 @@ export default {
     }
   },
   created() {
+    if (this.getUserRole[this.getUserRole.length - 1].role_id != 0) {
+      router.push("/");
+    }
     if (this.$route.path == "/sign/in") {
       this.signinFlag = true;
     } else {
       this.signinFlag = false;
     }
+  },
+  computed: {
+    ...mapGetters({
+      getUserRole: "getUserRole"
+    })
   }
 };
 </script>

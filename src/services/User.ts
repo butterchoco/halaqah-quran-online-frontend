@@ -61,6 +61,9 @@ class User {
                 .then(({ status, data }) => {
                     if (status == 200) {
                         if (data.roles.length != 0) {
+                            if (data.roles[data.roles.length - 1].role_id == 1 || data.roles[data.roles.length - 1].role_id == 2) {
+                                store.commit("setHasProgramRegistered", { value: true })
+                            }
                             store.commit("setUserRole", {
                                 role: data.roles
                             });
@@ -92,7 +95,7 @@ class User {
             axios
                 .get(env + "/api/tahfidz/periods/latest/")
                 .then(({ data }) => {
-                    if (data.latest_opened) {
+                    if (data.latest_opened != null) {
                         const today = new Date();
                         const parsedToday = Date.parse(today.toISOString())
                         const startDate = Date.parse(
@@ -104,6 +107,7 @@ class User {
                                 latest_opened: data.latest_opened
                             });
                         }
+                        resolve(data)
                     }
                     resolve(data)
                 })
@@ -131,13 +135,14 @@ class User {
         })
     }
 
-    static sendProgramRegistrationForm(env: string | undefined, token: string, periodId: string, form: any) {
+    static sendProgramRegistrationForm(env: string | undefined, token: string, periodId: string, term: string, form: any) {
         return new Promise((resolve, reject) => {
             const formData = new FormData();
             const referralNames = [form.referralName1, form.referralName2] + ""
-            formData.append("term", store.getters.getPeriodTerm);
+            formData.append("term", term);
             formData.append("user", store.getters.getUserId);
             formData.append("age", form.age);
+            formData.append("gender", form.gender);
             formData.append("domicile", form.domicile);
             formData.append("recording", form.recording);
             formData.append("juz_target_number", form.juzTargetNumber);
@@ -146,6 +151,8 @@ class User {
             formData.append("pilihan_infaq", form.infaqOptionNumber);
             formData.append("referral_names", referralNames);
             formData.append("selection_period", periodId);
+            formData.append("motivation", form.motivation);
+            formData.append("program_reference", form.programInfoReference);
             axios
                 .post(
                     env +
@@ -425,6 +432,35 @@ class User {
         })
     }
 
+    static getTeacherAvailableSchedule(env: string | undefined, term: string, token: string) {
+        return new Promise((resolve, reject) => {
+            axios.get(env + "/api/schedule/student/get/" + term, {
+                headers: {
+                    Authorization: "JWT " + token
+                }
+            }).then(({ data }) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+                errorHandling(error)
+            })
+        })
+    }
+
+    static sendStudentSchedule(env: string | undefined, token: string, scheduleId: any) {
+        return new Promise((resolve, reject) => {
+            axios.post(env + "/api/schedule/student/put/assign/" + scheduleId, {
+                headers: {
+                    Authorization: "JWT " + token
+                }
+            }).then(({ data }) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+                errorHandling(error)
+            })
+        })
+    }
 }
 
 export default User;

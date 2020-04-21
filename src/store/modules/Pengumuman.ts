@@ -3,7 +3,7 @@ const state = {
   isTahfizhProgramAccepted: false,
   AnnouncementAvailable: false,
   registrationEvaluation: {
-    evaluator: "Bob Bobby",
+    evaluator: "",
     report: [
       {
         title: "Kesalahan Harakat",

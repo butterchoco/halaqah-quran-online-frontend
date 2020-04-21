@@ -1,6 +1,13 @@
 <template>
   <section class="student-schedule-container vector-background">
     <b-container>
+      <b-alert
+        :show="this.form.success"
+        dismissible
+        fade
+        variant="success"
+      >Berhasil menambahkan jadwal !</b-alert>
+      <b-alert :show="this.form.fail" dismissible fade variant="danger">Gagal menambahkan jadwal !</b-alert>
       <b-row align-h="center">
         <b-col sm="12" md="8">
           <h3 class="header-title">Pilih Jadwal Setoran</h3>
@@ -28,13 +35,13 @@
                   <p class="date">{{data.date}}</p>
                 </div>
                 <div class="detail-wrapper">
-                  <p class="time">{{data.time}}</p>
-                  <p class="teacher">{{data.teacher}}</p>
+                  <p class="time">{{data.detail.time}}</p>
+                  <p class="teacher">Ust. {{data.detail.teacher.first_name}}</p>
                 </div>
                 <button class="detail btn">Detail</button>
               </div>
             </div>
-            <button class="submit btn primary">Submit</button>
+            <button v-if="listSelectedDate.length != 0" class="submit btn primary">Selanjutnya</button>
           </div>
         </b-col>
       </b-row>
@@ -48,6 +55,21 @@
         header-class="modal-header-student-schedule"
         :title="selectedDate"
       >
+        <div class="modal-content">
+          <b-form @submit.stop.prevent="handleSubmit(studentModal)">
+            <b-row>
+              <b-col>
+                <b-form-group id="time-group" label="Waktu" label-for="time">
+                  <b-form-select id="time" v-model="timeId" :options="timeOption" required>
+                    <template v-slot:first>
+                      <b-form-select-option :value="null" disabled>Pilih Opsi</b-form-select-option>
+                    </template>
+                  </b-form-select>
+                </b-form-group>
+              </b-col>
+            </b-row>
+          </b-form>
+        </div>
         <div class="modal-footer">
           <button @click="cancelJoin" class="btn">Batal</button>
           <button @click="joinClass" class="btn primary">Ikut</button>
@@ -59,6 +81,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import User from "@/services/User";
+import router from "@/router";
 
 export default {
   data() {
@@ -68,29 +92,58 @@ export default {
       selectedDate: "",
       form: {
         date: "",
-        time: "",
-        teacher: ""
+        detail: "",
+        success: false,
+        fail: false
       },
+      timeId: "",
+      timeOption: [],
       listSelectedDate: [],
-      availableDate: [],
+      availableDate: {},
       isModal: false
     };
   },
   methods: {
     joinClass() {
-      this.listSelectedDate.push(this.form);
+      this.form.date = this.selectedDate;
+      this.form.detail = this.availableDate[this.selectedDate].find(
+        ({ id }) => id == this.timeId
+      );
+      User.sendStudentSchedule(
+        process.env.VUE_APP_URL,
+        this.getAccessToken,
+        this.form.detail.id
+      )
+        .then(() => {
+          this.form.success = true;
+          this.listSelectedDate.push(this.form);
+        })
+        .catch(() => {
+          this.form.fail = true;
+        });
       this.isModal = false;
+      this.timeOption = [];
       this.selectedDate = "";
     },
     cancelJoin() {
       this.isModal = false;
+      this.timeOption = [];
       this.selectedDate = "";
     },
     addSelectedDate() {
       if (this.selectedDate != "") {
+        const date = this.availableDate[this.selectedDate];
+        for (let i = 0; i < date.length; i++) {
+          if (date[i].student == null) {
+            this.timeOption.push({
+              value: date[i].id,
+              text: date[i].time
+            });
+          }
+        }
         this.isModal = true;
       } else {
-        this.initiateDate();
+        this.printAvailableDate();
       }
     },
     initiateDate() {
@@ -101,24 +154,90 @@ export default {
         .forEach(btn => {
           btn.classList.add("disable");
         });
-      for (let i = 0; i < this.availableDate.length; i++) {
-        const date = document.querySelector(
-          "div[data-date='" + this.availableDate[i].date + "']"
-        );
-        if (date != null) {
-          date.classList.add("available");
-          date.classList.remove("disable");
+    },
+    printAvailableDate() {
+      for (const item in this.availableDate) {
+        const isStudentNull =
+          this.availableDate[item].find(({ student }) => student == null)
+            .length != 0;
+        const date = document.querySelector("div[data-date='" + item + "']");
+        if (isStudentNull) {
+          if (date != null) {
+            date.classList.add("available");
+            date.classList.remove("disable");
+          }
+        } else {
+          if (date != null) {
+            date.classList.add("halfAvailable");
+            date.classList.remove("disable");
+          }
         }
       }
+    },
+    pushResponseToData(response) {
+      for (let i = 0; i < response.length; i++) {
+        const date = new Date(response[i].start_datetime);
+        const formatedtime = date.toLocaleTimeString();
+        const formatedDate = date.toJSON().split("T")[0];
+        if (this.availableDate[formatedDate] != null) {
+          this.availableDate[formatedDate].push({
+            id: response[i].id,
+            time: formatedtime,
+            teacher: response[i].teacher,
+            student: response[i].student
+          });
+        } else {
+          this.availableDate[formatedDate] = [
+            {
+              id: response[i].id,
+              time: formatedtime,
+              teacher: response[i].teacher,
+              student: response[i].student
+            }
+          ];
+        }
+      }
+    },
+    async getAvailableDate() {
+      await User.getTeacherAvailableSchedule(
+        process.env.VUE_APP_URL,
+        this.getTermName,
+        this.getAccessToken
+      ).then(response => {
+        this.pushResponseToData(response);
+      });
+      this.initiateDate();
+      this.printAvailableDate();
+    },
+    gotoLoginForbidden() {
+      router.push("/forbidden/login");
+    },
+    gotoForbiddenPage() {
+      router.push("/forbidden/role");
+    },
+    gotoPeriodForbidden() {
+      router.push("/forbidden/period");
     }
   },
-  mounted() {
-    this.initiateDate();
+  created() {
+    if (this.getUserRole[this.getUserRole.length - 1].role_id == 0) {
+      this.gotoLoginForbidden();
+    } else if (this.getUserRole[this.getUserRole.length - 1].role_id != 2) {
+      this.gotoForbiddenPage();
+    } else if (!this.getSchedulePeriodOpened) {
+      this.gotoPeriodForbidden();
+    } else {
+      this.getAvailableDate();
+    }
   },
   computed: {
     ...mapGetters({
       getPeriodStart: "getPeriodStart",
-      getPeriodEnd: "getPeriodEnd"
+      getPeriodEnd: "getPeriodEnd",
+      getTermName: "getTermName",
+      getAccessToken: "getAccessToken",
+      getUserRole: "getUserRole",
+      getSchedulePeriodOpened: "getSchedulePeriodOpened"
     })
   }
 };

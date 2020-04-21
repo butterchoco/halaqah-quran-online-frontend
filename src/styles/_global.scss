@@ -195,7 +195,6 @@ a {
 .modal-footer {
   border: 0;
   margin: 0;
-  padding: 0;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -259,7 +258,7 @@ a {
       header {
         max-width: 80px;
         white-space: pre-wrap;
-        word-wrap: break-word;
+        font-weight: lighter !important;
       }
       
       &:focus {
@@ -290,6 +289,16 @@ a {
 
             &.available span {
               background: $secondary;
+              color: $white;
+
+              &:hover {
+                background: $black;
+                color: $white !important;
+              }
+            }
+
+            &.halfAvailable span {
+              background: $danger;
               color: $white;
 
               &:hover {
@@ -340,7 +349,7 @@ a {
         div.b-calendar-grid-body {
           div.row.no-gutters {
             div {
-              margin: 0;
+              margin: 0 !important;
             }
           }
         }

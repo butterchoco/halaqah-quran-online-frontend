@@ -36,7 +36,7 @@ export default new Vuex.Store({
       start_time: "",
       end_time: "",
       category: ""
-    }
+    },
   },
   getters: {
     getRefreshToken: (state: any) => {

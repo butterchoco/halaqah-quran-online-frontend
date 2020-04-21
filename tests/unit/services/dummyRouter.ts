@@ -2,14 +2,16 @@ import Home from "@/views/Home.vue";
 import DataCalonPeserta from "@/views/DataCalonPeserta.vue";
 import NotFound from "@/views/NotFound.vue";
 import Maintenance from "@/views/Maintenance.vue"
+import Sign from "@/views/Sign.vue";
+import Announcement from "@/views/Announcement.vue";
 import Activation from "@/views/Activation.vue";
 import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
 import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
-import Forbidden from "@/views/ForbiddenRole.vue"
-import LoginForbidden from "@/views/LoginForbidden.vue"
+import Forbidden from "@/views/Forbidden.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
+import StudentSchedule from "@/views/StudentSchedule.vue"
 
 const routes = [
     {
@@ -23,6 +25,11 @@ const routes = [
         component: Home
     },
     {
+        path: "/sign/:indicator",
+        name: "Sign",
+        component: Sign
+    },
+    {
         path: "/about",
         name: "About",
         component: Maintenance
@@ -31,6 +38,11 @@ const routes = [
         path: "/program",
         name: "Program",
         component: Maintenance
+    },
+    {
+        path: "/pengumuman",
+        name: "pengumuman",
+        component: Announcement
     },
     {
         path: "/activate/:uid/:token",
@@ -57,14 +69,9 @@ const routes = [
         component: DataCalonPeserta
     },
     {
-        path: "/forbidden",
+        path: "/forbidden/:indicator",
         name: "Forbidden",
         component: Forbidden
-    },
-    {
-        path: "/login-forbidden",
-        name: "LoginForbidden",
-        component: LoginForbidden
     },
     {
         path: "/announcement-success",
@@ -76,6 +83,11 @@ const routes = [
         name: "AnnouncementFailed",
         component: AnnouncementFailed
     },
+    {
+        path: "/student-schedule",
+        name: "StudentSchedule",
+        component: StudentSchedule
+    }
 ];
 
 export default routes;

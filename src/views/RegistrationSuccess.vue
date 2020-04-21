@@ -22,9 +22,9 @@ export default {
       msg2: "Pengumuman proses seleksi akan diumumkan dalam 7 hari ke depan.",
       goto: [],
       pathTo: {
-        0: "/login-forbidden",
-        3: "/forbidden",
-        4: "/forbidden",
+        0: "/forbidden/login",
+        3: "/forbidden/role",
+        4: "/forbidden/role",
         5: "/program-registration"
       }
     };

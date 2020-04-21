@@ -262,7 +262,13 @@ export default {
           { value: 2, text: "2 Kesalahan" },
           { value: 3, text: "3 Kesalahan" },
           { value: 4, text: "4 Kesalahan" },
-          { value: 5, text: "5 Kesalahan" }
+          { value: 5, text: "5 Kesalahan" },
+          { value: 6, text: "6 Kesalahan" },
+          { value: 7, text: "7 Kesalahan" },
+          { value: 8, text: "8 Kesalahan" },
+          { value: 9, text: "9 Kesalahan" },
+          { value: 10, text: "10 Kesalahan" },
+          { value: ">10", text: "Lebih dari 10 Kesalahan" }
         ],
         graduationOption: [
           { value: true, text: "Lulus" },
@@ -270,9 +276,7 @@ export default {
         ],
         levelTahsinOption: [
           { value: 1, text: "Level 1" },
-          { value: 2, text: "Level 2" },
-          { value: 3, text: "Level 3" },
-          { value: 4, text: "Level 4" }
+          { value: 2, text: "Level 2" }
         ],
         harakatMistake: "",
         madMistake: "",
@@ -289,7 +293,9 @@ export default {
       this.gotoLoginForbidden();
     } else if (this.getUserRole[this.getUserRole.length - 1].role_id != 4) {
       this.gotoForbiddenPage();
-    } else if (this.getParticipantSelectionPeriodOpened) {
+    } else if (!this.getParticipantSelectionPeriodOpened) {
+      this.gotoPeriodForbidden();
+    } else {
       this.getDataCalon();
       this.getDataNilaiCalon();
     }
@@ -306,10 +312,13 @@ export default {
   },
   methods: {
     gotoForbiddenPage() {
-      router.push("/forbidden");
+      router.push("/forbidden/role");
     },
     gotoLoginForbidden() {
-      router.push("/login-forbidden");
+      router.push("/forbidden/login");
+    },
+    gotoPeriodForbidden() {
+      router.push("/forbidden/period");
     },
     toggleModalNilai(dataStudent) {
       this.isModalNilai = !this.isModalNilai;
