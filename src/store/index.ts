@@ -54,6 +54,12 @@ export default new Vuex.Store({
     getFullname: (state: any) => {
       return state.user.firstName + " " + state.user.lastName
     },
+    getFirstname: (state: any) => {
+      return state.user.firstName
+    },
+    getLastname: (state: any) => {
+      return state.user.lastName
+    },
     getUsername: (state: any) => {
       return state.user.username
     },

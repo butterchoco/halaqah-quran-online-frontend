@@ -19,7 +19,10 @@ export default {
       isPrimary: true,
       isDanger: false,
       msg: "Mohon menunggu proses seleksi.",
-      msg2: "Pengumuman proses seleksi akan diumumkan dalam 7 hari ke depan.",
+      msg2:
+        "Pengumuman proses seleksi akan diumumkan dalam " +
+        this.getPeriodEnd +
+        " hari ke depan.",
       goto: [],
       pathTo: {
         0: "/forbidden/login",
@@ -40,7 +43,8 @@ export default {
   computed: {
     ...mapGetters({
       getRegistrationPeriodOpened: "getRegistrationPeriodOpened",
-      getHasProgramRegistered: "getHasProgramRegistered"
+      getHasProgramRegistered: "getHasProgramRegistered",
+      getPeriodEnd: "getPeriodEnd"
     })
   },
   created() {
@@ -50,6 +54,11 @@ export default {
     if (!this.getHasProgramRegistered) {
       this.gotoProgramRegistration();
     }
+    this.msg2 =
+      "Pengumuman proses seleksi akan diumumkan pada " +
+      new Date(this.getPeriodEnd)
+        .toLocaleString("en-GB", { timeZone: "UTC" })
+        .split(",")[0];
   }
 };
 </script>

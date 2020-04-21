@@ -58,9 +58,14 @@ export default {
       process.env.VUE_APP_URL,
       this.getAccessToken,
       this.getPeriodId
-    );
+    ).catch(() => {
+      return;
+    });
   },
   mounted() {
+    if (!this.getAnnouncementAvailable) {
+      return;
+    }
     if (this.getIsPassed) {
       this.gotoAnnouncementSuccess();
     } else {

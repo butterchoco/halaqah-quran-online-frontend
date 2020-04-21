@@ -374,9 +374,9 @@ export default {
         tahsinExperience: "",
         infaqOptionNumber: "",
         infaqOptionNumberOption: [
-          { value: 1, text: "Paket Sendiri (Rp.200.000)" },
-          { value: 2, text: "Paket Berdua (Rp.240.000)" },
-          { value: 3, text: "Paket Bertiga (Rp.280.000)" }
+          { value: 1, text: "Paket Sendiri (Rp.150.000)" },
+          { value: 2, text: "Paket Berdua (Rp.280.000)" },
+          { value: 3, text: "Paket Bertiga (Rp.400.000)" }
         ],
         referralName1: "",
         referralName2: "",

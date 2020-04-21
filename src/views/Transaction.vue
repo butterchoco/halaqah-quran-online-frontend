@@ -15,7 +15,9 @@
             <b-col md="10" offset-md="3">
               <p>Silahkan join grup whatsapp dengan link di bawah.</p>
               <br />
-              <b-button variant="none" class="primary">{{whatsappLink}}</b-button>
+              <a :href="whatsappLink">
+                <b-button variant="none" class="primary">{{whatsappLink}}</b-button>
+              </a>
             </b-col>
           </b-row>
         </div>
@@ -29,10 +31,7 @@
         </div>
         <div v-if="!isUploaded || isUploaded && isPaymentAccepted === false">
           <div v-if="isPaymentAccepted === false" class="rejected">
-            <b-alert
-              show
-              variant="danger"
-            >Bukti pembayaran tidak valid. Tolong upload bukti yang valid.</b-alert>
+            <b-alert show variant="danger">Bukti pembayaran ditolak. Tolong upload bukti yang valid.</b-alert>
           </div>
           <h3 class="header-title black">Pembayaran Infaq</h3>
           <p>Jumlah yang harus dibayar:</p>
@@ -53,7 +52,7 @@
           <br />
           <b-form @submit.stop.prevent="onSubmit">
             <b-row align-v="start">
-              <b-col sm="12" md="6" lg="5">
+              <b-col sm="12">
                 <b-form-group
                   class="form-group"
                   id="transaction-group"
