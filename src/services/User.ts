@@ -432,39 +432,6 @@ class User {
         })
     }
 
-    static getTeacherAvailableSchedule(env: string | undefined, term: string, token: string) {
-        return new Promise((resolve, reject) => {
-            axios.get(env + "/api/schedule/student/get/" + term, {
-                headers: {
-                    Authorization: "JWT " + token
-                }
-            }).then(({ data }) => {
-                resolve(data)
-            }).catch((error) => {
-                reject(error)
-                errorHandling(error)
-            })
-        })
-    }
-
-    static sendStudentSchedule(env: string | undefined, token: string, scheduleId: any) {
-        return new Promise((resolve, reject) => {
-            axios.put(env + "/api/schedule/student/put/assign/" + scheduleId, {},
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Authorization: "JWT " + token
-                    }
-                }
-            ).then(({ data }) => {
-                resolve(data)
-            }).catch((error) => {
-                reject(error)
-                errorHandling(error)
-            })
-        })
-    }
-
     static getTeacherSchedule(env: string | undefined, term: string, token: string) {
         return new Promise((resolve, reject) => {
             axios.get(env + "/api/schedule/teacher/get/" + term, {
