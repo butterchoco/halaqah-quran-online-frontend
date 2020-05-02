@@ -7,13 +7,35 @@
 // https://docs.cypress.io/api/plugins/preprocessors-api.html#Examples
 
 // /* eslint-disable import/no-extraneous-dependencies, global-require */
-// const webpack = require('@cypress/webpack-preprocessor')
+const webpack = require('@cypress/webpack-preprocessor')
+const webpackOptions = {
+  module: {
+    rules: [{
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    }]
+  }
+}
+
+const options = {
+  // send in the options from your webpack.config.js, so it works the same
+  // as your app's code
+  webpackOptions,
+  watchOptions: {}
+}
+
 
 module.exports = (on, config) => {
-  // on('file:preprocessor', webpack({
-  //  webpackOptions: require('@vue/cli-service/webpack.config'),
-  //  watchOptions: {}
-  // }))
+  // on(
+  //   'file:preprocessor',
+  //   webpack({
+  //     webpackOptions: require('@vue/cli-service/webpack.config'),
+  //     watchOptions: {}
+  //   })
+  // )
+  on('file:preprocessor', webpack(options))
+  require('@cypress/code-coverage/task')(on, config)
+  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
 
   return Object.assign({}, config, {
     fixturesFolder: 'tests/e2e/fixtures',

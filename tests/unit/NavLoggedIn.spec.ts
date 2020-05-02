@@ -12,18 +12,6 @@ localVue.use(VueRouter);
 localVue.use(Vuex)
 
 describe("NavLoggedIn Data", () => {
-  const OLD_ENV = process.env;
-
-  beforeEach(() => {
-    jest.resetModules()
-    process.env = { ...OLD_ENV };
-    delete process.env.NODE_ENV;
-  });
-
-  afterEach(() => {
-    process.env = OLD_ENV;
-  });
-
   const store = new Vuex.Store(Store)
   const wrapper = shallowMount(NavLoggedIn, {
     localVue,

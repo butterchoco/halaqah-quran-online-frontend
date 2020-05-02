@@ -20,9 +20,10 @@ export default {
       getIsAccepted: "getIsAccepted",
       getRegisEvaluation: "getRegisEvaluation",
       getAccessToken: "getAccessToken",
-      getSelectionPeriodId: "getSelectionPeriodId",
+      getPeriodId: "getPeriodId",
       getAnnouncementAvailable: "getAnnouncementAvailable",
-      getIsPassed: "getIsPassed"
+      getIsPassed: "getIsPassed",
+      getUserRole: "getUserRole"
     })
   },
   data() {
@@ -38,24 +39,38 @@ export default {
       ]
     };
   },
+  methods: {
+    gotoAnnouncementSuccess() {
+      router.push("/announcement-success");
+    },
+    gotoAnnouncementFailed() {
+      router.push("/announcement-failed");
+    },
+    gotoLoginForbidden() {
+      router.push("/forbidden/login");
+    }
+  },
   created() {
+    if (this.getUserRole[this.getUserRole.length - 1].role_id == 0) {
+      this.gotoLoginForbidden();
+    }
     User.getAnnouncementReport(
       process.env.VUE_APP_URL,
       this.getAccessToken,
-      this.getSelectionPeriodId
-    )
-      .then(() => {
-        if (this.getIsPassed) {
-          router.push("/announcement-success");
-        } else {
-          router.push("/announcement-failed");
-        }
-      })
-      .catch(error => {
-        if (error.response.status == 401) {
-          router.push("/login-forbidden");
-        }
-      });
+      this.getPeriodId
+    ).catch(() => {
+      return;
+    });
+  },
+  mounted() {
+    if (!this.getAnnouncementAvailable) {
+      return;
+    }
+    if (this.getIsPassed) {
+      this.gotoAnnouncementSuccess();
+    } else {
+      this.gotoAnnouncementFailed();
+    }
   }
 };
 </script>

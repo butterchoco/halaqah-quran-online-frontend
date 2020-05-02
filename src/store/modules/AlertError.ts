@@ -11,8 +11,8 @@ const state = {
                 content: "Silahkan segarkan kembali halaman anda !"
             },
             401: {
-                title: "Tidak ada akun terotentikasi",
-                content: "Silahkan login terlebih dahulu !"
+                title: "Kesalahan permintaan",
+                content: "Silahkan coba kembali !"
             },
             500: {
                 title: "Kesalahan server",
@@ -55,7 +55,7 @@ const actions = {
             value: true,
         })
         commit("setTitleAlertError", { value: getters.getMessageWithResponseCode(state, { value: payload.value }).title })
-        commit("setMessageAlertError", { value: getters.getMessageWithResponseCode(state, { value: payload.value }).title })
+        commit("setMessageAlertError", { value: getters.getMessageWithResponseCode(state, { value: payload.value }).content })
     },
     hideAlertError: ({ commit }: any) => {
         commit("setShowAlertError", {

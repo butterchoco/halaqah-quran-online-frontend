@@ -26,6 +26,20 @@ const factory = (values = {}) => {
 };
 
 describe("SignInForm.vue", () => {
+  it("call postForm method", async () => {
+    const wrapper: any = shallowMount(SignInForm, {
+      localVue,
+    })
+    wrapper.vm.postForm()
+  });
+
+  it("call onSubmit method", async () => {
+    const wrapper: any = shallowMount(SignInForm, {
+      localVue,
+    })
+    wrapper.vm.onSubmit()
+  });
+
   it("render an error when username is not filled", async () => {
     const wrapper = factory({ username: "", password: "AzharDifa99" });
     wrapper.find({ ref: "btn-submit" }).trigger("click");

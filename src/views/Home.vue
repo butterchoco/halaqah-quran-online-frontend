@@ -11,12 +11,15 @@
     <section class="hero-container">
       <h1 class="header-title">
         Pendaftaran TahfidzQu
-        <span class="isOpened" v-if="getIsProgramOpened">Dibuka</span>
+        <span class="isOpened" v-if="getRegistrationPeriodOpened">Dibuka</span>
         <span class="isClosed" v-else>Ditutup</span>
       </h1>
       <p class="header-description">{{ getHeaderDescription }}</p>
       <router-link to="/program-registration">
-        <button v-if="getIsProgramOpened" class="daftar-program btn primary mt-4">Daftar Sekarang !</button>
+        <button
+          v-if="getRegistrationPeriodOpened"
+          class="daftar-program btn primary mt-4"
+        >Daftar Sekarang !</button>
       </router-link>
     </section>
     <section class="timeline-container">
@@ -108,7 +111,7 @@ export default {
   name: "Home",
   computed: {
     ...mapGetters([
-      "getIsProgramOpened",
+      "getRegistrationPeriodOpened",
       "getTimeline",
       "getHeaderDescription",
       "getCurriculumDescription",

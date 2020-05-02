@@ -1,6 +1,6 @@
 <template>
   <section class="primary-container vector-background">
-    <b-container class="secondary-container py-5">
+    <b-container class="secondary-container">
       <b-row align-v="center" class="third-container">
         <b-col class="hero-container" sm="12" md="6" align-h="center">
           <b-img
@@ -12,11 +12,11 @@
         </b-col>
         <b-col v-if="signinFlag" sm="12" md="6" align-h="center" ref="form_container">
           <h2 class="subtitle" ref="title">Member Login</h2>
-          <SignInForm :inputWidth="inputWidth" />
+          <SignInForm />
         </b-col>
         <b-col v-else sm="12" md="6" align-h="center" ref="form_container">
           <h2 class="subtitle" ref="title">Create Your Account</h2>
-          <SignUpForm :inputWidth="inputWidth" />
+          <SignUpForm />
         </b-col>
       </b-row>
     </b-container>
@@ -24,8 +24,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import SignInForm from "@/components/SignInForm";
 import SignUpForm from "@/components/SignUpForm";
+import router from "@/router";
 
 export default {
   components: {
@@ -35,8 +37,7 @@ export default {
   name: "Sign",
   data() {
     return {
-      signinFlag: null,
-      inputWidth: 0
+      signinFlag: null
     };
   },
   watch: {
@@ -48,15 +49,20 @@ export default {
       }
     }
   },
-  mounted() {
-    this.inputWidth = this.$refs.form_container.clientWidth;
-  },
   created() {
-    if (this.$route.params.indicator == "in") {
+    if (this.getUserRole[this.getUserRole.length - 1].role_id != 0) {
+      router.push("/");
+    }
+    if (this.$route.path == "/sign/in") {
       this.signinFlag = true;
-    } else if (this.$route.params.indicator == "up") {
+    } else {
       this.signinFlag = false;
     }
+  },
+  computed: {
+    ...mapGetters({
+      getUserRole: "getUserRole"
+    })
   }
 };
 </script>
@@ -69,6 +75,7 @@ export default {
 
 .secondary-container {
   min-height: inherit;
+  padding: 0 2rem;
 }
 
 .third-container {
@@ -82,5 +89,11 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .hero-container {
+    display: none;
+  }
 }
 </style>

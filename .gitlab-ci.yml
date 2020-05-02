@@ -20,7 +20,7 @@ test:
   stage: test
   script:
     - npm run lint
-    - npm run test:unit -- --coverage
+    - npm run test:unit
   coverage: '/All\sfiles.*?\s+(\d+.\d+)/'
   artifacts:
     paths:
@@ -36,8 +36,6 @@ SonarScanner:
       -Dsonar.login=$SONARQUBE_TOKEN
       -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME
-  dependencies:
-    - test
 
 build:
   stage: build

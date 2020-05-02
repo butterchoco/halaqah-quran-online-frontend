@@ -4,27 +4,35 @@
       <img class="logo-nav desktop" src="@/assets/logo.png" alt="logo" />
       <ul>
         <li>
-          <router-link class="nav-link" to="/">
-            <span class="material-icons mobile">home</span>
-            <p>Beranda</p>
+          <router-link class="nav-link" to="/" @click.native="changeMobileNav('home')">
+            <span
+              class="material-icons mobile"
+              :class="{ 'active' : isMobileNavActive == 'home' }"
+            >home</span>
+            <p class="link-text" :class="{ 'active' : isMobileNavActive == 'home' }">Beranda</p>
           </router-link>
         </li>
         <li>
-          <router-link class="nav-link" to="/program">
-            <span class="material-icons mobile">work</span>
-            <p>Program</p>
+          <router-link class="nav-link" to="/program" @click.native="changeMobileNav('program')">
+            <span
+              class="material-icons mobile"
+              :class="{ 'active' : isMobileNavActive == 'program' }"
+            >work</span>
+            <p class="link-text" :class="{ 'active' : isMobileNavActive == 'program' }">Program</p>
           </router-link>
         </li>
         <li>
-          <router-link class="nav-link" to="/about">
-            <span class="material-icons mobile">people</span>
-            <p>Tentang Kami</p>
+          <router-link class="nav-link" to="/about" @click.native="changeMobileNav('about')">
+            <span
+              class="material-icons mobile"
+              :class="{ 'active' : isMobileNavActive == 'about' }"
+            >people</span>
+            <p class="link-text" :class="{ 'active' : isMobileNavActive == 'about' }">About</p>
           </router-link>
         </li>
         <li>
-          <div class="nav-link mobile" @click="dropdownActive">
-            <span class="material-icons">face</span>
-            <p>profil</p>
+          <div class="nav-link" @click="dropdownActive">
+            <span class="material-icons mobile" :class="{ 'active' : isDropdownActive }">face</span>
           </div>
         </li>
       </ul>
@@ -39,11 +47,23 @@
         <ul class="nav-profile">
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">today</span>
-            <router-link to="/" class="link" v-on:click.native="dropdownActive">Jadwal</router-link>
+            <router-link
+              to="/student-schedule"
+              class="link"
+              v-on:click.native="dropdownActive"
+            >Jadwal</router-link>
+          </li>
+          <li class="nav-profile-link" v-if="getUserRole[0].role_id == 3">
+            <span class="material-icons mobile">today</span>
+            <router-link
+              to="/teacher-schedule"
+              class="link"
+              v-on:click.native="dropdownActive"
+            >Jadwal</router-link>
           </li>
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">swap_horizontal</span>
-            <router-link to="/" class="link" v-on:click.native="dropdownActive">Transaksi</router-link>
+            <router-link to="/transaction" class="link" v-on:click.native="dropdownActive">Transaksi</router-link>
           </li>
           <li class="nav-profile-link" v-if="getUserRole[getUserRole.length-1].role_id == 2">
             <span class="material-icons mobile">trending_up</span>
@@ -82,10 +102,15 @@ import User from "@/services/User";
 export default {
   data() {
     return {
-      isDropdownActive: false
+      isDropdownActive: false,
+      isMobileNavActive: "home"
     };
   },
   methods: {
+    changeMobileNav(path) {
+      this.isDropdownActive = false;
+      this.isMobileNavActive = path;
+    },
     logout() {
       store.commit("removeToken");
       store.dispatch("resetUserInfo");
@@ -110,6 +135,7 @@ export default {
     store.dispatch("hideAlertError");
     if (this.getRefreshToken == null) {
       this.logout();
+      return;
     }
     this.resetToken();
     User.getInfo(process.env.VUE_APP_URL, this.getAccesstoken);
@@ -166,6 +192,16 @@ export default {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
+
+          p.link-text {
+            display: block !important;
+            &.active {
+              color: $white;
+              background: $primary;
+              padding: 5px 20px;
+              border-radius: 20px;
+            }
+          }
         }
       }
     }
@@ -231,6 +267,7 @@ export default {
               padding: $gap-sm-1 $gap-sm-4 !important;
               border-radius: 20px !important;
               color: white !important;
+              white-space: pre;
 
               &:hover {
                 background: white !important;
@@ -254,6 +291,14 @@ export default {
 
 i.material-icons:hover {
   color: $primary;
+}
+
+.material-icons.mobile {
+  color: #cad3de;
+
+  &.active {
+    color: $black;
+  }
 }
 
 .header-container {
@@ -289,6 +334,10 @@ i.material-icons:hover {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
+        p.link-text {
+          display: none;
+        }
 
         &:active {
           color: $primary;

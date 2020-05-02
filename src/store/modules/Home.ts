@@ -1,9 +1,5 @@
 /* eslint-disable */
 const state = {
-  selectionPeriod: {
-    periodId: "",
-    term: ""
-  },
   home: {
     headerDescription:
       "Program tahfizh menggunakan aplikasi chat Whatsapp sebagai penghubung antara pembimbing dengan peserta. Keutamaan program ini adalah tidak hanya mengedepankan jumlah hafalan, melainkan juga kualitas hafalan yang baik bagi pesertanya karena dibimbing langsung oleh para ustadz dan ustadzah.",
@@ -162,18 +158,6 @@ const state = {
 };
 
 const getters = {
-  getIsProgramOpened: (state: any) => {
-    if (state.selectionPeriod.periodId !== "") {
-      return true
-    }
-    return false;
-  },
-  getSelectionPeriodTerm: (state: any) => {
-    return state.selectionPeriod.term
-  },
-  getSelectionPeriodId: (state: any) => {
-    return state.selectionPeriod.periodId
-  },
   getTimeline: (state: any) => {
     return state.home.timeline;
   },
@@ -194,11 +178,7 @@ const getters = {
   }
 };
 
-const mutations = {
-  setSelectionPeriod: (state: any, payload: any) => {
-    state.selectionPeriod = payload.selectionPeriod
-  }
-};
+const mutations = {};
 
 const actions = {};
 

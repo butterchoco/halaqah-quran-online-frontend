@@ -19,31 +19,46 @@ export default {
       isPrimary: true,
       isDanger: false,
       msg: "Mohon menunggu proses seleksi.",
-      msg2: "Pengumuman proses seleksi akan diumumkan dalam 7 hari ke depan.",
+      msg2:
+        "Pengumuman proses seleksi akan diumumkan dalam " +
+        this.getPeriodEnd +
+        " hari ke depan.",
       goto: [],
       pathTo: {
-        0: "/login-forbidden",
-        3: "/forbidden",
-        4: "/forbidden",
+        0: "/forbidden/login",
+        3: "/forbidden/role",
+        4: "/forbidden/role",
         5: "/program-registration"
       }
     };
   },
+  methods: {
+    gotoRegisClosed() {
+      router.push("/regis-closed");
+    },
+    gotoProgramRegistration() {
+      router.push("/program-registration");
+    }
+  },
   computed: {
     ...mapGetters({
-      getIsProgramOpened: "getIsProgramOpened",
-      getHasProgramRegistered: "getHasProgramRegistered"
+      getRegistrationPeriodOpened: "getRegistrationPeriodOpened",
+      getHasProgramRegistered: "getHasProgramRegistered",
+      getPeriodEnd: "getPeriodEnd"
     })
   },
   created() {
-    if (!this.getIsProgramOpened) {
-      router.push("/regis-closed");
-      return;
+    if (!this.getRegistrationPeriodOpened) {
+      this.gotoRegisClosed();
     }
     if (!this.getHasProgramRegistered) {
-      router.push("/program-registration");
-      return;
+      this.gotoProgramRegistration();
     }
+    this.msg2 =
+      "Pengumuman proses seleksi akan diumumkan pada " +
+      new Date(this.getPeriodEnd)
+        .toLocaleString("en-GB", { timeZone: "UTC" })
+        .split(",")[0];
   }
 };
 </script>

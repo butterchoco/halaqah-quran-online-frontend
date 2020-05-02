@@ -121,6 +121,18 @@ section {
     }
   }
 
+  &.danger {
+    background: $danger;
+    color: white;
+    border: 1px solid transparent;
+
+    &:hover {
+      background: white;
+      color: $black;
+      border: 1px solid $danger;
+    }
+  }
+
   &:hover {
     background: $black;
     color: white;
@@ -155,7 +167,206 @@ a {
 }
 
 .vector-background {
-  background: url("/assets/img/Bg-2.png") no-repeat;
+  background: url("/img/Bg-2.png") no-repeat;
   background-position-y: bottom;
   background-size: 100%;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+.modal-header {
+  border-bottom: 0;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: "" !important;
+
+  h5 {
+    align-self: center;
+  }
+}
+
+.modal-header-student-schedule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-title {
+    background: $secondary;
+    font-weight: normal;
+    padding: 0 $gap-sm-2;
+    font-size: 18px;
+  }
+
+  .close {
+    display: none;
+  }
+}
+
+.modal-footer {
+  border: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.modal-content {
+  border-radius: 10px;
+  border: 0;
+}
+
+.form-control {
+  border: 0 !important;
+}
+
+.calendar {
+  margin-bottom: 2rem;
+
+  div.d-block {
+    display: flex;
+
+    .b-calendar-nav {
+      order: 2;
+      display: flex;
+      justify-content: center;
+
+      button {
+        background: transparent;
+        outline: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        max-height: 32px;
+        max-width: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:focus, &:active, &:active:focus {
+          background-color: transparent;
+          color: grey;
+          box-shadow: none;
+        }
+
+        &:hover {
+          background: $primary;
+          color: $white;
+        }
+      }
+
+      button[title="Current month"] {
+        display: none;
+      }
+    }
+
+    div.form-control[aria-roledescription="Calendar"] {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      header {
+        max-width: 80px;
+        white-space: pre-wrap;
+        font-weight: lighter !important;
+      }
+      
+      &:focus {
+        box-shadow: none;
+      }
+
+      div.row.no-gutters.border-bottom {
+        width: 100%;
+        margin: $gap-m-2 0;
+        border-bottom: 0 !important;
+
+        small {
+          font-weight: 500;
+        }
+      }
+
+      div.b-calendar-grid-body {
+        width: 100%;
+
+        div.row.no-gutters {
+          div[role="button"] {
+            margin: $gap-m-1;
+
+            &.selected span {
+              background: $primary;
+              color: $white !important;
+            }
+
+            &.available span {
+              background: $secondary;
+              color: $white;
+
+              &:hover {
+                background: $black;
+                color: $white !important;
+              }
+            }
+
+            &.halfAvailable span {
+              background: $danger;
+              color: $white;
+
+              &:hover {
+                background: $black;
+                color: $white !important;
+              }
+            }
+
+            &.disable {
+              pointer-events: none;
+              span {
+                color: #ccc !important;
+              }
+            }
+
+            span {
+              background: transparent;
+              font-weight: normal !important;
+
+              &:hover {
+                background: $black;
+                color: $white !important;
+              }
+
+              &.active {
+                background: $primary !important;
+              }
+
+              &.focus {
+                box-shadow: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  footer {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .calendar {
+    div.d-block {
+      div.form-control[aria-roledescription="Calendar"] {
+        div.b-calendar-grid-body {
+          div.row.no-gutters {
+            div {
+              margin: 0 !important;
+            }
+          }
+        }
+      }
+    }
+    
+  }
 }

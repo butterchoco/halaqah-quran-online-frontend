@@ -62,11 +62,19 @@
             <b-form-input
               id="input-5"
               size="sm"
+              ref="password"
+              class="password"
               v-model="form.password"
               :state="validateState('password')"
               aria-describedby="input-5-live-feedback"
               type="password"
             ></b-form-input>
+            <div class="show-password-container" @click="showPassword">
+              <p>Show password</p>
+              <div class="eye-outer">
+                <div class="eye"></div>
+              </div>
+            </div>
             <b-form-invalid-feedback
               id="input-5-live-feedback"
               class="error_password"
@@ -76,11 +84,18 @@
             <b-form-input
               id="input-6"
               size="sm"
+              class="password"
               v-model="form.passwordValidation"
               :state="validateState('passwordValidation')"
               aria-describedby="input--live-feedback"
               type="password"
             ></b-form-input>
+            <div class="show-password-container" @click="showPassword">
+              <p>Show password</p>
+              <div class="eye-outer">
+                <div class="eye"></div>
+              </div>
+            </div>
             <b-form-invalid-feedback
               id="input-6-live-feedback"
               class="error_password_validation"
@@ -89,10 +104,19 @@
         </b-col>
       </b-row>
       <div class="btn-container">
-        <b-button type="submit" size="sm" ref="btn-submit" variant="none" class="primary">Register</b-button>
-        <p style="margin-top: 2%;">
+        <b-button
+          id="submit"
+          type="submit"
+          size="sm"
+          ref="btn-submit"
+          variant="none"
+          class="primary"
+        >Register</b-button>
+        <p class="signin-nav pt-3">
           Already have account?
-          <router-link to="/sign/in">login Here</router-link>
+          <router-link id="signin-nav" to="/sign/in">
+            <strong>login Here</strong>
+          </router-link>
         </p>
       </div>
     </b-form>
@@ -134,7 +158,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import router from "@/router";
+import User from "@/services/User";
 
 import {
   required,
@@ -153,9 +178,6 @@ import {
 
 export default {
   name: "SignUpForm",
-  props: {
-    inputWidth: Number
-  },
   data() {
     return {
       show: true,
@@ -176,7 +198,8 @@ export default {
         trailingMessage: "",
         button: "",
         isSuccess: false
-      }
+      },
+      isShowPassword: false
     };
   },
   validations: {
@@ -214,9 +237,33 @@ export default {
     }
   },
   methods: {
+    showPassword() {
+      this.isShowPassword = !this.isShowPassword;
+      if (this.isShowPassword) {
+        document.querySelectorAll(".password").forEach(btn => {
+          btn.setAttribute("type", "string");
+        });
+        document
+          .querySelectorAll(".eye-outer")
+          .forEach(btn => (btn.style.background = "#40bfc1"));
+        document
+          .querySelectorAll(".eye")
+          .forEach(btn => (btn.style.background = "#fff"));
+      } else {
+        document.querySelectorAll(".password").forEach(btn => {
+          btn.setAttribute("type", "password");
+        });
+        document
+          .querySelectorAll(".eye-outer")
+          .forEach(btn => (btn.style.background = "#eee"));
+        document
+          .querySelectorAll(".eye")
+          .forEach(btn => (btn.style.background = "#ddd"));
+      }
+    },
     registrationSuccess(value) {
-      this.modal.title = "Registration Success";
-      this.modal.image = require("../assets/img/success-email.png");
+      this.modal.title = "Pendaftaran Berhasil !";
+      this.modal.image = require("@/assets/img/success-email.png");
       this.modal.message = value + " telah bergabung di hafidzisme";
       this.modal.trailingMessage = "Silahkan cek email untuk aktivasi akun!";
       this.modal.button = "Go to login page";
@@ -224,11 +271,11 @@ export default {
       this.$bvModal.show("registration-modal");
     },
     registrationFailure(value, secondValue) {
-      this.modal.title = "Registration Failure";
-      this.modal.image = require("../assets/img/success-selection.png");
+      this.modal.title = "Pendaftaran Gagal !";
+      this.modal.image = require("@/assets/img/success-selection.png");
       this.modal.message = value;
       this.modal.trailingMessage = secondValue;
-      this.modal.button = "Try Again";
+      this.modal.button = "Coba Lagi";
       this.modal.isSuccess = false;
       this.$bvModal.show("registration-modal");
     },
@@ -249,46 +296,30 @@ export default {
       }
     },
     postForm() {
-      const nameArr = this.form.fullname.split(" ");
-      const firstName = nameArr[0];
-      const lastName = nameArr.slice(1, nameArr.length).join(" ");
-      axios
-        .post(process.env.VUE_APP_URL + "/api/auth/users/", {
-          "username": this.form.username,
-          "email": this.form.email,
-          "password": this.form.password,
-          "re_password": this.form.passwordValidation,
-          "first_name": firstName,
-          "last_name": lastName,
-          "whatsapp_number": this.form.number
-        })
+      User.signUp(process.env.VUE_APP_URL, this.form)
         .then(() => {
           this.isLoggedin = true;
           this.registrationSuccess(this.form.username);
         })
         .catch(error => {
-          if (error.response.data.username) {
+          if (error.response) {
             this.registrationFailure(
-              "Please try again!",
+              "Silahkan coba lagi!",
               error.response.data.username[0]
             );
           } else {
             this.registrationFailure(
-              "Please try again latter",
-              "Website temporarily unavailable"
+              "Silahkan coba lagi nanti",
+              "Server sedang tidak tersedia"
             );
           }
         })
-        .finally(() => (this.isLoading = false));
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     toSignin() {
-      this.$router.push("/sign/in");
-    }
-  },
-  computed: {
-    inputStyle() {
-      const halfWidth = this.inputWidth * 0.7;
-      return "width: " + halfWidth + "px";
+      router.push("/sign/in");
     }
   }
 };
@@ -298,4 +329,39 @@ export default {
 @import "@/styles/form.scss";
 @import "@/styles/reusable/loading.scss";
 @import "@/styles/reusable/modal.scss";
+
+.show-password-container {
+  cursor: pointer;
+  pointer-events: visible;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+
+  p {
+    margin-right: 5px;
+  }
+
+  .eye-outer {
+    height: 16px;
+    width: 16px;
+    background: #eee;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .eye {
+    background: #ddd;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  p.signin-nav {
+    text-align: center;
+  }
+}
 </style>

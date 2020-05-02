@@ -28,7 +28,15 @@ const user = {
 
 export default new Vuex.Store({
   state: {
-    user: user
+    user: user,
+    latest_opened: {
+      id: "",
+      term: "",
+      urlWhatsappGroup: "",
+      start_time: "",
+      end_time: "",
+      category: ""
+    },
   },
   getters: {
     getRefreshToken: (state: any) => {
@@ -46,6 +54,12 @@ export default new Vuex.Store({
     getFullname: (state: any) => {
       return state.user.firstName + " " + state.user.lastName
     },
+    getFirstname: (state: any) => {
+      return state.user.firstName
+    },
+    getLastname: (state: any) => {
+      return state.user.lastName
+    },
     getUsername: (state: any) => {
       return state.user.username
     },
@@ -54,6 +68,54 @@ export default new Vuex.Store({
     },
     getUserRole: (state: any) => {
       return state.user.role
+    },
+    getUrlWhatsappGroup: (state: any) => {
+      return state.latest_opened.urlWhatsappGroup
+    },
+    getTermName: (state: any) => {
+      return state.latest_opened.term
+    },
+    getPeriodId: (state: any) => {
+      return state.latest_opened.id
+    },
+    getPeriodStart: (state: any) => {
+      return state.latest_opened.start_time
+    },
+    getPeriodEnd: (state: any) => {
+      return state.latest_opened.end_time
+    },
+    getPeriodCategory: (state: any) => {
+      return state.latest_opened.category
+    },
+    getRegistrationPeriodOpened: (state: any) => {
+      if (state.latest_opened.category === "registration") {
+        return true
+      }
+      return false;
+    },
+    getParticipantSelectionPeriodOpened: (state: any) => {
+      if (state.latest_opened.category === "participant_selection") {
+        return true
+      }
+      return false;
+    },
+    getSchedulePeriodOpened: (state: any) => {
+      if (state.latest_opened.category === "schedule_choice") {
+        return true
+      }
+      return false;
+    },
+    getPaymentPeriodOpened: (state: any) => {
+      if (state.latest_opened.category === "payment") {
+        return true
+      }
+      return false;
+    },
+    getClassPeriodOpened: (state: any) => {
+      if (state.latest_opened.category === "class") {
+        return true
+      }
+      return false;
     }
   },
   mutations: {
@@ -83,6 +145,12 @@ export default new Vuex.Store({
     },
     setUserRole: (state: any, payload: any) => {
       state.user.role = payload.role
+    },
+    setPeriod: (state: any, payload: any) => {
+      state.latest_opened = payload.latest_opened
+    },
+    setPeriodCategory: (state: any, payload: any) => {
+      state.latest_opened.category = payload.value
     }
   },
   actions: {

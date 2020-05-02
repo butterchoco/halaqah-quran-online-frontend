@@ -10,10 +10,11 @@ import Activation from "@/views/Activation.vue";
 import ProgramRegistration from "@/views/ProgramRegistration.vue";
 import RegistrationClosed from "@/views/RegistrationClosed.vue";
 import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
-import Forbidden from "@/views/ForbiddenRole.vue"
-import LoginForbidden from "@/views/LoginForbidden.vue"
+import Forbidden from "@/views/Forbidden.vue"
+import Transaction from "@/views/Transaction.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
+import TeacherSchedule from "@/views/TeacherSchedule.vue"
 
 
 Vue.use(VueRouter);
@@ -50,6 +51,11 @@ const routes = [
     component: Announcement
   },
   {
+    path: "/transaction",
+    name: "Transaction",
+    component: Transaction
+  },
+  {
     path: "/activate/:uid/:token",
     name: "Activation",
     component: Activation
@@ -74,14 +80,9 @@ const routes = [
     component: DataCalonPeserta
   },
   {
-    path: "/forbidden",
+    path: "/forbidden/:indicator",
     name: "Forbidden",
     component: Forbidden
-  },
-  {
-    path: "/login-forbidden",
-    name: "LoginForbidden",
-    component: LoginForbidden
   },
   {
     path: "/announcement-success",
@@ -93,6 +94,11 @@ const routes = [
     name: "AnnouncementFailed",
     component: AnnouncementFailed
   },
+  {
+    path: "/teacher-schedule",
+    name: "TeacherSchedule",
+    component: TeacherSchedule
+  }
 ];
 
 const router = new VueRouter({

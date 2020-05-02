@@ -4,21 +4,27 @@
       <img class="logo-nav desktop" src="@/assets/logo.png" alt="logo" />
       <ul>
         <li>
-          <router-link class="nav-link" to="/">
-            <span class="material-icons mobile">home</span>
-            <p>Beranda</p>
+          <router-link class="nav-link" to="/" @click.native="changeMobileNav('home')">
+            <span
+              class="material-icons mobile"
+              :class="{ 'active' : isMobileNavActive == 'home' }"
+            >home</span>
           </router-link>
         </li>
         <li>
-          <router-link class="nav-link" to="/program">
-            <span class="material-icons mobile">work</span>
-            <p>Program</p>
+          <router-link class="nav-link" to="/program" @click.native="changeMobileNav('program')">
+            <span
+              class="material-icons mobile"
+              :class="{ 'active' : isMobileNavActive == 'program' }"
+            >work</span>
           </router-link>
         </li>
         <li>
-          <router-link class="nav-link" to="/about">
-            <span class="material-icons mobile">supervised_user_circle</span>
-            <p>Tentang</p>
+          <router-link class="nav-link" to="/about" @click.native="changeMobileNav('about')">
+            <span
+              class="material-icons mobile"
+              :class="{ 'active' : isMobileNavActive == 'about' }"
+            >supervised_user_circle</span>
           </router-link>
         </li>
       </ul>
@@ -40,6 +46,16 @@ import store from "@/store";
 
 export default {
   name: "NavBeforeLogin",
+  data() {
+    return {
+      isMobileNavActive: "home"
+    };
+  },
+  methods: {
+    changeMobileNav(path) {
+      this.isMobileNavActive = path;
+    }
+  },
   created() {
     store.dispatch("hideAlertError");
     store.dispatch("resetUserInfo");
@@ -126,6 +142,14 @@ export default {
 
 i.material-icons:hover {
   color: $primary;
+}
+
+.material-icons.mobile {
+  color: #cad3de;
+
+  &.active {
+    color: $black;
+  }
 }
 
 .header-container {
