@@ -14,7 +14,6 @@ import Forbidden from "@/views/Forbidden.vue"
 import Transaction from "@/views/Transaction.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
-import StudentSchedule from "@/views/StudentSchedule.vue"
 import TeacherSchedule from "@/views/TeacherSchedule.vue"
 
 
@@ -94,11 +93,6 @@ const routes = [
     path: "/announcement-failed",
     name: "AnnouncementFailed",
     component: AnnouncementFailed
-  },
-  {
-    path: "/student-schedule",
-    name: "StudentSchedule",
-    component: StudentSchedule
   },
   {
     path: "/teacher-schedule",

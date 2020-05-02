@@ -11,7 +11,6 @@ import RegistrationSuccess from "@/views/RegistrationSuccess.vue";
 import Forbidden from "@/views/Forbidden.vue"
 import AnnouncementSuccess from "@/views/AnnouncementSuccess.vue"
 import AnnouncementFailed from "@/views/AnnouncementFailed.vue"
-import StudentSchedule from "@/views/StudentSchedule.vue"
 
 const routes = [
     {
@@ -83,11 +82,6 @@ const routes = [
         name: "AnnouncementFailed",
         component: AnnouncementFailed
     },
-    {
-        path: "/student-schedule",
-        name: "StudentSchedule",
-        component: StudentSchedule
-    }
 ];
 
 export default routes;

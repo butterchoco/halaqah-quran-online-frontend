@@ -63,26 +63,39 @@
               id="input-5"
               size="sm"
               ref="password"
+              class="password"
               v-model="form.password"
               :state="validateState('password')"
               aria-describedby="input-5-live-feedback"
               type="password"
             ></b-form-input>
+            <div class="show-password-container" @click="showPassword">
+              <p>Show password</p>
+              <div class="eye-outer">
+                <div class="eye"></div>
+              </div>
+            </div>
             <b-form-invalid-feedback
               id="input-5-live-feedback"
               class="error_password"
             >Please enter a valid password</b-form-invalid-feedback>
           </b-form-group>
-          <div class="show-password" @click="showPassword"></div>
           <b-form-group id="input-group-6" label="Repeat Password" label-for="input-6">
             <b-form-input
               id="input-6"
               size="sm"
+              class="password"
               v-model="form.passwordValidation"
               :state="validateState('passwordValidation')"
               aria-describedby="input--live-feedback"
               type="password"
             ></b-form-input>
+            <div class="show-password-container" @click="showPassword">
+              <p>Show password</p>
+              <div class="eye-outer">
+                <div class="eye"></div>
+              </div>
+            </div>
             <b-form-invalid-feedback
               id="input-6-live-feedback"
               class="error_password_validation"
@@ -101,7 +114,9 @@
         >Register</b-button>
         <p class="signin-nav pt-3">
           Already have account?
-          <router-link id="signin-nav" to="/sign/in">login Here</router-link>
+          <router-link id="signin-nav" to="/sign/in">
+            <strong>login Here</strong>
+          </router-link>
         </p>
       </div>
     </b-form>
@@ -223,10 +238,27 @@ export default {
   },
   methods: {
     showPassword() {
+      this.isShowPassword = !this.isShowPassword;
       if (this.isShowPassword) {
-        this.$refs.password.setAttribute("type", "string");
+        document.querySelectorAll(".password").forEach(btn => {
+          btn.setAttribute("type", "string");
+        });
+        document
+          .querySelectorAll(".eye-outer")
+          .forEach(btn => (btn.style.background = "#40bfc1"));
+        document
+          .querySelectorAll(".eye")
+          .forEach(btn => (btn.style.background = "#fff"));
       } else {
-        this.$refs.password.setAttribute("type", "password");
+        document.querySelectorAll(".password").forEach(btn => {
+          btn.setAttribute("type", "password");
+        });
+        document
+          .querySelectorAll(".eye-outer")
+          .forEach(btn => (btn.style.background = "#eee"));
+        document
+          .querySelectorAll(".eye")
+          .forEach(btn => (btn.style.background = "#ddd"));
       }
     },
     registrationSuccess(value) {
@@ -298,11 +330,33 @@ export default {
 @import "@/styles/reusable/loading.scss";
 @import "@/styles/reusable/modal.scss";
 
-.show-password {
-  height: 32px;
-  width: 32px;
-  background: $primary;
-  border-radius: 50%;
+.show-password-container {
+  cursor: pointer;
+  pointer-events: visible;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+
+  p {
+    margin-right: 5px;
+  }
+
+  .eye-outer {
+    height: 16px;
+    width: 16px;
+    background: #eee;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .eye {
+    background: #ddd;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
 }
 
 @media only screen and (max-width: 768px) {

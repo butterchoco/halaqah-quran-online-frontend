@@ -17,12 +17,18 @@
       <b-form-group id="input-group-2" label="Password" label-for="input-2">
         <b-form-input
           id="input-2"
-          class="custom-input"
+          class="custom-input password"
           v-model="form.password"
           type="password"
           :state="validateState('password')"
           aria-describedby="input-2-live-feedback"
         ></b-form-input>
+        <div class="show-password-container" @click="showPassword">
+          <p>Show password</p>
+          <div class="eye-outer">
+            <div class="eye"></div>
+          </div>
+        </div>
         <b-form-invalid-feedback
           id="input-2-live-feedback"
           class="error_password"
@@ -32,7 +38,9 @@
         <b-button type="submit" id="submit" variant="none" ref="btn-submit" class="primary">Login</b-button>
         <p class="signup-nav mt-4">
           or
-          <router-link id="signup-nav" to="/sign/up">Create New Account</router-link>
+          <router-link id="signup-nav" to="/sign/up">
+            <strong>Create New Account</strong>
+          </router-link>
         </p>
       </div>
     </b-form>
@@ -78,7 +86,8 @@ export default {
         image: require("../assets/img/success-selection.png"),
         message: "No active account found with the given credentials",
         button: "Try Again"
-      }
+      },
+      isShowPassword: false
     };
   },
   validations: {
@@ -92,6 +101,30 @@ export default {
     }
   },
   methods: {
+    showPassword() {
+      this.isShowPassword = !this.isShowPassword;
+      if (this.isShowPassword) {
+        document.querySelectorAll(".password").forEach(btn => {
+          btn.setAttribute("type", "string");
+        });
+        document
+          .querySelectorAll(".eye-outer")
+          .forEach(btn => (btn.style.background = "#40bfc1"));
+        document
+          .querySelectorAll(".eye")
+          .forEach(btn => (btn.style.background = "#fff"));
+      } else {
+        document.querySelectorAll(".password").forEach(btn => {
+          btn.setAttribute("type", "password");
+        });
+        document
+          .querySelectorAll(".eye-outer")
+          .forEach(btn => (btn.style.background = "#eee"));
+        document
+          .querySelectorAll(".eye")
+          .forEach(btn => (btn.style.background = "#ddd"));
+      }
+    },
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
@@ -125,6 +158,35 @@ export default {
 @import "@/styles/form.scss";
 @import "@/styles/reusable/loading.scss";
 @import "@/styles/reusable/modal.scss";
+
+.show-password-container {
+  cursor: pointer;
+  pointer-events: visible;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+
+  p {
+    margin-right: 5px;
+  }
+
+  .eye-outer {
+    height: 16px;
+    width: 16px;
+    background: #eee;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .eye {
+    background: #ddd;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+}
 
 @media only screen and (max-width: 768px) {
   p.signup-nav {
